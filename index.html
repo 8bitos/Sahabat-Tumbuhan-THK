@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahabat Tumbuhanku: Petualangan Tri Hita Karana</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-world">
+            <!-- The map or minigame will be dynamically rendered here -->
+        </div>
+        <div id="side-panel">
+            <div id="character-dialogue-area">
+                <div id="character-image-container">
+                    <img id="character-image" src="" alt="Character">
+                </div>
+                <div id="dialogue-box">
+                    <p id="character-name">Narator</p>
+                    <p id="dialogue-text">Selamat datang! Klik sebuah lokasi di peta untuk memulai petualanganmu.</p>
+                </div>
+            </div>
+            <div id="ui-area">
+                <h3>Keseimbangan Harmoni</h3>
+                <div class="progress-container">
+                    <span>Palemahan</span>
+                    <div class="progress-bar-outer">
+                        <div id="palemahan-progress" class="progress-bar-inner" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <span>Pawongan</span>
+                    <div class="progress-bar-outer">
+                        <div id="pawongan-progress" class="progress-bar-inner" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <span>Parahyangan</span>
+                    <div class="progress-bar-outer">
+                        <div id="parahyangan-progress" class="progress-bar-inner" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Overlay Container -->
+    <div id="quiz-overlay-container"> <!-- No hidden class initially -->
+        <div id="quiz-content">
+            <h2 id="quiz-question"></h2>
+            <div id="quiz-options">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <div id="quiz-feedback"></div>
+            <button id="next-question-btn" class="hidden">Next Question</button>
+            <button id="finish-quiz-btn" class="hidden">Finish Quiz</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

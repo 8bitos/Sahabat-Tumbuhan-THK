@@ -1,0 +1,431 @@
+{
+    "loka-intro": {
+        "character": "Narator",
+        "dialogue": "Kamu berjalan menuju taman sekolah yang rimbun. Suara gemerisik daun dan aroma tanah basah memenuhi udara. Di sana, seorang anak laki-laki dengan topi jerami sedang berjongkok, mengamati sebatang pohon dengan serius. Dia adalah Loka, si pecinta alam.",
+        "choices": [
+            { "text": "Sapa Loka", "nextScene": "loka-sapa" }
+        ],
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-sapa": {
+        "character": "Loka",
+        "dialogue": "\"Oh, hai! Kamu murid baru, ya? Aku Loka. Aku sedang mengamati pohon ini. Pohon ini punya banyak rahasia dan keajaiban, lho! Mau tahu?\" Loka tersenyum ramah, matanya berbinar.",
+        "choices": [
+            { "text": "Tentu, rahasia apa, Loka?", "nextScene": "loka-taman-1" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Smile"
+    },
+    "loka-taman-1": {
+        "character": "Loka",
+        "dialogue": "\"Setiap bagian pohon ini punya tugasnya masing-masing yang sangat penting untuk kehidupannya. Lihat, ini akar! Akar itu seperti jangkar yang menahan pohon agar tidak tumbang saat ada angin kencang, dan juga menyerap air serta mineral dari tanah.\" Loka menunjuk ke bagian bawah pohon yang tertutup tanah.",
+        "choices": [
+            { "text": "Lanjut ke batang", "nextScene": "loka-taman-2" },
+            { "text": "Ada jenis akar lain?", "nextScene": "loka-akar-cabang" },
+            { "text": "Kuis tentang fungsi akar!", "nextScene": "loka-quiz-fungsi-akar" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Explain"
+    },
+    "loka-quiz-fungsi-akar": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang fungsi akar. Perhatikan gambar berikut (bayangkan ada gambar akar): Bagian tumbuhan yang ditunjuk pada gambar di atas berfungsi untuk …",
+        "quiz": {
+            "question": "Bagian tumbuhan yang ditunjuk pada gambar di atas berfungsi untuk …",
+            "options": ["Menyerap air dan mineral dari tanah", "Mengangkut hasil fotosintesis", "Tempat terjadinya fotosintesis", "Menarik serangga penyerbuk"],
+            "correct": "Menyerap air dan mineral dari tanah",
+            "nextScene": "loka-quiz-fungsi-akar-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-fungsi-akar-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat sekali! Akar memang hebat dalam menyerap air dan mineral. Tanpa akar yang sehat, pohon ini tidak akan bisa tumbuh besar dan kuat. Lanjut ke bagian berikutnya, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke batang", "nextScene": "loka-taman-2" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-akar-penting": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang pentingnya akar!",
+        "quiz": {
+            "question": "Mengapa akar sangat penting bagi kelangsungan hidup tumbuhan?",
+            "options": ["Karena dapat berubah menjadi buah", "Karena berfungsi mengedarkan oksigen", "Karena menyerap air dan menancapkan tumbuhan", "Karena bisa menjadi tempat hidup serangga"],
+            "correct": "Karena menyerap air dan menancapkan tumbuhan",
+            "nextScene": "loka-quiz-akar-penting-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-akar-penting-correct": {
+        "character": "Loka",
+        "dialogue": "\"Benar! Akar adalah fondasi kehidupan tumbuhan. Tanpa akar yang kuat, tumbuhan tidak bisa bertahan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke batang", "nextScene": "loka-taman-2" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-menyiram": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang menyiram tumbuhan!",
+        "quiz": {
+            "question": "Menyiram tumbuhan secara rutin membantu akar dalam ...",
+            "options": ["Mengeluarkan makanan", "Menyerap air untuk pertumbuhan", "Membentuk bunga", "Membuang daun kering"],
+            "correct": "Menyerap air untuk pertumbuhan",
+            "nextScene": "loka-quiz-menyiram-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-menyiram-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat sekali! Air sangat penting untuk akar dan pertumbuhan tumbuhan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke batang", "nextScene": "loka-taman-2" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-akar-cabang": {
+        "character": "Loka",
+        "dialogue": "\"Tentu! Ada akar serabut seperti pada padi atau rumput, yang bentuknya seperti serabut rambut. Dan ada akar tunggang seperti pada mangga atau wortel, yang punya satu akar utama besar. Keduanya punya fungsi yang sama, tapi bentuknya berbeda sesuai kebutuhan tumbuhan.\"",
+        "choices": [
+            { "text": "Oh, begitu. Lanjut ke batang", "nextScene": "loka-taman-2" },
+            { "text": "Kuis tentang jenis akar!", "nextScene": "loka-quiz-akar-serabut" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Explain"
+    },
+    "loka-quiz-akar-serabut": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang jenis akar!",
+        "quiz": {
+            "question": "Akar serabut biasa dimiliki oleh tumbuhan ...",
+            "options": ["Kacang tanah", "Padi", "Mangga", "Jambu"],
+            "correct": "Padi",
+            "nextScene": "loka-quiz-akar-serabut-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-akar-serabut-correct": {
+        "character": "Loka",
+        "dialogue": "\"Benar! Padi punya akar serabut. Kamu memang memperhatikan detail! Lanjut ke bagian berikutnya, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke batang", "nextScene": "loka-taman-2" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-taman-2": {
+        "character": "Loka",
+        "dialogue": "\"Kalau ini batang. Batang itu seperti tiang penyangga yang kuat, mengalirkan air dan nutrisi dari akar ke seluruh bagian pohon, dan juga mengangkut hasil makanan dari daun ke seluruh bagian tumbuhan. Batang juga tempat tumbuhnya dahan dan daun.\" Loka menepuk batang pohon yang kokoh.",
+        "choices": [
+            { "text": "Bagaimana dengan daun?", "nextScene": "loka-taman-3" },
+            { "text": "Ada hal lain yang menarik di taman ini?", "nextScene": "loka-eksplorasi-1" },
+            { "text": "Kuis tentang batang!", "nextScene": "loka-quiz-batang" },
+            { "text": "Kuis tentang batang kaktus!", "nextScene": "loka-quiz-kaktus" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Explain"
+    },
+    "loka-quiz-batang": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang batang! Gambar berikut menunjukkan bagian tumbuhan yang tegak dan menghubungkan akar dengan daun: Bagian tumbuhan pada gambar tersebut adalah …",
+        "quiz": {
+            "question": "Gambar berikut menunjukkan bagian tumbuhan yang tegak dan menghubungkan akar dengan daun: Bagian tumbuhan pada gambar tersebut adalah …",
+            "options": ["Batang", "Bunga", "Akar", "Buah"],
+            "correct": "Batang",
+            "nextScene": "loka-quiz-batang-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-batang-correct": {
+        "character": "Loka",
+        "dialogue": "\"Benar sekali! Batang memang penting untuk menyokong tumbuhan dan mengalirkan nutrisi. Lanjut ke bagian daun, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke daun", "nextScene": "loka-taman-3" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-kaktus": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang batang kaktus!",
+        "quiz": {
+            "question": "Tumbuhan kaktus memiliki batang berduri dan tebal karena ...",
+            "options": ["Menyimpan air di daerah kering", "Menyerap lebih banyak oksigen", "Melindungi diri dari hewan", "Membuang air berlebih"],
+            "correct": "Menyimpan air di daerah kering",
+            "nextScene": "loka-quiz-kaktus-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-kaktus-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat sekali! Kaktus beradaptasi dengan baik di lingkungan kering. Ini menunjukkan betapa beragamnya cara tumbuhan bertahan hidup. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke daun", "nextScene": "loka-taman-3" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-taman-3": {
+        "character": "Loka",
+        "dialogue": "\"Dan ini daun! Daun itu seperti pabrik makanan untuk pohon. Dengan bantuan sinar matahari, daun mengubah air dan karbon dioksida menjadi makanan. Proses ini namanya fotosintesis!\" Loka memetik sehelai daun yang segar.",
+        "choices": [
+            { "text": "Mau lihat video penjelasannya?", "nextScene": "loka-video-intro" },
+            { "text": "Langsung kuis saja!", "nextScene": "loka-quiz-daun" },
+            { "text": "Bagian mana yang paling banyak klorofil?", "nextScene": "loka-quiz-klorofil" },
+            { "text": "Kuis identifikasi daun!", "nextScene": "loka-quiz-identifikasi-daun" },
+            { "text": "Kuis tentang tanpa daun!", "nextScene": "loka-quiz-tanpa-daun" },
+            { "text": "Kuis tentang daun lebar!", "nextScene": "loka-quiz-daun-lebar" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Explain"
+    },
+    "loka-quiz-identifikasi-daun": {
+        "character": "Narator",
+        "dialogue": "Perhatikan gambar daun berikut ini (bayangkan ada gambar daun): Gambar tersebut menunjukkan bagian tumbuhan yang bernama …",
+        "quiz": {
+            "question": "Gambar tersebut menunjukkan bagian tumbuhan yang bernama …",
+            "options": ["Akar", "Daun", "Batang", "Bunga"],
+            "correct": "Daun",
+            "nextScene": "loka-quiz-identifikasi-daun-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-identifikasi-daun-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat! Itu memang daun. Kamu jeli sekali dalam mengidentifikasi bagian tumbuhan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis daun", "nextScene": "loka-quiz-daun" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-tanpa-daun": {
+        "character": "Narator",
+        "dialogue": "Jika daun tumbuhan dirusak, maka proses fotosintesis akan terganggu karena ...",
+        "quiz": {
+            "question": "Jika daun tumbuhan dirusak, maka proses fotosintesis akan terganggu karena ...",
+            "options": ["Tetap terjadi", "Meningkat", "Berkurang atau tidak terjadi", "Menyebabkan bunga gugur"],
+            "correct": "Berkurang atau tidak terjadi",
+            "nextScene": "loka-quiz-tanpa-daun-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-tanpa-daun-correct": {
+        "character": "Loka",
+        "dialogue": "\"Benar! Daun sangat vital untuk fotosintesis. Tanpa daun, tumbuhan akan kesulitan membuat makanannya sendiri. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis daun", "nextScene": "loka-quiz-daun" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-daun-lebar": {
+        "character": "Narator",
+        "dialogue": "Daun tumbuhan yang lebar dan tipis berguna untuk ...",
+        "quiz": {
+            "question": "Daun tumbuhan yang lebar dan tipis berguna untuk ...",
+            "options": ["Menghindari angin", "Menyerap lebih banyak cahaya", "Menyimpan air", "Menjadi bunga"],
+            "correct": "Menyerap lebih banyak cahaya",
+            "nextScene": "loka-quiz-daun-lebar-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-daun-lebar-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat! Bentuk daun juga penting untuk memaksimalkan penyerapan cahaya matahari. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis daun", "nextScene": "loka-quiz-daun" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-video-intro": {
+        "character": "Narator",
+        "dialogue": "Loka mengeluarkan tabletnya dan memutar sebuah video edukasi singkat tentang fotosintesis. Video itu menunjukkan bagaimana daun bekerja seperti panel surya mini.",
+        "video": "loka_video.mp4",
+        "choices": [
+            { "text": "Video selesai", "nextScene": "loka-quiz-daun" }
+        ],
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-daun": {
+        "character": "Loka",
+        "dialogue": "\"Nah, setelah belajar tentang daun, coba jawab pertanyaan ini untuk menguji pemahamanmu!\"",
+        "quiz": {
+            "question": "Bagian tumbuhan yang berfungsi utama sebagai tempat fotosintesis adalah...",
+            "options": ["Akar", "Batang", "Daun", "Biji"],
+            "correct": "Daun",
+            "nextScene": "loka-quiz-daun-correct"
+        },
+        "background": "loka_background.png",
+        "expression": "Smile"
+    },
+    "loka-quiz-daun-correct": {
+        "character": "Loka",
+        "dialogue": "\"Betul sekali! Daun memang dapur utamanya tumbuhan. Kamu sudah belajar banyak tentang Palemahan, yaitu hubungan kita dengan alam dan bagaimana kita menjaga lingkungan.\" Loka tersenyum bangga.",
+        "choices": [
+            { "text": "Terima kasih, Loka. Kembali ke pilihan utama", "nextScene": "main-hub" },
+            { "text": "Bisa ceritakan lebih banyak tentang Palemahan?", "nextScene": "loka-palemahan-detail" }
+        ],
+        "progressUpdate": { "palemahan": 25 },
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-klorofil": {
+        "character": "Narator",
+        "dialogue": "Manakah bagian tumbuhan yang biasanya paling banyak mengandung klorofil?",
+        "quiz": {
+            "question": "Manakah bagian tumbuhan yang biasanya paling banyak mengandung klorofil?",
+            "options": ["Akar", "Batang", "Daun", "Bunga"],
+            "correct": "Daun",
+            "nextScene": "loka-quiz-klorofil-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-klorofil-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat! Daun memang kaya klorofil, makanya warnanya hijau. Klorofil ini yang membantu fotosintesis. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis daun", "nextScene": "loka-quiz-daun" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-eksplorasi-1": {
+        "character": "Loka",
+        "dialogue": "\"Tentu saja! Taman ini penuh dengan kehidupan. Coba perhatikan bunga-bunga di sana. Menurutmu, apa fungsi bunga bagi tumbuhan?\" Loka menunjuk ke sekumpulan bunga yang indah.",
+        "choices": [
+            { "text": "Untuk menarik serangga?", "nextScene": "loka-eksplorasi-correct" },
+            { "text": "Untuk membuat makanan?", "nextScene": "loka-eksplorasi-wrong" },
+            { "text": "Kuis tentang bunga!", "nextScene": "loka-quiz-bunga" },
+            { "text": "Kuis tentang biji!", "nextScene": "loka-quiz-biji" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Smile"
+    },
+    "loka-quiz-bunga": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang bunga!",
+        "quiz": {
+            "question": "Apa nama bagian tumbuhan yang berkembang menjadi buah?",
+            "options": ["Biji", "Daun", "Bunga", "Akar"],
+            "correct": "Bunga",
+            "nextScene": "loka-quiz-bunga-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-bunga-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat sekali! Bunga adalah awal dari buah. Kamu memang hebat!\"",
+        "choices": [
+            { "text": "Lanjut belajar dengan Loka", "nextScene": "loka-taman-3" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-quiz-biji": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang biji!",
+        "quiz": {
+            "question": "Biji yang jatuh ke tanah dan mendapat air serta cahaya akan ...",
+            "options": ["Mati", "Membusuk", "Berkembang menjadi tumbuhan baru", "Menjadi akar"],
+            "correct": "Berkembang menjadi tumbuhan baru",
+            "nextScene": "loka-quiz-biji-correct"
+        },
+        "background": "loka_background.png",
+        "expression": ""
+    },
+    "loka-quiz-biji-correct": {
+        "character": "Loka",
+        "dialogue": "\"Benar! Biji adalah awal kehidupan baru. Ini adalah siklus alam yang indah. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut belajar dengan Loka", "nextScene": "loka-taman-3" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-eksplorasi-correct": {
+        "character": "Loka",
+        "dialogue": "\"Tepat sekali! Bunga itu untuk menarik serangga atau hewan lain agar membantu penyerbukan, yang penting untuk membuat biji dan buah. Kamu jeli sekali!\"",
+        "choices": [
+            { "text": "Lanjut belajar dengan Loka", "nextScene": "loka-taman-3" },
+            { "text": "Ada lagi yang bisa kita amati?", "nextScene": "loka-eksplorasi-2" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-eksplorasi-wrong": {
+        "character": "Loka",
+        "dialogue": "\"Hmm, bukan itu. Yang membuat makanan itu daun, melalui fotosintesis. Bunga punya fungsi lain yang penting untuk tumbuhan.\" Loka menjelaskan dengan sabar.",
+        "choices": [
+            { "text": "Oh, begitu. Lanjut belajar dengan Loka", "nextScene": "loka-taman-3" },
+            { "text": "Bisa berikan petunjuk lain?", "nextScene": "loka-eksplorasi-hint" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Sad"
+    },
+    "loka-eksplorasi-hint": {
+        "character": "Loka",
+        "dialogue": "\"Bunga itu bagian yang paling cantik, kan? Kenapa ya tumbuhan membuat bagian yang cantik? Mungkin untuk menarik perhatian...\" Loka memberikan petunjuk.",
+        "choices": [
+            { "text": "Untuk menarik serangga?", "nextScene": "loka-eksplorasi-correct" },
+            { "text": "Kembali ke pertanyaan awal", "nextScene": "loka-eksplorasi-1" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Smile"
+    },
+    "loka-eksplorasi-2": {
+        "character": "Loka",
+        "dialogue": "\"Tentu! Lihatlah semut-semut yang berbaris di tanah itu. Mereka membawa potongan daun. Menurutmu, kenapa semut membawa potongan daun?\"",
+        "choices": [
+            { "text": "Untuk dimakan?", "nextScene": "loka-eksplorasi-wrong-2" },
+            { "text": "Untuk membangun sarang?", "nextScene": "loka-eksplorasi-correct-2" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Smile"
+    },
+    "loka-eksplorasi-wrong-2": {
+        "character": "Loka",
+        "dialogue": "\"Semut daun tidak memakan daun secara langsung. Mereka menggunakannya untuk menumbuhkan jamur di sarang mereka, dan jamur itulah makanannya. Menarik, kan?\"",
+        "choices": [
+            { "text": "Wah, baru tahu! Lanjut belajar", "nextScene": "loka-taman-3" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Shock"
+    },
+    "loka-eksplorasi-correct-2": {
+        "character": "Loka",
+        "dialogue": "\"Betul sekali! Semut-semut itu adalah semut pemotong daun, dan mereka menggunakan potongan daun untuk menumbuhkan jamur di sarang mereka sebagai makanan. Alam itu penuh kejutan, ya!\"",
+        "choices": [
+            { "text": "Luar biasa! Lanjut belajar", "nextScene": "loka-taman-3" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Excited"
+    },
+    "loka-palemahan-detail": {
+        "character": "Loka",
+        "dialogue": "\"Palemahan itu tentang bagaimana kita menjaga hubungan baik dengan alam. Kita harus merawat tumbuhan, tidak membuang sampah sembarangan, dan selalu bersyukur atas semua yang alam berikan. Dengan begitu, alam akan terus memberikan manfaat untuk kita.\"",
+        "choices": [
+            { "text": "Aku mengerti, Loka. Kembali ke pilihan utama", "nextScene": "main-hub" }
+        ],
+        "background": "loka_background.png",
+        "expression": "Smile"
+    }
+}

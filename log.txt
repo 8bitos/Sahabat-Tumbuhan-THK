@@ -1,0 +1,14 @@
+quiz.js loaded quiz.js:3:9
+DOMContentLoaded fired in quiz.js quiz.js:6:13
+quizContainer: 
+<div id="quiz-container">
+quiz.js:15:13
+quizImage: 
+<img id="quiz-image" class="hidden" src="" alt="Quiz Image">
+quiz.js:16:13
+quizQuestions: 
+Array(7) [ {…}, {…}, {…}, {…}, {…}, {…}, {…} ]
+quiz.js:17:13
+quizQuestions.length: 7 quiz.js:18:13
+displayQuestion called. currentQuestionIndex: 0 quiz.js:33:17
+No image for this question. quiz.js:48:25

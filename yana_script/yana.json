@@ -1,0 +1,278 @@
+{
+    "yana-intro": {
+        "character": "Narator",
+        "dialogue": "Kamu berjalan menuju pura sekolah. Suasana di sana terasa tenang dan damai. Seorang anak perempuan sedang duduk bersila di depan sebuah pelinggih kecil, merangkai bunga dengan khidmat. Dia adalah Yana.",
+        "choices": [
+            { "text": "Sapa Yana", "nextScene": "yana-sapa" }
+        ],
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-sapa": {
+        "character": "Yana",
+        "dialogue": "\"Om Swastiastu. Aku Yana. Aku sedang membuat canang sari untuk persembahan. Kamu murid baru, ya? Mau belajar tentang makna bunga-bunga ini?\" Yana tersenyum lembut.",
+        "choices": [
+            { "text": "Tentu, Yana!", "nextScene": "yana-canang-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Smile"
+    },
+    "yana-canang-1": {
+        "character": "Yana",
+        "dialogue": "\"Canang sari itu persembahan suci yang terbuat dari berbagai bunga dan daun. Setiap bagiannya punya makna filosofis. Misalnya, bunga kamboja melambangkan kesucian dan ketulusan.\" Yana menunjukkan bunga kamboja putih.",
+        "choices": [
+            { "text": "Apa lagi yang ada di canang sari?", "nextScene": "yana-canang-2" },
+            { "text": "Bagaimana cara merangkai canang sari?", "nextScene": "yana-merangkai-simulasi" },
+            { "text": "Kuis tentang fungsi bunga!", "nextScene": "yana-quiz-bunga-fungsi" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Smile"
+    },
+    "yana-quiz-bunga-fungsi": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang fungsi bunga!",
+        "quiz": {
+            "question": "Fungsi utama bunga pada tumbuhan adalah untuk ...",
+            "options": ["Menghasilkan oksigen", "Menarik hewan", "Perkembangbiakan", "Menyerap sinar matahari"],
+            "correct": "Perkembangbiakan",
+            "nextScene": "yana-quiz-bunga-fungsi-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-bunga-fungsi-correct": {
+        "character": "Yana",
+        "dialogue": "\"Tepat sekali! Bunga adalah kunci perkembangbiakan tumbuhan. Ini juga menunjukkan bagaimana alam mendukung kehidupan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke canang sari", "nextScene": "yana-canang-2" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-canang-2": {
+        "character": "Yana",
+        "dialogue": "\"Ada juga daun sirih, janur, dan bunga-bunga lain yang melambangkan keindahan dan doa. Membuat canang sari adalah bentuk rasa syukur kita kepada Tuhan. Ini adalah bagian dari Parahyangan, hubungan kita dengan Tuhan.\"",
+        "choices": [
+            { "text": "Ada kuis tentang canang sari?", "nextScene": "yana-quiz-1" },
+            { "text": "Kuis tentang oksigen!", "nextScene": "yana-quiz-oksigen" },
+            { "text": "Kuis tentang rasa syukur!", "nextScene": "yana-quiz-syukur" },
+            { "text": "Kuis tentang kebutuhan tumbuhan!", "nextScene": "yana-quiz-kebutuhan-tumbuhan" },
+            { "text": "Kuis tentang menjaga tanaman di sekolah!", "nextScene": "yana-quiz-tanggung-jawab" },
+            { "text": "Kuis tentang biji!", "nextScene": "yana-quiz-biji" },
+            { "text": "Kuis tentang menanam pohon!", "nextScene": "yana-quiz-menanam-pohon" },
+            { "text": "Kuis tentang siswa merusak tanaman!", "nextScene": "yana-quiz-merusak-tanaman" },
+            { "text": "Kuis tentang pentingnya mengenal fungsi tumbuhan!", "nextScene": "yana-quiz-pentingnya-fungsi" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Smile"
+    },
+    "yana-quiz-oksigen": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang oksigen!",
+        "quiz": {
+            "question": "Daun pada tumbuhan menghasilkan oksigen, yang dimanfaatkan oleh ...",
+            "options": ["Tumbuhan saja", "Hewan pemakan tumbuhan", "Semua makhluk hidup", "Hanya serangga"],
+            "correct": "Semua makhluk hidup",
+            "nextScene": "yana-quiz-oksigen-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-oksigen-correct": {
+        "character": "Yana",
+        "dialogue": "\"Benar! Oksigen dari tumbuhan sangat penting bagi semua makhluk hidup. Ini adalah salah satu anugerah alam yang harus kita syukuri. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-syukur": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang rasa syukur!",
+        "quiz": {
+            "question": "Salah satu bentuk rasa syukur atas fungsi tumbuhan adalah ...",
+            "options": ["Memetik semua bunga di taman", "Merusak akar tumbuhan liar", "Merawat tanaman dengan baik", "Menginjak tanaman untuk bermain"],
+            "correct": "Merawat tanaman dengan baik",
+            "nextScene": "yana-quiz-syukur-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-syukur-correct": {
+        "character": "Yana",
+        "dialogue": "\"Tepat sekali! Merawat tanaman adalah bentuk rasa syukur kita kepada alam dan Tuhan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-kebutuhan-tumbuhan": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang kebutuhan tumbuhan!",
+        "quiz": {
+            "question": "Kebutuhan utama tumbuhan untuk membuat makanan sendiri adalah ...",
+            "options": ["Air, tanah, dan pupuk", "Cahaya matahari, air, dan udara", "Serangga, air, dan tanah", "Manusia, pupuk, dan air"],
+            "correct": "Cahaya matahari, air, dan udara",
+            "nextScene": "yana-quiz-kebutuhan-tumbuhan-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-kebutuhan-tumbuhan-correct": {
+        "character": "Yana",
+        "dialogue": "\"Benar! Tumbuhan sangat mandiri dalam membuat makanannya sendiri. Ini adalah keajaiban alam yang harus kita hargai. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-tanggung-jawab": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang tanggung jawab!",
+        "quiz": {
+            "question": "Kegiatan menjaga tanaman di lingkungan sekolah mencerminkan nilai ...",
+            "options": ["Kepedulian terhadap sesama", "Tanggung jawab terhadap lingkungan", "Kewajiban sebagai siswa", "Keinginan untuk bermain"],
+            "correct": "Tanggung jawab terhadap lingkungan",
+            "nextScene": "yana-quiz-tanggung-jawab-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-tanggung-jawab-correct": {
+        "character": "Yana",
+        "dialogue": "\"Tepat sekali! Menjaga tanaman di sekolah adalah bentuk tanggung jawab kita bersama. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-biji": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang biji!",
+        "quiz": {
+            "question": "Biji yang jatuh ke tanah dan mendapat air serta cahaya akan ...",
+            "options": ["Mati", "Membusuk", "Berkembang menjadi tumbuhan baru", "Menjadi akar"],
+            "correct": "Berkembang menjadi tumbuhan baru",
+            "nextScene": "yana-quiz-biji-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-biji-correct": {
+        "character": "Yana",
+        "dialogue": "\"Benar! Biji adalah awal kehidupan baru. Ini adalah siklus alam yang indah. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-menanam-pohon": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang menanam pohon!",
+        "quiz": {
+            "question": "Menanam pohon di sekitar rumah mencerminkan sikap ...",
+            "options": ["Acuh terhadap lingkungan", "Peduli terhadap keberlanjutan alam", "Menyukai warna hijau", "Mengurangi penggunaan air"],
+            "correct": "Peduli terhadap keberlanjutan alam",
+            "nextScene": "yana-quiz-menanam-pohon-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-menanam-pohon-correct": {
+        "character": "Yana",
+        "dialogue": "\"Tepat sekali! Menanam pohon adalah tindakan nyata kepedulian kita terhadap alam. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-merusak-tanaman": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang etika dan tanggung jawab!",
+        "quiz": {
+            "question": "Siswa yang merusak tanaman di taman sekolah sebaiknya diberikan pemahaman tentang ...",
+            "options": ["Kebutuhan nutrisi tumbuhan", "Fungsi daun bagi tumbuhan", "Etika dan tanggung jawab sebagai warga sekolah", "Cara membuat pupuk"],
+            "correct": "Etika dan tanggung jawab sebagai warga sekolah",
+            "nextScene": "yana-quiz-merusak-tanaman-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-merusak-tanaman-correct": {
+        "character": "Yana",
+        "dialogue": "\"Benar! Penting untuk memahami etika dan tanggung jawab kita terhadap lingkungan sekolah. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-pentingnya-fungsi": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang pentingnya mengenal fungsi tumbuhan!",
+        "quiz": {
+            "question": "Mengapa penting mengenal fungsi bagian tumbuhan?",
+            "options": ["Agar bisa memanen lebih cepat", "Agar bisa mencintai dan menjaga alam", "Agar bisa mengolah tanaman lebih enak", "Agar bisa bermain dengan tanaman"],
+            "correct": "Agar bisa mencintai dan menjaga alam",
+            "nextScene": "yana-quiz-pentingnya-fungsi-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-pentingnya-fungsi-correct": {
+        "character": "Yana",
+        "dialogue": "\"Tepat sekali! Dengan memahami fungsi tumbuhan, kita akan lebih mencintai dan menjaga alam. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis canang sari", "nextScene": "yana-quiz-1" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-quiz-1": {
+        "character": "Narator",
+        "dialogue": "Pilih bunga yang sering digunakan untuk canang sari!",
+        "quiz": {
+            "question": "Bunga yang sering digunakan untuk canang sari adalah?",
+            "options": ["Mawar", "Kamboja", "Melati"],
+            "correct": "Kamboja",
+            "nextScene": "yana-quiz-correct"
+        },
+        "background": "yana_background.png",
+        "expression": ""
+    },
+    "yana-quiz-correct": {
+        "character": "Yana",
+        "dialogue": "\"Terima kasih sudah membantu! Canang sarinya indah sekali. Kamu sudah memahami pentingnya Parahyangan dalam budaya kita.\"",
+        "choices": [
+            { "text": "Kembali ke pilihan utama", "nextScene": "main-hub" },
+            { "text": "Bisa ceritakan lebih banyak tentang Parahyangan?", "nextScene": "yana-parahyangan-detail" }
+        ],
+        "progressUpdate": { "parahyangan": 25 },
+        "background": "yana_background.png",
+        "expression": "Excited"
+    },
+    "yana-merangkai-simulasi": {
+        "character": "Yana",
+        "dialogue": "\"Merangkai canang sari membutuhkan ketelitian dan kesabaran. Kita mulai dengan janur sebagai alas, lalu menata bunga-bunga sesuai arah mata angin, dan menambahkan porosan. Ini adalah meditasi kecil.\" (Simulasi mini-game merangkai canang sari akan muncul di sini)",
+        "choices": [
+            { "text": "Selesai merangkai canang sari", "nextScene": "yana-quiz-correct" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Smile"
+    },
+    "yana-parahyangan-detail": {
+        "character": "Yana",
+        "dialogue": "\"Parahyangan itu tentang bagaimana kita menjaga hubungan baik dengan Tuhan. Tumbuhan dan bunga adalah sarana kita untuk menyampaikan rasa syukur dan doa. Dengan bersembahyang, hati kita menjadi tenang dan damai.\"",
+        "choices": [
+            { "text": "Aku mengerti, Yana. Kembali ke pilihan utama", "nextScene": "main-hub" }
+        ],
+        "background": "yana_background.png",
+        "expression": "Smile"
+    }
+}

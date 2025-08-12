@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merangkai Canang Sari</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="game-container">
+        <img src="assets/img/meja.png" alt="Background" class="background-image">
+
+        <!-- Items to be placed -->
+        <div id="items-container">
+            <!-- Items will be added here by script.js -->
+        </div>
+
+        <!-- Canang drop zone -->
+        <div id="canang-base"></div>
+
+        <!-- UI at the bottom -->
+        <div class="bottom-ui-container">
+            <div class="character-container">
+                <img id="yana-character" src="../../assets/img/Yana/Yana-Smile.png" alt="Yana">
+            </div>
+            <div class="dialogue-box">
+                <p id="character-name">Yana</p>
+                <p id="dialogue-text">Mari kita membuat Canang Sari!</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <!-- Video Modal -->
+    <div id="video-modal" class="hidden">
+        <div class="video-content">
+            <span class="close-button">&times;</span>
+            <video id="explanation-video" controls autoplay>
+                <source src="assets/video/video_placeholder.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p id="video-explanation-text">
+                Parahyangan: Hubungan harmonis antara manusia dengan Tuhan, diwujudkan melalui rasa syukur dan persembahan.
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

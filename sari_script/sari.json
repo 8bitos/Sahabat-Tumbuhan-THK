@@ -1,0 +1,190 @@
+{
+    "sari-intro": {
+        "character": "Narator",
+        "dialogue": "Kamu berjalan menuju kantin sekolah. Aroma masakan yang lezat tercium di udara. Di sana, seorang anak perempuan sedang sibuk membantu ibu kantin menata piring. Dia adalah Sari.",
+        "choices": [
+            { "text": "Sapa Sari", "nextScene": "sari-sapa" }
+        ],
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-sapa": {
+        "character": "Sari",
+        "dialogue": "\"Hai! Aku Sari. Kamu murid baru, ya? Aku sedang membantu Ibu Kantin menyiapkan makanan. Banyak makanan di sini yang terbuat dari tumbuhan, lho!\" Sari tersenyum ramah.",
+        "choices": [
+            { "text": "Makanan apa saja, Sari?", "nextScene": "sari-makanan-1" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Smile"
+    },
+    "sari-makanan-1": {
+        "character": "Sari",
+        "dialogue": "\"Ada nasi dari padi, sayur-sayuran, buah-buahan. Bahkan bumbu masakan juga banyak yang dari tumbuhan. Tumbuhan itu sangat berjasa untuk kita semua, membuat kita bisa makan dan sehat.\" Sari menunjuk ke arah meja makan.",
+        "choices": [
+            { "text": "Bagaimana tumbuhan membantu masyarakat?", "nextScene": "sari-masyarakat-1" },
+            { "text": "Kuis tentang fungsi daun!", "nextScene": "sari-quiz-daun-fungsi" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-MemberiTahu"
+    },
+    "sari-quiz-daun-fungsi": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang fungsi daun!",
+        "quiz": {
+            "question": "Jika daun tumbuhan dirusak, maka proses fotosintesis akan terganggu karena ...",
+            "options": ["Daun menyerap air", "Daun menghasilkan makanan", "Daun menarik penyerbuk", "Daun menyimpan cadangan makanan"],
+            "correct": "Daun menghasilkan makanan",
+            "nextScene": "sari-quiz-daun-fungsi-correct"
+        },
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-quiz-daun-fungsi-correct": {
+        "character": "Sari",
+        "dialogue": "\"Tepat sekali! Daun adalah pabrik makanan tumbuhan. Tanpa daun, tumbuhan akan kesulitan bertahan hidup. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke bagaimana tumbuhan membantu masyarakat", "nextScene": "sari-masyarakat-1" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Excited"
+    },
+    "sari-masyarakat-1": {
+        "character": "Sari",
+        "dialogue": "\"Selain makanan, tumbuhan juga digunakan untuk membuat pakaian, rumah, bahkan obat-obatan tradisional. Misalnya, kunyit ini. Ibuku sering membuat jamu dari kunyit untuk menjaga kesehatan keluarga dan tetangga.\" Sari menunjukkan sepotong kunyit.",
+        "choices": [
+            { "text": "Bagian kunyit mana yang dipakai untuk jamu?", "nextScene": "sari-quiz-1" },
+            { "text": "Bagaimana cara membuat jamu kunyit?", "nextScene": "sari-jamu-simulasi" },
+            { "text": "Kuis tentang buah dan biji!", "nextScene": "sari-quiz-buah-biji" },
+            { "text": "Kuis tentang pentingnya akar!", "nextScene": "sari-quiz-akar-penting" },
+            { "text": "Kuis tentang batang kaktus!", "nextScene": "sari-quiz-kaktus" },
+            { "text": "Kuis tentang batang membantu manusia!", "nextScene": "sari-quiz-batang-manusia" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-MemberiTahu"
+    },
+    "sari-quiz-kaktus": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang batang kaktus!",
+        "quiz": {
+            "question": "Tumbuhan kaktus memiliki batang berduri dan tebal karena ...",
+            "options": ["Menyimpan air di daerah kering", "Menyerap lebih banyak oksigen", "Melindungi diri dari hewan", "Membuang air berlebih"],
+            "correct": "Menyimpan air di daerah kering",
+            "nextScene": "sari-quiz-kaktus-correct"
+        },
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-quiz-kaktus-correct": {
+        "character": "Sari",
+        "dialogue": "\"Tepat sekali! Kaktus beradaptasi dengan baik di lingkungan kering. Ini menunjukkan betapa beragamnya cara tumbuhan bertahan hidup. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis kunyit", "nextScene": "sari-quiz-1" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Excited"
+    },
+    "sari-quiz-akar-penting": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang pentingnya akar!",
+        "quiz": {
+            "question": "Mengapa akar sangat penting bagi kelangsungan hidup tumbuhan?",
+            "options": ["Karena dapat berubah menjadi buah", "Karena berfungsi mengedarkan oksigen", "Karena menyerap air dan menancapkan tumbuhan", "Karena bisa menjadi tempat hidup serangga"],
+            "correct": "Karena menyerap air dan menancapkan tumbuhan",
+            "nextScene": "sari-quiz-akar-penting-correct"
+        },
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-quiz-akar-penting-correct": {
+        "character": "Sari",
+        "dialogue": "\"Tepat sekali! Akar adalah fondasi kehidupan tumbuhan. Tanpa akar yang kuat, tumbuhan tidak bisa bertahan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis kunyit", "nextScene": "sari-quiz-1" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Excited"
+    },
+    "sari-quiz-buah-biji": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang buah dan biji!",
+        "quiz": {
+            "question": "Buah yang matang mengandung biji untuk ...",
+            "options": ["Menjadi makanan manusia", "Tempat menyimpan air", "Perkembangbiakan tumbuhan", "Membuat daun baru"],
+            "correct": "Perkembangbiakan tumbuhan",
+            "nextScene": "sari-quiz-buah-biji-correct"
+        },
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-quiz-buah-biji-correct": {
+        "character": "Sari",
+        "dialogue": "\"Benar! Biji adalah kunci untuk tumbuhan baru. Ini menunjukkan bagaimana tumbuhan terus berkembang biak untuk keberlangsungan hidup. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis kunyit", "nextScene": "sari-quiz-1" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Excited"
+    },
+    "sari-quiz-batang-manusia": {
+        "character": "Narator",
+        "dialogue": "Mari kita uji pemahamanmu tentang batang membantu manusia!",
+        "quiz": {
+            "question": "Batang pada pohon besar dapat membantu manusia dalam ...",
+            "options": ["Pembuatan rumah ramah lingkungan", "Pembuatan gula", "Menghasilkan biji", "Menyimpan air"],
+            "correct": "Pembuatan rumah ramah lingkungan",
+            "nextScene": "sari-quiz-batang-manusia-correct"
+        },
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-quiz-batang-manusia-correct": {
+        "character": "Sari",
+        "dialogue": "\"Tepat sekali! Batang pohon besar sangat berguna untuk membangun rumah dan banyak hal lainnya. Ini adalah contoh bagaimana alam dan manusia saling membutuhkan. Lanjut ke pembahasan lain, ya!\"",
+        "choices": [
+            { "text": "Lanjut ke kuis kunyit", "nextScene": "sari-quiz-1" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Excited"
+    },
+    "sari-quiz-1": {
+        "character": "Narator",
+        "dialogue": "Pilih bagian kunyit yang digunakan untuk jamu!",
+        "quiz": {
+            "question": "Bagian kunyit yang digunakan untuk jamu adalah?",
+            "options": ["Daun", "Batang", "Rimpang"],
+            "correct": "Rimpang",
+            "nextScene": "sari-quiz-correct"
+        },
+        "background": "sari_background.png",
+        "expression": ""
+    },
+    "sari-quiz-correct": {
+        "character": "Sari",
+        "dialogue": "\"Hebat! Kamu tahu banyak tentang tumbuhan yang bermanfaat untuk kehidupan sosial kita. Kamu sudah belajar banyak tentang Pawongan, yaitu hubungan kita dengan sesama manusia dan lingkungan sosial.\" Sari tersenyum bangga.",
+        "choices": [
+            { "text": "Kembali ke pilihan utama", "nextScene": "main-hub" },
+            { "text": "Bisa ceritakan lebih banyak tentang Pawongan?", "nextScene": "sari-pawongan-detail" }
+        ],
+        "progressUpdate": { "pawongan": 25 },
+        "background": "sari_background.png",
+        "expression": "Sari-Excited"
+    },
+    "sari-jamu-simulasi": {
+        "character": "Sari",
+        "dialogue": "\"Untuk membuat jamu kunyit, kita perlu membersihkan kunyit, memarutnya, lalu merebusnya dengan sedikit air dan gula merah. Proses ini membantu mengeluarkan sari-sari kunyit yang berkhasiat. Ini adalah salah satu cara kita saling membantu dalam masyarakat.\" (Simulasi mini-game membuat jamu akan muncul di sini)",
+        "choices": [
+            { "text": "Selesai membuat jamu", "nextScene": "sari-quiz-correct" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-MemberiTahu"
+    },
+    "sari-pawongan-detail": {
+        "character": "Sari",
+        "dialogue": "\"Pawongan itu tentang bagaimana kita hidup rukun dan saling membantu dengan sesama. Tumbuhan mengajarkan kita untuk berbagi dan memberi manfaat. Dengan saling tolong-menolong, masyarakat kita akan semakin kuat.\"",
+        "choices": [
+            { "text": "Aku mengerti, Sari. Kembali ke pilihan utama", "nextScene": "main-hub" }
+        ],
+        "background": "sari_background.png",
+        "expression": "Sari-Smile"
+    }
+}

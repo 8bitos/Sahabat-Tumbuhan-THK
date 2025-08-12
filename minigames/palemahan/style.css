@@ -1,0 +1,53 @@
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: sans-serif;
+}
+
+.bins-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.bin {
+    width: 120px;
+    height: 150px;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.item-container {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: #e0e0e0;
+}
+
+.item {
+    width: 80px;
+    height: 80px;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: green;
+}
