@@ -71,6 +71,12 @@ body {
     transform: scale(1.1);
 }
 
+.item.selected {
+    border: 5px solid #4CAF50; /* Green border to indicate selection */
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+    border-radius: 10px; /* Rounded corners for the selection border */
+}
+
 /* --- Middle Section: Canang Base --- */
 #canang-base {
     position: relative; /* Changed to relative */

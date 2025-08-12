@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Game State ---
     let currentStepIndex = 0;
     let isBasePlaced = false;
+    let selectedItem = null; // For tap-and-drop
 
     // --- Functions ---
     function setDialogue(expression, text) {
@@ -45,9 +46,36 @@ document.addEventListener('DOMContentLoaded', () => {
             itemEl.className = `item ${item.className}`;
             itemEl.draggable = false; // Initially not draggable
             itemEl.addEventListener('dragstart', dragStart);
+
+            // --- Tap and Drop Logic ---
+            itemEl.addEventListener('click', () => handleItemClick(item.id));
+
             itemsContainer.appendChild(itemEl);
         });
         updateDraggableItems();
+    }
+
+    function handleItemClick(itemId) {
+        const itemEl = document.getElementById(itemId);
+        if (!itemEl || itemEl.style.cursor === 'not-allowed') {
+            setDialogue('Yana-Sad.png', "Belum saatnya menggunakan bahan itu.");
+            return; // Ignore clicks on non-draggable items
+        }
+
+        // Deselect if already selected
+        if (itemEl.classList.contains('selected')) {
+            itemEl.classList.remove('selected');
+            selectedItem = null;
+        } else {
+            // Deselect any other item
+            const currentlySelected = document.querySelector('.item.selected');
+            if (currentlySelected) {
+                currentlySelected.classList.remove('selected');
+            }
+            // Select the new item
+            itemEl.classList.add('selected');
+            selectedItem = itemId;
+        }
     }
 
     function updateDraggableItems() {
@@ -59,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (itemEl) {
                 const isDraggable = item.id === requiredItem;
                 itemEl.draggable = isDraggable;
-                itemEl.style.cursor = isDraggable ? 'grab' : 'not-allowed';
+                itemEl.style.cursor = isDraggable ? 'pointer' : 'not-allowed'; // Use pointer for clickable items
                 itemEl.style.opacity = isDraggable ? '1' : '0.5';
             }
         });
@@ -148,6 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function drop(e) {
         e.preventDefault();
         const id = e.dataTransfer.getData('text/plain');
+        const canangRect = canangBase.getBoundingClientRect();
+        const dropX = e.clientX;
+        const dropY = e.clientY;
+        handleDrop(id, dropX, dropY, canangRect);
+    }
+
+    function handleCanangClick(e) {
+        if (selectedItem) {
+            const canangRect = canangBase.getBoundingClientRect();
+            const dropX = e.clientX;
+            const dropY = e.clientY;
+            handleDrop(selectedItem, dropX, dropY, canangRect);
+        }
+    }
+
+    function handleDrop(id, dropX, dropY, canangRect) {
         const draggedElement = document.getElementById(id);
         const currentStep = gameSteps[currentStepIndex];
 
@@ -155,10 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setDialogue('Yana-Sad.png', "Oops, sepertinya itu bukan bahan yang tepat. Coba lagi, ya!");
             return;
         }
-
-        const canangRect = canangBase.getBoundingClientRect();
-        const dropX = e.clientX;
-        const dropY = e.clientY;
 
         let isCorrectPlacement = false;
 
@@ -191,8 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 placedItem.className = `placed-item ${draggedElement.className}`;
                 
                 // Position the item relative to the canang base
-                const relativeX = e.clientX - canangRect.left;
-                const relativeY = e.clientY - canangRect.top;
+                const relativeX = dropX - canangRect.left;
+                const relativeY = dropY - canangRect.top;
                 placedItem.style.left = `${relativeX - (draggedElement.offsetWidth / 2)}px`;
                 placedItem.style.top = `${relativeY - (draggedElement.offsetHeight / 2)}px`;
 
@@ -201,6 +241,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Make the original item in the shelf disappear
             draggedElement.style.visibility = 'hidden';
+
+            // Deselect item after placing
+            if (draggedElement.classList.contains('selected')) {
+                draggedElement.classList.remove('selected');
+            }
+            selectedItem = null;
 
             advanceStep();
         } else {
@@ -211,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listeners ---
     gameContainer.addEventListener('dragover', dragOver);
     gameContainer.addEventListener('drop', drop);
+    canangBase.addEventListener('click', handleCanangClick); // For tap-and-drop
 
     // --- Initial Game Start ---
     initializeItems();

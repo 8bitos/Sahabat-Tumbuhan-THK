@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Game State ---
     let currentRecipeIndex = 0;
     let currentMix = [];
+    let selectedIngredient = null; // To track tap-and-drop selection
 
     // --- Tooltip Functions ---
     function showTooltip(event, text) {
@@ -104,8 +105,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 tooltip.style.visibility = 'hidden';
                 setDialogue('explain', 'Bantu aku memecahkan resep nenek ini!'); // Reset dialogue
             });
+
+            // --- Tap and Drop Logic ---
+            ingEl.addEventListener('click', () => {
+                // If this ingredient is already selected, deselect it
+                if (ingEl.classList.contains('selected')) {
+                    ingEl.classList.remove('selected');
+                    selectedIngredient = null;
+                } else {
+                    // Deselect any other selected ingredient
+                    const currentlySelected = document.querySelector('.ingredient-shape.selected');
+                    if (currentlySelected) {
+                        currentlySelected.classList.remove('selected');
+                    }
+                    // Select the new ingredient
+                    ingEl.classList.add('selected');
+                    selectedIngredient = ing.id;
+                }
+            });
+
             ingredientsShelf.appendChild(ingEl);
         });
+    }
+
+    function addIngredientToMix(id) {
+        const ingredient = ingredients.find(ing => ing.id === id);
+        if (ingredient) {
+            if (currentMix.length < 3) {
+                if (!currentMix.includes(id)) {
+                    currentMix.push(id);
+                    const mixedEl = document.createElement('div');
+                    mixedEl.className = 'mixed-ingredient';
+                    mixedEl.style.backgroundImage = `url('assets/img/${ingredient.image}')`; // Use image
+                    mixedEl.style.backgroundSize = 'contain';
+                    mixedEl.style.backgroundRepeat = 'no-repeat';
+                    mixedEl.style.backgroundPosition = 'center';
+                    mixingBowl.appendChild(mixedEl);
+
+                    // Deselect after adding
+                    const selectedEl = document.querySelector('.ingredient-shape.selected');
+                    if (selectedEl) {
+                        selectedEl.classList.remove('selected');
+                    }
+                    selectedIngredient = null;
+
+                } else {
+                    setDialogue('sad', `${ingredient.name} sudah ada di mangkuk.`);
+                }
+            } else {
+                setDialogue('sad', 'Mangkuk sudah penuh, maksimal 3 bahan.');
+            }
+        } else {
+            setDialogue('sad', `Bahan dengan ID ${id} tidak dikenal.`);
+        }
     }
 
     function loadRecipe(index) {
@@ -120,6 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentMix = [];
         mixingBowl.innerHTML = '';
         checkButton.disabled = false;
+        // Clear selection
+        const currentlySelected = document.querySelector('.ingredient-shape.selected');
+        if (currentlySelected) {
+            currentlySelected.classList.remove('selected');
+        }
+        selectedIngredient = null;
     }
 
     function setDialogue(type, text) {
@@ -151,27 +209,13 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         mixingBowl.classList.remove('drag-over');
         const id = e.dataTransfer.getData('text/plain');
-        const ingredient = ingredients.find(ing => ing.id === id);
+        addIngredientToMix(id);
+    });
 
-        if (ingredient) {
-            if (currentMix.length < 3) {
-                if (!currentMix.includes(id)) {
-                    currentMix.push(id);
-                    const mixedEl = document.createElement('div');
-                    mixedEl.className = 'mixed-ingredient';
-                    mixedEl.style.backgroundImage = `url('assets/img/${ingredient.image}')`; // Use image
-                    mixedEl.style.backgroundSize = 'contain';
-                    mixedEl.style.backgroundRepeat = 'no-repeat';
-                    mixedEl.style.backgroundPosition = 'center';
-                    mixingBowl.appendChild(mixedEl);
-                } else {
-                    setDialogue('sad', `${ingredient.name} sudah ada di mangkuk.`);
-                }
-            } else {
-                setDialogue('sad', 'Mangkuk sudah penuh, maksimal 3 bahan.');
-            }
-        } else {
-            setDialogue('sad', `Bahan dengan ID ${id} tidak dikenal.`);
+    // --- Tap to Drop Logic ---
+    mixingBowl.addEventListener('click', () => {
+        if (selectedIngredient) {
+            addIngredientToMix(selectedIngredient);
         }
     });
 

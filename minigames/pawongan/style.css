@@ -117,6 +117,11 @@ body {
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
+.ingredient-shape.selected {
+    border: 5px solid #4CAF50; /* Green border to indicate selection */
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+}
+
 #mixing-station {
     height: 40%;
     border-top: 4px dashed #ccc;
