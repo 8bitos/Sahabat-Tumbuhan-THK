@@ -25,7 +25,7 @@ html, body {
     flex-grow: 1;
     position: relative;
     background-color: #e0f0e0;
-    background-image: url('assets/img/placeholder_background.png');
+    background-image: url('assets/img/peta-main.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -42,8 +42,10 @@ html, body {
     flex-direction: column;
     background-color: #ffffff;
     border-top: 2px solid #cccccc;
-    padding: 10px;
-    gap: 15px;
+    padding: 10px; /* Adjusted padding */
+    gap: 10px; /* Adjusted gap */
+    flex-shrink: 0; /* Prevent shrinking on mobile */
+    max-height: 20vh; /* Limit height on mobile */
 }
 
 #character-dialogue-area {
@@ -78,48 +80,6 @@ html, body {
     line-height: 1.4;
 }
 
-#ui-area {
-    width: 100%;
-}
-
-h3 {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: #444;
-}
-
-.progress-container {
-    margin-bottom: 5px;
-}
-
-.progress-container span {
-    font-size: 0.8rem;
-}
-
-.progress-bar-outer {
-    width: 100%;
-    height: 20px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-bar-inner {
-    height: 100%;
-    background-color: #4caf50;
-    border-radius: 10px;
-    transition: width 0.5s ease-in-out;
-    text-align: right;
-    color: white;
-    font-size: 0.8rem;
-    line-height: 20px;
-    padding-right: 5px;
-}
-
-#pawongan-progress { background-color: #2196F3; }
-#parahyangan-progress { background-color: #f44336; }
-
 /* --- Corrected Map and Minigame Styles --- */
 
 /* Map specific styles - These will only apply when #game-world does NOT have .minigame-active */
@@ -132,6 +92,24 @@ h3 {
     cursor: pointer;
     transition: transform 0.2s, background-color 0.2s;
     border: 2px solid white;
+    display: flex; /* Use flexbox for content */
+    flex-direction: column; /* Stack image and text */
+    align-items: center; /* Center horizontally */
+    gap: 5px; /* Space between image and text */
+    text-align: center;
+}
+
+.map-location-avatar {
+    width: 60px; /* Size of avatar */
+    height: 60px;
+    border-radius: 50%; /* Make it round */
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.map-location span {
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .map-location:hover {
@@ -232,11 +210,11 @@ h3 {
     gap: 20px;
     background-image: url('minigames/palemahan/assets/img/bgmn1.png');
     background-size: cover; /* Ensure it covers the entire area */
-    background-position: center; /* Center the background image */
+    background-position: center;
     background-repeat: no-repeat;
-    width: 100%; /* Ensure it takes full width */
-    height: 100%; /* Ensure it takes full height */
-    border-radius: 15px; /* Keep the board's rounded corners */
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
 }
 
 #gardening-pot {
@@ -250,7 +228,7 @@ h3 {
     border-radius: 0;
     position: relative;
     display: flex;
-    align-items: center; /* Center plant vertically for better positioning */
+    align-items: center;
     justify-content: center;
 }
 
@@ -441,7 +419,6 @@ h3 {
 #quiz-feedback {
     margin-top: 15px;
     font-weight: bold;
-    font-size: 1.1rem;
 }
 
 #quiz-navigation {
@@ -452,13 +429,11 @@ h3 {
 
 #quiz-navigation button {
     padding: 10px 20px;
-    border-radius: 8px;
     border: none;
     background-color: #3b5998;
     color: white;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s;
 }
 
 #quiz-navigation button:hover {
@@ -493,12 +468,12 @@ h3 {
     }
 
     #side-panel {
-        flex-basis: 350px;
+        flex-basis: 300px; /* Adjusted width */
         flex-shrink: 0;
         height: 100vh;
         border-top: none;
         border-left: 2px solid #cccccc;
-        justify-content: center;
+        justify-content: center; /* This centers content vertically */
     }
 
     #character-image {
@@ -515,333 +490,72 @@ h3 {
     }
 }
 
-/* Desktop Layout */
-@media (min-width: 768px) {
-    #game-container {
-        flex-direction: row;
-    }
-
-    #game-world {
-        height: 100vh;
-    }
-
-    #side-panel {
-        flex-basis: 350px;
-        flex-shrink: 0;
-        height: 100vh;
-        border-top: none;
-        border-left: 2px solid #cccccc;
-        justify-content: center;
-    }
-
-    #character-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    #dialogue-text {
-        font-size: 1rem;
-    }
-
-    h3 {
-        font-size: 1.2rem;
-    }
-}
-
-/* Quiz Styles */
-#quiz-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    max-width: 700px;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-#quiz-question {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-#quiz-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-}
-
-.quiz-option-button {
-    background-color: #e0f0e0;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
-    padding: 12px 15px;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.quiz-option-button:hover {
-    background-color: #d0e0d0;
-    border-color: #388E3C;
-}
-
-.quiz-option-button.correct {
-    background-color: #c8e6c9; /* Light green */
-    border-color: #4CAF50;
-}
-
-.quiz-option-button.wrong {
-    background-color: #ffcdd2; /* Light red */
-    border-color: #F44336;
-}
-
-#quiz-feedback {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-#quiz-navigation {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-#quiz-navigation button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    background-color: #3b5998;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s;
-}
-
-#quiz-navigation button:hover {
-    background-color: #2a4270;
-}
-
-/* Responsive adjustments for quiz */
-@media (max-width: 768px) {
-    #quiz-question {
-        font-size: 1rem;
-    }
-
-    .quiz-option-button {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-
-    #quiz-navigation button {
-        font-size: 0.9rem;
-        padding: 8px 15px;
-    }
-}
-
-/* Desktop Layout */
-@media (min-width: 768px) {
-    #game-container {
-        flex-direction: row;
-    }
-
-    #game-world {
-        height: 100vh;
-    }
-
-    #side-panel {
-        flex-basis: 350px;
-        flex-shrink: 0;
-        height: 100vh;
-        border-top: none;
-        border-left: 2px solid #cccccc;
-        justify-content: center;
-    }
-
-    #character-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    #dialogue-text {
-        font-size: 1rem;
-    }
-
-    h3 {
-        font-size: 1.2rem;
-    }
-}
-
-/* Quiz Styles */
-#quiz-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    max-width: 700px;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-#quiz-question {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-#quiz-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-}
-
-.quiz-option-button {
-    background-color: #e0f0e0;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
-    padding: 12px 15px;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.quiz-option-button:hover {
-    background-color: #d0e0d0;
-    border-color: #388E3C;
-}
-
-.quiz-option-button.correct {
-    background-color: #c8e6c9; /* Light green */
-    border-color: #4CAF50;
-}
-
-.quiz-option-button.wrong {
-    background-color: #ffcdd2; /* Light red */
-    border-color: #F44336;
-}
-
-#quiz-feedback {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-#quiz-navigation {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-#quiz-navigation button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    background-color: #3b5998;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s;
-}
-
-#quiz-navigation button:hover {
-    background-color: #2a4270;
-}
-
-/* Responsive adjustments for quiz */
-@media (max-width: 768px) {
-    #quiz-question {
-        font-size: 1rem;
-    }
-
-    .quiz-option-button {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-
-    #quiz-navigation button {
-        font-size: 0.9rem;
-        padding: 8px 15px;
-    }
-}
-
-/* Desktop Layout */
-@media (min-width: 768px) {
-    #game-container {
-        flex-direction: row;
-    }
-
-    #game-world {
-        height: 100vh;
-    }
-
-    #side-panel {
-        flex-basis: 350px;
-        flex-shrink: 0;
-        height: 100vh;
-        border-top: none;
-        border-left: 2px solid #cccccc;
-        justify-content: center;
-    }
-
-    #character-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    #dialogue-text {
-        font-size: 1rem;
-    }
-
-    h3 {
-        font-size: 1.2rem;
-    }
-}
-
-/* Desktop Layout */
-@media (min-width: 768px) {
-    #game-container {
-        flex-direction: row;
-    }
-
-    #game-world {
-        height: 100vh;
-    }
-
-    #side-panel {
-        flex-basis: 350px;
-        flex-shrink: 0;
-        height: 100vh;
-        border-top: none;
-        border-left: 2px solid #cccccc;
-        justify-content: center;
-    }
-
-    #character-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    #dialogue-text {
-        font-size: 1rem;
-    }
-
-    h3 {
-        font-size: 1.2rem;
-    }
-}
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+#quiz-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#quiz-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+#quiz-options button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+#quiz-options button:hover {
+    background-color: #e0e0e0;
+}
+
+#quiz-options button.correct {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+#quiz-options button.wrong {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+#quiz-feedback {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+#next-question-btn, #finish-quiz-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #3b5998;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#next-question-btn.hidden, #finish-quiz-btn.hidden {
+    display: none !important;
 }

@@ -1,151 +1,218 @@
-const items = [
-    { name: 'Daun Kering', type: 'organik', image: 'assets/img/daun_kering.png' },
-    { name: 'Botol Plastik', type: 'anorganik', image: 'assets/img/botol_plastik.png' },
-    { name: 'Baterai Bekas', type: 'b3', image: 'assets/img/baterai_bekas.png' },
-    { name: 'Sisa Makanan', type: 'organik', image: 'assets/img/sisa_makanan.png' },
-    { name: 'Kertas Bekas', type: 'anorganik', image: 'assets/img/kertas_bekas.png' },
-    { name: 'Lampu Rusak', type: 'b3', image: 'assets/img/lampu_rusak.png' },
-    { name: 'Kulit Buah', type: 'organik', image: 'assets/img/kulit_buah.png' },
-    { name: 'Kaleng Minuman', type: 'anorganik', image: 'assets/img/kaleng_minuman.png' },
-    { name: 'Pestisida', type: 'b3', image: 'assets/img/pestisida.png' },
-    { name: 'Ranting Pohon', type: 'organik', image: 'assets/img/ranting_pohon.png' },
-    { name: 'Kaca Pecah', type: 'anorganik', image: 'assets/img/kaca_pecah.png' },
-    { name: 'Obat Kadaluarsa', type: 'b3', image: 'assets/img/obat_kadaluarsa.png' },
-    { name: 'Tulang Ikan', type: 'organik', image: 'assets/img/tulang_ikan.png' },
-    { name: 'Plastik Kresek', type: 'anorganik', image: 'assets/img/plastik_kresek.png' },
-    { name: 'Termometer Raksa', type: 'b3', image: 'assets/img/termometer_raksa.png' }
-];
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DOM Elements ---
+    const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const videoModal = document.getElementById('video-modal');
 
-let currentItem = null;
-let timeLeft = 60; // Waktu dalam detik
-let score = 0;
-const goal = 5; // Target skor
-let timerInterval;
-let gameState = 'start'; // 'start', 'playing', 'end'
+    const seedChoices = document.querySelectorAll('.seed-choice');
+    const dialogueText = document.getElementById('dialogue-text');
+    const lokaAvatar = document.getElementById('loka-avatar');
 
-// Audio
-const correctSound = new Audio('assets/sound/correct.mp3');
-const incorrectSound = new Audio('assets/sound/incorrect.mp3');
+    const growthStageText = document.getElementById('growth-stage-text');
+    const growthProgressBar = document.getElementById('growth-progress');
+    const plantImage = document.getElementById('plant-image');
+    
+    const needBubble = document.getElementById('need-bubble');
+    const needIcon = document.getElementById('need-icon');
+    const pestElement = document.getElementById('pest');
 
-// DOM Elements
-const startScreen = document.getElementById('start-screen');
-const gameScreen = document.getElementById('game-screen');
-const endScreen = document.getElementById('end-screen');
-const startButton = document.getElementById('start-button');
-const restartButton = document.getElementById('restart-button');
-const itemContainer = document.querySelector('.item-container');
-const bins = document.querySelectorAll('.bin');
-const messageDisplay = document.getElementById('message');
-const timeDisplay = document.getElementById('time');
-const scoreDisplay = document.getElementById('score');
-const goalDisplay = document.getElementById('goal');
-const endMessage = document.getElementById('end-message');
-const finalScoreDisplay = document.getElementById('final-score');
+    const tools = document.querySelectorAll('.tool');
+    const videoCloseButton = videoModal.querySelector('.close-button');
+    const explanationVideo = document.getElementById('explanation-video');
 
-// Inisialisasi tampilan goal
-goalDisplay.textContent = goal;
+    // --- Game Data & State ---
+    const plantData = {
+        sunflower: {
+            stages: ['assets/img/Stage1Plant.png', 'assets/img/Stage2Plant.png', 'assets/img/Stage3Plant.png', 'assets/img/Bloom-Sunflower.png'],
+            seed: 'assets/img/Sunflower-Seed.png'
+        },
+        chili: {
+            stages: ['assets/img/Stage1Plant.png', 'assets/img/Stage2Plant.png', 'assets/img/Stage3Plant.png', 'assets/img/Bloom-Chili.png'],
+            seed: 'assets/img/Chili-Seed.png'
+        }
+    };
 
-// Game State Management
-function showScreen(screen) {
-    startScreen.classList.add('hidden');
-    gameScreen.classList.add('hidden');
-    endScreen.classList.add('hidden');
-    screen.classList.remove('hidden');
-}
+    const plantFunFacts = {
+        sunflower: [
+            "Lihat, tunasnya sudah muncul! Merawat kehidupan kecil ini adalah wujud cinta kita pada alam, atau Palemahan.",
+            "Batangnya makin kuat! Bunga matahari selalu menghadap ke arah matahari, seolah berterima kasih atas energinya. Itu pelajaran tentang rasa syukur.",
+            "Kuncupnya mulai terlihat! Sebentar lagi ia akan mekar dan jadi rumah bagi lebah. Kita membantu ekosistem!"
+        ],
+        chili: [
+            "Tunas cabai pertama! Dalam Tri Hita Karana, merawatnya dari kecil mengajarkan kita tentang proses dan kesabaran.",
+            "Daunnya makin lebat! Tanaman ini butuh perhatian kita agar kelak buahnya bisa bermanfaat untuk sesama (Pawongan).",
+            "Bakal buahnya muncul! Dari bibit kecil, kini ia siap memberi manfaat. Inilah bukti keharmonisan hubungan kita dengan alam."
+        ]
+    };
 
-function startGame() {
-    gameState = 'playing';
-    showScreen(gameScreen);
-    timeLeft = 60;
-    score = 0;
-    timeDisplay.textContent = timeLeft;
-    scoreDisplay.textContent = score;
-    loadNewItem();
-    startTimer();
-}
+    const needs = ['water', 'sun', 'fertilizer'];
+    const needIcons = {
+        water: 'assets/img/ikon_air.png',
+        sun: 'assets/img/ikon_matahari.png',
+        fertilizer: 'assets/img/ikon_pipik.png'
+    };
 
-function getRandomItem() {
-    const randomIndex = Math.floor(Math.random() * items.length);
-    return items[randomIndex];
-}
+    let gameState = {
+        plantType: null,
+        growthPoints: 0,
+        currentStage: 0,
+        currentNeed: null,
+        pestActive: false,
+        gameInterval: null
+    };
 
-function loadNewItem() {
-    currentItem = getRandomItem();
-    itemContainer.innerHTML = `<div class="item" draggable="true" data-type="${currentItem.type}"><img src="${currentItem.image}" alt="${currentItem.name}"></div>`;
-    messageDisplay.textContent = '';
-    setupDragAndDrop();
-}
+    // --- Functions ---
 
-function setupDragAndDrop() {
-    const item = document.querySelector('.item');
+    function setDialogue(text, character = 'Loka-Smile') {
+        dialogueText.textContent = text;
+        lokaAvatar.src = `../../assets/img/Loka/${character}.png`;
+    }
 
-    item.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text/plain', currentItem.type); 
+    function startGame(plantType) {
+        gameState.plantType = plantType;
+        gameState.growthPoints = 0;
+        gameState.currentStage = 0;
+        gameState.currentNeed = null;
+        gameState.pestActive = false;
+
+        plantImage.src = plantData[plantType].seed;
+        updateGrowthUI();
+
+        startScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+
+        setDialogue(`Kamu memilih menanam ${plantType === 'sunflower' ? 'Bunga Matahari' : 'Cabai'}. Ayo kita rawat baik-baik!`);
+
+        gameState.gameInterval = setInterval(gameLoop, 2000); // Game loop runs every 2 seconds
+    }
+
+    function gameLoop() {
+        // 1. Chance to generate a need if one isn't active
+        if (!gameState.currentNeed && Math.random() < 0.4) { // 40% chance
+            generateNeed();
+        }
+
+        // 2. Chance for a pest attack if one isn't active
+        if (!gameState.pestActive && Math.random() < 0.15) { // 15% chance
+            spawnPest();
+        }
+    }
+
+    function generateNeed() {
+        const randomNeed = needs[Math.floor(Math.random() * needs.length)];
+        gameState.currentNeed = randomNeed;
+        needIcon.src = needIcons[randomNeed];
+        needBubble.classList.remove('hidden');
+        setDialogue(`Tanaman kita butuh ${randomNeed === 'water' ? 'air' : (randomNeed === 'sun' ? 'sinar matahari' : 'pupuk')}!`, 'Loka-Explain');
+    }
+
+    function satisfyNeed(tool) {
+        if (tool === gameState.currentNeed) {
+            addGrowthPoints(25);
+            setDialogue('Terima kasih! Tanaman ini terlihat lebih sehat.', 'Loka-Excited');
+            gameState.currentNeed = null;
+            needBubble.classList.add('hidden');
+        } else {
+            setDialogue('Oh, bukan itu yang dibutuhkan sekarang.', 'Loka-Sad');
+        }
+    }
+
+    function spawnPest() {
+        gameState.pestActive = true;
+        pestElement.classList.remove('hidden');
+        setDialogue('Aduh, ada hama! Cepat kita basmi!', 'Loka-Shock');
+    }
+
+    function removePest() {
+        if (!gameState.pestActive) return;
+        addGrowthPoints(10); // Bonus points for removing pest
+        gameState.pestActive = false;
+        pestElement.classList.add('hidden');
+        setDialogue('Hama sudah hilang! Kerja bagus!', 'Loka-Smile');
+    }
+
+    function addGrowthPoints(points) {
+        gameState.growthPoints += points;
+        if (gameState.growthPoints >= 100) {
+            const excessPoints = gameState.growthPoints - 100;
+            gameState.growthPoints = excessPoints;
+            advanceStage();
+        } else {
+            updateGrowthUI();
+        }
+    }
+
+    function advanceStage() {
+        gameState.currentStage++;
+        updateGrowthUI();
+
+        const plantType = gameState.plantType;
+        const stageIndex = gameState.currentStage - 1;
+
+        // Check if it's the final, blooming stage
+        if (gameState.currentStage >= plantData[plantType].stages.length - 1) {
+            const funFact = plantFunFacts[plantType][stageIndex];
+            setDialogue(funFact, 'Loka-Explain');
+            // Wait a few seconds for user to read, then start harvest sequence
+            setTimeout(harvest, 4000); 
+        } else {
+            // It's a mid-growth stage, show the fun fact.
+            const funFact = plantFunFacts[plantType][stageIndex];
+            setDialogue(funFact, 'Loka-Explain');
+        }
+    }
+
+    function updateGrowthUI() {
+        // Update progress bar
+        growthProgressBar.style.width = `${gameState.growthPoints}%`;
+
+        // Update plant image and stage text
+        const stages = plantData[gameState.plantType].stages;
+        if (gameState.currentStage < stages.length) {
+            plantImage.src = stages[gameState.currentStage];
+            growthStageText.textContent = `Tahap ${gameState.currentStage + 1}`;
+        } 
+        if (gameState.currentStage === 0) growthStageText.textContent = 'Bibit';
+        if (gameState.currentStage === stages.length -1) growthStageText.textContent = 'Berbunga';
+
+    }
+
+    function harvest() {
+        clearInterval(gameState.gameInterval);
+        setDialogue('Hore! Kita berhasil panen!', 'Loka-Excited');
+        growthStageText.textContent = 'Panen!';
+        growthProgressBar.style.width = `100%`;
+        // Hide any active needs/pests
+        needBubble.classList.add('hidden');
+        pestElement.classList.add('hidden');
+        setTimeout(() => videoModal.classList.remove('hidden'), 2000);
+    }
+
+    // --- Event Listeners ---
+    seedChoices.forEach(button => {
+        button.addEventListener('click', () => {
+            startGame(button.dataset.plant);
+        });
     });
 
-    bins.forEach(bin => {
-        bin.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-
-        bin.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const itemType = e.dataTransfer.getData('text/plain');
-            const binType = e.currentTarget.dataset.type; 
-
-            if (itemType === binType) {
-                correctSound.play();
-                messageDisplay.textContent = 'Benar! Sampah berhasil dipilah.';
-                score++;
-                scoreDisplay.textContent = score;
-                bin.classList.add('correct');
-                setTimeout(() => bin.classList.remove('correct'), 500);
-
-                if (score >= goal) {
-                    endGame(true);
-                } else {
-                    setTimeout(loadNewItem, 1000);
-                }
-            } else {
-                incorrectSound.play();
-                messageDisplay.textContent = 'Salah! Waktu berkurang 5 detik!';
-                timeLeft = Math.max(0, timeLeft - 5); 
-                timeDisplay.textContent = timeLeft;
-                bin.classList.add('incorrect');
-                setTimeout(() => bin.classList.remove('incorrect'), 500);
+    tools.forEach(tool => {
+        tool.addEventListener('click', () => {
+            if (gameState.currentNeed) {
+                satisfyNeed(tool.dataset.tool);
             }
         });
     });
-}
 
-function startTimer() {
-    clearInterval(timerInterval); 
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timeDisplay.textContent = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            endGame(false);
-        }
-    }, 1000);
-}
+    pestElement.addEventListener('click', removePest);
 
-function endGame(win) {
-    gameState = 'end';
-    clearInterval(timerInterval);
-    showScreen(endScreen);
-    finalScoreDisplay.textContent = score;
+    videoCloseButton.addEventListener('click', () => {
+        videoModal.classList.add('hidden');
+        // Redirect to quiz after closing video
+        window.location.href = '../quiz/index.html';
+    });
 
-    if (win) {
-        endMessage.textContent = 'Selamat! Kamu berhasil memilah semua sampah!';
-    } else {
-        endMessage.textContent = 'Waktu habis! Kamu hanya berhasil memilah ' + score + ' sampah. Coba lagi!';
-    }
-}
-
-// Event Listeners
-startButton.addEventListener('click', startGame);
-restartButton.addEventListener('click', startGame);
-
-// Initial state
-showScreen(startScreen);
+    explanationVideo.addEventListener('ended', () => {
+        // Redirect to quiz after video ends
+        window.location.href = '../quiz/index.html';
+    });
+});

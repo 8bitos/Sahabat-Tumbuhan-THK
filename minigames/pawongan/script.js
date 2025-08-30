@@ -108,6 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- Tap and Drop Logic ---
             ingEl.addEventListener('click', () => {
+                // Show the clue in the dialogue box on click
+                setDialogue('explain', ing.clue);
+
                 // If this ingredient is already selected, deselect it
                 if (ingEl.classList.contains('selected')) {
                     ingEl.classList.remove('selected');

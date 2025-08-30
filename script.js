@@ -4,9 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const characterImage = document.getElementById('character-image');
     const characterName = document.getElementById('character-name');
     const dialogueText = document.getElementById('dialogue-text');
-    const palemahanProgress = document.getElementById('palemahan-progress');
-    const pawonganProgress = document.getElementById('pawongan-progress');
-    const parahyanganProgress = document.getElementById('parahyangan-progress');
 
     // Import quiz questions
     
@@ -32,12 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- CORE FUNCTIONS ---
 
     function updateUI() {
-        palemahanProgress.style.width = `${gameState.progress.palemahan}%`;
-        pawonganProgress.style.width = `${gameState.progress.pawongan}%`;
-        parahyanganProgress.style.width = `${gameState.progress.parahyangan}%`;
-        palemahanProgress.innerText = `${gameState.progress.palemahan}%`;
-        pawonganProgress.innerText = `${gameState.progress.pawongan}%`;
-        parahyanganProgress.innerText = `${gameState.progress.parahyangan}%`;
+        // This function is now empty after removing progress bars
     }
 
     function setDialogue(char, text, expression = '') {
@@ -67,7 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const locElement = document.createElement('div');
             locElement.id = `location-${loc.id}`;
             locElement.className = 'map-location';
-            locElement.textContent = loc.name;
+            
+            const avatarImg = document.createElement('img');
+            avatarImg.src = `assets/img/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}-Smile.png`;
+            avatarImg.alt = loc.name;
+            avatarImg.className = 'map-location-avatar';
+            locElement.appendChild(avatarImg);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = loc.name;
+            locElement.appendChild(nameSpan);
+
             locElement.style.top = loc.top;
             locElement.style.left = loc.left;
             locElement.addEventListener('click', () => {
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 switch (loc.mission) {
                     case 'palemahan':
                         setDialogue('Loka', 'Hai! Senang bertemu denganmu di taman. Merawat tanaman adalah cara kita berterima kasih pada alam, lho. Ayo, aku tunjukkan caranya!', 'Smile');
-                        setTimeout(startGardeningMinigame, 2500); // Wait 2.5 seconds before starting
+                        setTimeout(() => { window.location.href = 'minigames/palemahan/index.html'; }, 2500); // Wait 2.5 seconds before starting
                         break;
                     case 'pawongan':
                         setDialogue('Sari', 'Oh, hai! Aku sedang mau membuat jamu untuk temanku. Saling membantu itu penting, kan? Yuk, bantu aku meracik bahannya!', 'MemberiTahu');
@@ -193,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkJamuCompletion() {
         setDialogue('Sari', 'Terima kasih! Jamu ini pasti akan membantunya.', 'Excited');
         gameState.progress.pawongan = Math.min(100, gameState.progress.pawongan + 25);
-        updateUI();
+        
         const backButton = document.createElement('button');
         backButton.id = 'complete-button';
         backButton.textContent = 'Selesai & Kembali';
@@ -328,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Tri Hita Karana progress (e.g., Palemahan for plant knowledge)
         gameState.progress.palemahan = Math.min(100, gameState.progress.palemahan + progressIncrease);
-        updateUI();
+        
 
         setDialogue('Narator', feedbackMessage);
 
@@ -449,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (gameState.plant.needs === needKey) {
                         gameState.plant.stage++;
                         gameState.progress.palemahan = Math.min(100, gameState.progress.palemahan + 8);
-                        updateUI();
+                        
                         let growthDialogue = {
                             water: 'Benar! Air membantu akar menyerap nutrisi dari tanah. Lihat, ia jadi lebih segar!',
                             sun: 'Tepat! Sinar matahari memberi energi untuk fotosintesis. Tanamanmu jadi lebih kuat!',
@@ -483,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
             harvestButton.className = 'action-button';
             harvestButton.addEventListener('click', () => {
                 gameState.progress.palemahan = Math.min(100, gameState.progress.palemahan + 20);
-                updateUI();
+                
                 setDialogue('Loka', 'Panen berhasil! Merawat tanaman mengajarkan kita untuk sabar dan peduli pada alam.', 'Excited');
                 gameState.plant = null;
                 // Call video lesson after harvest
@@ -519,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INITIALIZE GAME ---
     function init() {
         renderHub();
-        updateUI();
+        
     }
 
     init();

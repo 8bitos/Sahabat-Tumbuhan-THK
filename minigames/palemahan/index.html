@@ -3,39 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilah Sampah Cerdas</title>
+    <title>Berkebun Virtual bersama Loka</title>
+    <link rel="stylesheet" href="../shared_style.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <div id="start-screen" class="screen">
-            <h1>Pilah Sampah Cerdas</h1>
-            <p>Bantu pilah sampah ke tempat yang benar!</p>
-            <button id="start-button">Mulai Game</button>
-        </div>
-
-        <div id="game-screen" class="screen hidden">
-            <div class="game-info">
-                <p>Waktu: <span id="time">60</span>s</p>
-                <p>Skor: <span id="score">0</span> / <span id="goal">5</span></p>
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+        <div class="game-container">
+            <h1>Ayo Berkebun!</h1>
+            <p>Pilih bibit yang ingin kamu tanam:</p>
+            <div class="seed-selection">
+                <button class="seed-choice btn" data-plant="sunflower">
+                    <img src="assets/img/Sunflower-Seed.png" alt="Bibit Bunga Matahari">
+                    <span>Bunga Matahari</span>
+                </button>
+                <button class="seed-choice btn" data-plant="chili">
+                    <img src="assets/img/Chili-Seed.png" alt="Bibit Cabai">
+                    <span>Cabai</span>
+                </button>
             </div>
-            <div class="bins-container">
-                <div class="bin" id="organik" data-type="organik">Organik</div>
-                <div class="bin" id="anorganik" data-type="anorganik">Anorganik</div>
-                <div class="bin" id="b3" data-type="b3">B3</div>
-            </div>
-            <div class="item-container">
-                <!-- Sampah akan muncul di sini -->
-            </div>
-            <p id="message"></p>
-        </div>
-
-        <div id="end-screen" class="screen hidden">
-            <h1 id="end-message"></h1>
-            <p>Skor Akhir: <span id="final-score"></span></p>
-            <button id="restart-button">Main Lagi</button>
         </div>
     </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+        <div class="top-bar">
+            <div id="loka-dialogue">
+                <img id="loka-avatar" src="../../assets/img/Loka/Loka-Smile.png" alt="Loka">
+                <p id="dialogue-text">Ayo kita rawat tanaman ini sampai panen!</p>
+            </div>
+            <div id="plant-stats">
+                <p>Tahap Tumbuh: <span id="growth-stage-text">Bibit</span></p>
+                <div id="growth-progress-bar"><div id="growth-progress"></div></div>
+            </div>
+        </div>
+
+        <div id="garden-area">
+            <div id="plant-pot">
+                <img id="plant-image" src="" alt="Tanaman">
+                <div id="need-bubble" class="hidden">
+                    <img id="need-icon" src="" alt="Kebutuhan Tanaman">
+                </div>
+                <div id="pest" class="hidden">
+                    <img src="assets/img/Ulat.png" alt="Hama Ulat">
+                </div>
+            </div>
+        </div>
+
+        <div id="toolbar">
+            <button class="tool" data-tool="water">
+                <img src="assets/img/ikon_air.png" alt="Air">
+                <span>Air</span>
+            </button>
+            <button class="tool" data-tool="sun">
+                <img src="assets/img/ikon_matahari.png" alt="Matahari">
+                <span>Matahari</span>
+            </button>
+            <button class="tool" data-tool="fertilizer">
+                <img src="assets/img/ikon_pipik.png" alt="Pupuk">
+                <span>Pupuk</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="hidden">
+        <div class="video-content">
+            <span class="close-button">&times;</span>
+            <h2>Yey, Panen!</h2>
+            <p>Tanamanmu sudah tumbuh besar! Sekarang, ayo kita pelajari bagaimana tanaman bisa tumbuh.</p>
+            <video id="explanation-video" controls>
+                <source src="assets/video/Fotosintesis.mp4" type="video/mp4">
+                Browser kamu tidak mendukung video ini.
+            </video>
+            <p id="video-explanation-text">
+                Ini adalah proses fotosintesis, cara tanaman membuat makanannya sendiri dengan bantuan sinar matahari, air, dan udara!
+            </p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

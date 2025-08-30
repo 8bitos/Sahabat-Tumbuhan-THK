@@ -128,6 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
         explanationVideo.pause();
         explanationVideo.currentTime = 0; // Reset video to start
         videoModal.classList.add('hidden');
+        // Show the game container again when video is closed
+        gameContainer.classList.remove('hidden');
     }
 
     // --- Event Listener for Video Close Button ---
@@ -149,6 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
             allowOutsideClick: false,
         }).then((result) => {
             if (result.isConfirmed) {
+                // Hide the game container before showing the video
+                gameContainer.classList.add('hidden');
                 // Show video modal after user confirms
                 showVideoModal('assets/video/video_placeholder.mp4', 'Parahyangan: Hubungan harmonis antara manusia dengan Tuhan, diwujudkan melalui rasa syukur dan persembahan.');
             }

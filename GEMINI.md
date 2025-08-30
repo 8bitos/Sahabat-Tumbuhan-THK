@@ -27,8 +27,7 @@ To create an interactive web-based educational game, "Sahabat Tumbuhanku," that 
     - **Quiz Pawongan Terpisah:** Setelah video selesai, pemain akan diarahkan ke halaman kuis khusus Pawongan (`minigames/quiz_pawongan/index.html`).
         - Kuis ini memuat soal-soal dari `soal.txt` (bagian Pawongan).
         - UI game utama dan pop-up video sudah responsif.
-- **Isu yang Sedang Dihadapi:**
-    - **Gambar Aset:** Gambar bahan di lemari seharusnya sudah muncul (perlu verifikasi di browser).
+
 - **Langkah Selanjutnya (yang belum diimplementasikan di versi stabil ini):**
     - (Tidak ada langkah selanjutnya yang belum diimplementasikan untuk Pawongan minigame saat ini, berdasarkan diskusi kita.)
 
