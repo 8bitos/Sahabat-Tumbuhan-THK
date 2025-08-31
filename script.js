@@ -32,15 +32,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // This function is now empty after removing progress bars
     }
 
-    function setDialogue(char, text, expression = '') {
+    function setDialogue(char, text, expression = '', buttons = []) {
         characterName.textContent = char;
         dialogueText.textContent = text;
         if (char !== 'Narator' && expression) {
-            characterImage.src = `assets/img/${char.toLowerCase()}/${char}-${expression}.png`;
+            characterImage.src = `assets/img/${char}/${char}-${expression}.png`;
             characterImage.style.display = 'block';
         } else {
             characterImage.style.display = 'none';
         }
+
+        const dialogueButtons = document.getElementById('dialogue-buttons');
+        dialogueButtons.innerHTML = ''; // Clear existing buttons
+
+        buttons.forEach(buttonInfo => {
+            const button = document.createElement('button');
+            button.className = `dialogue-button ${buttonInfo.className || ''}`;
+            button.textContent = buttonInfo.text;
+            button.addEventListener('click', buttonInfo.onClick);
+            dialogueButtons.appendChild(button);
+        });
     }
 
     function renderHub() {
@@ -73,19 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
             locElement.style.top = loc.top;
             locElement.style.left = loc.left;
             locElement.addEventListener('click', () => {
-                // Show introductory dialogue before starting the minigame
                 switch (loc.mission) {
                     case 'palemahan':
-                        setDialogue('Loka', 'Hai! Senang bertemu denganmu di taman. Merawat tanaman adalah cara kita berterima kasih pada alam, lho. Ayo, aku tunjukkan caranya!', 'Smile');
-                        setTimeout(() => { window.location.href = 'minigames/palemahan/index.html'; }, 2500); // Wait 2.5 seconds before starting
+                        window.location.href = 'minigames/palemahan_menu.html';
                         break;
                     case 'pawongan':
-                        setDialogue('Sari', 'Oh, hai! Aku sedang mau membuat jamu untuk temanku. Saling membantu itu penting, kan? Yuk, bantu aku meracik bahannya!', 'MemberiTahu');
-                        setTimeout(() => { window.location.href = 'minigames/pawongan/index.html'; }, 2500);
+                        window.location.href = 'minigames/pawongan_menu.html';
                         break;
                     case 'parahyangan':
-                        setDialogue('Yana', 'Selamat datang di Pura sekolah. Di sini kita belajar bersyukur. Salah satunya dengan membuat persembahan Canang Sari. Mau coba?', 'Smile');
-                        setTimeout(startCanangSariMinigame, 2500);
+                        window.location.href = 'minigames/parahyangan_menu.html';
                         break;
                     default:
                         setDialogue('Narator', `Misi untuk ${loc.name} belum siap.`);

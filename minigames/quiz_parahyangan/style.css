@@ -110,23 +110,46 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-
-/* Action button style for "Back to Main Game" */
-.action-button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
-    background-color: #4CAF50; /* Green color */
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s;
+/* Results Screen Styles */
+#results-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 90%;
 }
 
-.action-button:hover {
-    background-color: #45a049;
+#character-avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+#results-title {
+    font-size: 1.8rem;
+    color: #8e44ad; /* Yana's theme color */
+    margin-bottom: 0.5rem;
+}
+
+#character-feedback {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #333 !important;
+}
+
+#score-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333 !important;
 }

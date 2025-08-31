@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Quiz elements
     const quizContainer = document.getElementById('quiz-container');
     const quizImage = document.getElementById('quiz-image');
     const quizQuestion = document.getElementById('quiz-question');
@@ -7,7 +8,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nextQuestionBtn = document.getElementById('next-question-btn');
     const finishQuizBtn = document.getElementById('finish-quiz-btn');
 
-    let quizQuestions = []; // Will be populated dynamically
+    // Results elements
+    const resultsContainer = document.getElementById('results-container');
+    const characterAvatar = document.getElementById('character-avatar');
+    const resultsTitle = document.getElementById('results-title');
+    const characterFeedback = document.getElementById('character-feedback');
+    const scoreText = document.getElementById('score-text');
+    const backToMapBtn = document.getElementById('back-to-map-btn');
+
+    let quizQuestions = [];
     let currentQuestionIndex = 0;
     let score = 0;
 
@@ -16,43 +25,28 @@ document.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch('../../soal.txt');
             const text = await response.text();
             const lines = text.split('\n');
-
             const parahyanganQuestions = [];
             let inParahyanganSection = false;
             let currentQuestion = null;
 
             for (const line of lines) {
                 const trimmedLine = line.trim();
-
                 if (trimmedLine.startsWith('🔹 III. Soal Tujuan 3:')) {
                     inParahyanganSection = true;
                     continue;
                 }
-
                 if (inParahyanganSection) {
-                    if (/^\d+\.\s/.test(trimmedLine)) { // New question
-                        if (currentQuestion) {
-                            parahyanganQuestions.push(currentQuestion);
-                        }
-                        currentQuestion = {
-                            question: trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim(),
-                            options: [],
-                            correctAnswer: ''
-                        };
-                    } else if (/^[A-D]\.\s/.test(trimmedLine) || /^[a-d]\.\s/.test(trimmedLine)) { // Option
-                        if (currentQuestion) {
-                            currentQuestion.options.push(trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim());
-                        }
+                    if (/^\d+\.\s/.test(trimmedLine)) {
+                        if (currentQuestion) parahyanganQuestions.push(currentQuestion);
+                        currentQuestion = { question: trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim(), options: [], correctAnswer: '' };
+                    } else if (/^[A-D]\.\s/.test(trimmedLine) || /^[a-d]\.\s/.test(trimmedLine)) {
+                        if (currentQuestion) currentQuestion.options.push(trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim());
                     } else if (trimmedLine.startsWith('Kunci jawaban:') || trimmedLine.startsWith('Jawaban:')) {
-                        if (currentQuestion) {
-                            currentQuestion.correctAnswer = trimmedLine.slice(-1);
-                        }
+                        if (currentQuestion) currentQuestion.correctAnswer = trimmedLine.slice(-1);
                     }
                 }
             }
-            if (currentQuestion) {
-                parahyanganQuestions.push(currentQuestion);
-            }
+            if (currentQuestion) parahyanganQuestions.push(currentQuestion);
             return parahyanganQuestions;
         } catch (error) {
             console.error('Error loading or parsing soal.txt:', error);
@@ -64,23 +58,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (currentQuestionIndex < quizQuestions.length) {
             const question = quizQuestions[currentQuestionIndex];
             quizQuestion.textContent = question.question;
-            quizOptions.innerHTML = ''; // Clear previous options
-
-            quizImage.classList.add('hidden'); // Hide image for now
-            quizImage.src = ''; // Clear previous src
+            quizOptions.innerHTML = '';
+            quizImage.classList.add('hidden');
+            quizImage.src = '';
 
             question.options.forEach((option, index) => {
                 const button = document.createElement('button');
-                button.className = 'quiz-option';
+                button.className = 'quiz-option btn';
                 button.textContent = option;
-                button.dataset.option = String.fromCharCode(65 + index); // A, B, C, D
+                button.dataset.option = String.fromCharCode(65 + index);
                 button.addEventListener('click', () => checkAnswer(button, question.correctAnswer));
                 quizOptions.appendChild(button);
             });
+
             quizFeedback.textContent = '';
             nextQuestionBtn.classList.add('hidden');
             finishQuizBtn.classList.add('hidden');
-            // Enable all buttons for the new question
             Array.from(quizOptions.children).forEach(btn => {
                 btn.disabled = false;
                 btn.classList.remove('correct', 'wrong');
@@ -91,7 +84,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function checkAnswer(selectedButton, correctAnswer) {
-        // Disable all buttons after an answer is selected
         Array.from(quizOptions.children).forEach(button => {
             button.disabled = true;
         });
@@ -103,7 +95,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             selectedButton.classList.add('wrong');
             quizFeedback.textContent = `Salah. Jawaban yang benar adalah ${correctAnswer}.`;
-            // Highlight the correct answer
             Array.from(quizOptions.children).forEach(button => {
                 if (button.dataset.option === correctAnswer) {
                     button.classList.add('correct');
@@ -113,48 +104,59 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (currentQuestionIndex < quizQuestions.length - 1) {
             nextQuestionBtn.classList.remove('hidden');
-            nextQuestionBtn.onclick = nextQuestion;
         } else {
             finishQuizBtn.classList.remove('hidden');
-            finishQuizBtn.onclick = endQuiz;
         }
     }
 
-    function nextQuestion() {
+    nextQuestionBtn.addEventListener('click', () => {
         currentQuestionIndex++;
         displayQuestion();
-    }
+    });
+
+    finishQuizBtn.addEventListener('click', endQuiz);
 
     function endQuiz() {
-        const percentageScore = (score / quizQuestions.length) * 100;
-        let feedbackMessage = '';
+        quizContainer.classList.add('hidden');
+        resultsContainer.classList.remove('hidden');
 
-        if (percentageScore >= 80) {
-            feedbackMessage = `Luar biasa! Kamu mendapatkan ${score} dari ${quizQuestions.length} pertanyaan (${percentageScore.toFixed(0)}%). Pemahamanmu tentang tumbuhan sangat baik!`
-        } else if (percentageScore >= 50) {
-            feedbackMessage = `Bagus! Kamu mendapatkan ${score} dari ${quizQuestions.length} pertanyaan (${percentageScore.toFixed(0)}%). Terus belajar untuk meningkatkan pemahamanmu.`
-        } else {
-            feedbackMessage = `Jangan menyerah! Kamu mendapatkan ${score} dari ${quizQuestions.length} pertanyaan (${percentageScore.toFixed(0)}%). Mari kita ulangi materinya dan coba lagi nanti.`
+        let result;
+        if (score <= 2) {
+            result = {
+                expression: 'Sad',
+                title: 'Jangan Menyerah',
+                feedback: "Jangan sedih. Rasa syukur itu ada di dalam hati kita semua, kadang kita hanya perlu bantuan untuk menemukannya. Mari kita cari bersama-sama."
+            };
+        } else if (score <= 5) {
+            result = {
+                expression: 'Smile',
+                title: 'Terus Berusaha!',
+                feedback: "Tidak apa-apa. Belajar bersyukur adalah perjalanan. Niat tulusmu sudah terlihat, dan itu yang paling penting."
+            };
+        } else if (score <= 8) {
+            result = {
+                expression: 'Smile',
+                title: 'Kerja Bagus!',
+                feedback: "Sangat bagus. Kamu mengerti cara menunjukkan rasa terima kasih melalui perbuatan. Terus jaga ketenangan dan kedamaian hatimu."
+            };
+        } else { // 9+
+            result = {
+                expression: 'Excited',
+                title: 'Luar Biasa!',
+                feedback: "Luar biasa! Hatimu begitu tulus dan pemahamanmu tentang rasa syukur sangat mendalam. Kamu memancarkan keharmonisan dengan Sang Pencipta."
+            };
         }
 
-        quizQuestion.textContent = 'Kuis Selesai!';
-        quizOptions.innerHTML = `<p>${feedbackMessage}</p>`;
-        quizFeedback.textContent = '';
-        nextQuestionBtn.classList.add('hidden');
-        finishQuizBtn.classList.add('hidden');
-        quizImage.classList.add('hidden'); // Hide image at the end of quiz
-
-        const backToMainButton = document.createElement('button');
-        backToMainButton.textContent = 'Kembali ke Game Utama';
-        backToMainButton.className = 'action-button'; // Re-use existing button style
-        backToMainButton.style.marginTop = '20px';
-        backToMainButton.addEventListener('click', () => {
-            window.location.href = '../../index.html'; // Navigate back to main game
-        });
-        quizOptions.appendChild(backToMainButton); // Append to options div for centering
+        characterAvatar.src = `../../assets/img/Yana/Yana-${result.expression}.png`;
+        resultsTitle.textContent = result.title;
+        characterFeedback.textContent = result.feedback;
+        scoreText.textContent = `Skor Kamu: ${score} dari ${quizQuestions.length}`;
     }
 
-    // Initial load of questions and display
+    backToMapBtn.addEventListener('click', () => {
+        window.location.href = '../../index.html';
+    });
+
     quizQuestions = await loadParahyanganQuestions();
     displayQuestion();
 });

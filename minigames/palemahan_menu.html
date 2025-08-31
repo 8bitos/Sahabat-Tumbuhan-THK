@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog Palemahan - Loka</title>
+    <link rel="stylesheet" href="shared_style.css">
+    <style>
+        body {
+            background-image: url('palemahan/assets/img/bgmn1.png');
+            background-size: cover;
+            background-position: center;
+        }
+        #dialogue-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+        #character-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #character-expression {
+            max-width: 100%;
+            max-height: 50vh;
+            object-fit: contain;
+            transition: opacity 0.5s ease-in-out;
+            border: 5px solid white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        #dialogue-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            border: 3px solid var(--primary-color);
+            flex-shrink: 0;
+        }
+        #dialogue-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        #choices {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .choice-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            background-color: #45a049;
+        }
+        .choice-btn.secondary {
+            background-color: #6c757d;
+        }
+        .choice-btn.secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dialogue-scene">
+        <div id="character-container">
+            <img id="character-expression" src="../assets/img/Loka/Loka-Smile.png" alt="Loka">
+        </div>
+        <div id="dialogue-box">
+            <p id="dialogue-text">...</p>
+            <div id="choices">
+                <!-- Choices will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characterImage = document.getElementById('character-expression');
+        const dialogueText = document.getElementById('dialogue-text');
+        const choicesContainer = document.getElementById('choices');
+
+        const dialogueTree = [
+            { // 0: Initial
+                character: 'Loka',
+                expression: 'Smile',
+                text: "Hai, selamat datang di taman sekolah! Aku Loka. Aku senang banget kalau ada yang mau main ke sini.",
+                choices: [
+                    { text: "Tamanmu indah sekali!", nextScene: 1 },
+                    { text: "Kenapa kamu suka sekali di taman?", nextScene: 2 }
+                ]
+            },
+            { // 1: Compliment
+                character: 'Loka',
+                expression: 'Excited',
+                text: "Wah, terima kasih! Aku merawatnya setiap hari. Bagiku, taman ini bukan cuma kumpulan tanaman, tapi juga sahabat.",
+                choices: [
+                    { text: "Sahabat? Maksudnya?", nextScene: 3 }
+                ]
+            },
+            { // 2: Question
+                character: 'Loka',
+                expression: 'Explain',
+                text: "Karena di sini aku merasa terhubung dengan alam. Merawat mereka membuatku merasa tenang dan damai. Ini adalah caraku mempraktikkan sesuatu yang disebut Palemahan.",
+                choices: [
+                    { text: "Palemahan? Aku baru dengar.", nextScene: 3 }
+                ]
+            },
+            { // 3: Introducing Palemahan
+                character: 'Loka',
+                expression: 'Smile',
+                text: "Palemahan itu salah satu dari tiga pilar kearifan lokal Bali, Tri Hita Karana. Artinya, kita menjaga hubungan yang harmonis dengan lingkungan dan alam sekitar.",
+                choices: [
+                    { text: "Jadi, seperti menjaga kebersihan?", nextScene: 4 },
+                    { text: "Harmonis itu seperti apa?", nextScene: 5 }
+                ]
+            },
+            { // 4: Hygiene connection
+                character: 'Loka',
+                expression: 'Explain',
+                text: "Betul, itu bagian kecilnya! Tapi lebih dari itu. Palemahan itu tentang melihat alam sebagai 'subjek', bukan cuma 'objek'. Mereka hidup dan memberi kita banyak hal.",
+                choices: [
+                    { text: "Jadi kita harus berterima kasih pada mereka?", nextScene: 6 }
+                ]
+            },
+            { // 5: Harmony connection
+                character: 'Loka',
+                expression: 'Smile',
+                text: "Harmonis itu artinya ada hubungan timbal balik. Alam memberi kita kehidupan, dan kita membalasnya dengan merawat dan melestarikannya. Bukan cuma mengambil terus-menerus.",
+                choices: [
+                    { text: "Aku mulai paham. Jadi, berkebun ini caranya?", nextScene: 6 }
+                ]
+            },
+            { // 6: The 'Thank You'
+                character: 'Loka',
+                expression: 'Excited',
+                text: "Tepat sekali! Dengan menanam dan merawat tumbuhan, kita secara aktif berterima kasih pada Bumi. Kita belajar tentang siklus kehidupan, kesabaran, dan kepedulian.",
+                choices: [
+                    { text: "Itu dalam sekali maknanya.", nextScene: 7 },
+                    { text: "Aku ingin mencobanya!", nextScene: 7 }
+                ]
+            },
+            { // 7: Conclusion
+                character: 'Loka',
+                expression: 'Smile',
+                text: "Tentu saja! Dan ini sangat menyenangkan, lho. Aku akan memandumu. Siap untuk mempraktikkan Palemahan bersama-sama?",
+                choices: [
+                    { text: "Ayo Mulai Berkebun!", action: () => { window.location.href = 'palemahan/index.html'; } },
+                    { text: "Mungkin lain kali.", className: 'secondary', action: () => { window.location.href = '../index.html'; } }
+                ]
+            }
+        ];
+
+        function renderScene(sceneId) {
+            const scene = dialogueTree[sceneId];
+            
+            // Fade out
+            characterImage.style.opacity = 0;
+            dialogueText.style.opacity = 0;
+
+            setTimeout(() => {
+                characterImage.src = `../assets/img/${scene.character}/${scene.character}-${scene.expression}.png`;
+                dialogueText.textContent = scene.text;
+                choicesContainer.innerHTML = '';
+
+                scene.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.textContent = choice.text;
+                    button.className = 'choice-btn';
+                    if (choice.className) {
+                        button.classList.add(choice.className);
+                    }
+
+                    if (choice.nextScene !== undefined) {
+                        button.onclick = () => renderScene(choice.nextScene);
+                    } else if (choice.action) {
+                        button.onclick = choice.action;
+                    }
+                    choicesContainer.appendChild(button);
+                });
+
+                // Fade in
+                characterImage.style.opacity = 1;
+                dialogueText.style.opacity = 1;
+            }, 400); // Wait for fade out to complete
+        }
+
+        // Start the dialogue
+        renderScene(0);
+    </script>
+
+</body>
+</html>

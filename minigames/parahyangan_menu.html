@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog Parahyangan - Yana</title>
+    <link rel="stylesheet" href="shared_style.css">
+    <style>
+        body {
+            background-image: url('canang-sari/assets/img/pura.png');
+            background-size: cover;
+            background-position: center;
+        }
+        #dialogue-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+        #character-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #character-expression {
+            max-width: 100%;
+            max-height: 50vh;
+            object-fit: contain;
+            transition: opacity 0.5s ease-in-out;
+            border: 5px solid white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        #dialogue-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            border: 3px solid #8e44ad; /* Yana's theme color (purple) */
+            flex-shrink: 0;
+        }
+        #dialogue-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        #choices {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .choice-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            background-color: #9b59b6; /* Yana's theme color */
+            color: white;
+        }
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            background-color: #8e44ad;
+        }
+        .choice-btn.secondary {
+            background-color: #6c757d;
+        }
+        .choice-btn.secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dialogue-scene">
+        <div id="character-container">
+            <img id="character-expression" src="../assets/img/Yana/Yana-Smile.png" alt="Yana">
+        </div>
+        <div id="dialogue-box">
+            <p id="dialogue-text">...</p>
+            <div id="choices">
+                <!-- Choices will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characterImage = document.getElementById('character-expression');
+        const dialogueText = document.getElementById('dialogue-text');
+        const choicesContainer = document.getElementById('choices');
+
+        const dialogueTree = [
+            { // 0: Initial
+                character: 'Yana',
+                expression: 'Smile',
+                text: "Selamat datang. Aku Yana. Senang melihatmu tertarik datang ke area Pura sekolah kita yang tenang ini.",
+                choices: [
+                    { text: "Di sini rasanya damai sekali.", nextScene: 1 },
+                    { text: "Tempat apa ini? Kelihatannya sepi.", nextScene: 2 }
+                ]
+            },
+            { // 1: Peaceful
+                character: 'Yana',
+                expression: 'Smile',
+                text: "Benar, kan? Pura adalah tempat suci untuk menenangkan diri dan terhubung dengan Sang Pencipta. Ini adalah inti dari konsep Parahyangan.",
+                choices: [
+                    { text: "Parahyangan itu apa?", nextScene: 3 }
+                ]
+            },
+            { // 2: Empty
+                character: 'Yana',
+                expression: 'Shock',
+                text: "Oh, jangan salah! Ini bukan sekadar tempat sepi. Ini Pura, tempat yang sangat penting untuk kami menenangkan diri dan terhubung dengan Sang Pencipta. Ini inti dari Parahyangan.",
+                choices: [
+                    { text: "Oh, maaf. Jelaskan padaku tentang Parahyangan.", nextScene: 3 }
+                ]
+            },
+            { // 3: Intro Parahyangan
+                character: 'Yana',
+                expression: 'Smile',
+                text: "Parahyangan itu tentang menjaga hubungan harmonis kita dengan Tuhan. Salah satu caranya adalah dengan menunjukkan rasa syukur.",
+                choices: [
+                    { text: "Syukur untuk apa saja?", nextScene: 4 }
+                ]
+            },
+            { // 4: Grateful for what
+                character: 'Yana',
+                expression: 'Smile',
+                text: "Untuk kehidupan, untuk alam yang indah, untuk semua hal baik. Rasa syukur itu bisa diwujudkan lewat persembahan. Hari ini aku mau membuat Canang Sari.",
+                choices: [
+                    { text: "Canang Sari? Itu sulit dibuat, ya?", nextScene: 5 }
+                ]
+            },
+            { // 5: Hard to make?
+                character: 'Yana',
+                expression: 'Smile',
+                text: "Tidak juga, kok. Yang penting bukan hasilnya harus sempurna, tapi ketulusan kita saat membuatnya. Setiap elemennya punya makna mendalam sebagai simbol terima kasih.",
+                choices: [
+                    { text: "Wow, aku tidak tahu sedalam itu!", nextScene: 6 }
+                ]
+            },
+            { // 6: Deep meaning
+                character: 'Yana',
+                expression: 'Excited',
+                text: "Tentu! Setiap bunga, setiap daun, semuanya adalah doa. Ini adalah cara kita 'berbicara' dengan Tuhan melalui keindahan alam. Sangat menyenangkan!",
+                choices: [
+                    { text: "Aku mau coba!", nextScene: 7 }
+                ]
+            },
+            { // 7: Conclusion
+                character: 'Yana',
+                expression: 'Smile',
+                text: "Bagus! Ayo kita coba merangkai Canang Sari bersama sambil belajar lebih dalam tentang Parahyangan.",
+                choices: [
+                    { text: "Mulai Membuat Canang", action: () => { window.location.href = 'canang-sari/index.html'; } },
+                    { text: "Lain kali saja.", className: 'secondary', action: () => { window.location.href = '../index.html'; } }
+                ]
+            }
+        ];
+
+        function renderScene(sceneId) {
+            const scene = dialogueTree[sceneId];
+            
+            characterImage.style.opacity = 0;
+            dialogueText.style.opacity = 0;
+
+            setTimeout(() => {
+                characterImage.src = `../assets/img/${scene.character}/${scene.character}-${scene.expression}.png`;
+                dialogueText.textContent = scene.text;
+                choicesContainer.innerHTML = '';
+
+                scene.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.textContent = choice.text;
+                    button.className = 'choice-btn';
+                    if (choice.className) {
+                        button.classList.add(choice.className);
+                    }
+
+                    if (choice.nextScene !== undefined) {
+                        button.onclick = () => renderScene(choice.nextScene);
+                    } else if (choice.action) {
+                        button.onclick = choice.action;
+                    }
+                    choicesContainer.appendChild(button);
+                });
+
+                characterImage.style.opacity = 1;
+                dialogueText.style.opacity = 1;
+            }, 400);
+        }
+
+        renderScene(0);
+    </script>
+
+</body>
+</html>

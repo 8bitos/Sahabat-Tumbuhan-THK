@@ -25,9 +25,23 @@ html, body {
     flex-grow: 1;
     position: relative;
     background-color: #e0f0e0;
-    background-image: url('assets/img/peta-main.jpg');
+    /* background-image is now set via media queries */
     background-size: cover;
     background-position: center;
+}
+
+/* Default to mobile/portrait */
+@media (orientation: portrait) {
+    #game-world {
+        background-image: url('assets/img/bg-mobile.png');
+    }
+}
+
+/* Desktop/landscape */
+@media (orientation: landscape) {
+    #game-world {
+        background-image: url('assets/img/bg-desktop.png');
+    }
 }
 
 /* This class will be added dynamically to center minigames */
@@ -78,6 +92,36 @@ html, body {
 #dialogue-text {
     font-size: 0.9rem;
     line-height: 1.4;
+    margin-bottom: 10px; /* Add margin to separate from buttons */
+}
+
+#dialogue-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dialogue-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3b5998;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.dialogue-button:hover {
+    background-color: #2a4270;
+}
+
+.dialogue-button.secondary {
+    background-color: #6c757d;
+}
+
+.dialogue-button.secondary:hover {
+    background-color: #5a6268;
 }
 
 /* --- Corrected Map and Minigame Styles --- */

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog Pawongan - Sari</title>
+    <link rel="stylesheet" href="shared_style.css">
+    <style>
+        body {
+            background-image: url('pawongan/assets/img/kantin.png');
+            background-size: cover;
+            background-position: center;
+        }
+        #dialogue-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+        #character-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #character-expression {
+            max-width: 100%;
+            max-height: 50vh;
+            object-fit: contain;
+            transition: opacity 0.5s ease-in-out;
+            border: 5px solid white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        #dialogue-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            border: 3px solid #ffc107; /* Sari's theme color */
+            flex-shrink: 0;
+        }
+        #dialogue-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        #choices {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .choice-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            background-color: #ffb300;
+        }
+        .choice-btn.secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .choice-btn.secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dialogue-scene">
+        <div id="character-container">
+            <img id="character-expression" src="../assets/img/Sari/Sari-Smile.png" alt="Sari">
+        </div>
+        <div id="dialogue-box">
+            <p id="dialogue-text">...</p>
+            <div id="choices">
+                <!-- Choices will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characterImage = document.getElementById('character-expression');
+        const dialogueText = document.getElementById('dialogue-text');
+        const choicesContainer = document.getElementById('choices');
+
+        const dialogueTree = [
+            { // 0: Initial
+                character: 'Sari',
+                expression: 'Smile',
+                text: "Oh, hai! Kebetulan sekali bertemu kamu di sini. Aku lagi mau meracik sesuatu yang spesial di dapur kantin.",
+                choices: [
+                    { text: "Kamu mau masak apa?", nextScene: 1 },
+                    { text: "Sesuatu yang spesial?", nextScene: 1 }
+                ]
+            },
+            { // 1: The Task
+                character: 'Sari',
+                expression: 'MemberiTahu',
+                text: "Aku mau membuat jamu! Temanku, Dewi, lagi kurang sehat. Kata nenekku, resep warisan keluarga ini bisa bikin badan jadi hangat dan nyaman.",
+                choices: [
+                    { text: "Wah, baik sekali kamu!", nextScene: 2 },
+                    { text: "Memangnya jamu bisa menyembuhkan?", nextScene: 3 }
+                ]
+            },
+            { // 2: Praise
+                character: 'Sari',
+                expression: 'Smile',
+                text: "Hehe, terima kasih. Membantu teman yang kesusahan itu kan penting. Inilah yang disebut Pawongan dalam Tri Hita Karana, yaitu menjaga hubungan baik dengan sesama.",
+                choices: [
+                    { text: "Jadi Pawongan itu tentang menolong orang lain?", nextScene: 4 },
+                    { text: "Aku ingin belajar lebih banyak tentang itu.", nextScene: 4 }
+                ]
+            },
+            { // 3: Questioning Jamu
+                character: 'Sari',
+                expression: 'MemberiTahu',
+                text: "Jamu itu bukan obat, tapi minuman tradisional untuk menjaga kesehatan. Ini adalah bentuk kepedulian kita, memberikan sesuatu yang bermanfaat dari alam untuk orang yang kita sayangi.",
+                choices: [
+                    { text: "Itu sejalan dengan konsep Pawongan, ya?", nextScene: 4 }
+                ]
+            },
+            { // 4: Explaining Pawongan
+                character: 'Sari',
+                expression: 'Smile',
+                text: "Tepat! Pawongan mengajarkan kita untuk peduli dan saling tolong-menolong. Dengan berbagi hasil alam seperti ini, kita memperkuat ikatan persahabatan kita.",
+                choices: [
+                    { text: "Aku setuju. Hubungan baik itu penting.", nextScene: 5 },
+                    { text: "Jadi, tumbuhan juga berperan dalam hubungan antar manusia?", nextScene: 5 }
+                ]
+            },
+            { // 5: Connecting Plants & People
+                character: 'Sari',
+                expression: 'Excited',
+                text: "Tentu saja! Tumbuhan memberi kita bahan untuk saling merawat. Dengan meracik jamu ini, kita tidak hanya membantu teman, tapi juga menghargai alam.",
+                choices: [
+                    { text: "Aku jadi semangat ingin membantu!", nextScene: 6 },
+                    { text: "Kamu tahu banyak tentang ini, Sari.", nextScene: 6 }
+                ]
+            },
+            { // 6: Conclusion
+                character: 'Sari',
+                expression: 'Smile',
+                text: "Yuk! Aku butuh bantuan untuk memilih dan menakar bahan yang pas. Mau membantuku meracik jamu sambil mempraktikkan Pawongan?",
+                choices: [
+                    { text: "Ayo Mulai Meracik Jamu!", action: () => { window.location.href = 'pawongan/index.html'; } },
+                    { text: "Lain kali saja, ya.", className: 'secondary', action: () => { window.location.href = '../index.html'; } }
+                ]
+            }
+        ];
+
+        function renderScene(sceneId) {
+            const scene = dialogueTree[sceneId];
+            
+            characterImage.style.opacity = 0;
+            dialogueText.style.opacity = 0;
+
+            setTimeout(() => {
+                characterImage.src = `../assets/img/${scene.character}/${scene.character}-${scene.expression}.png`;
+                dialogueText.textContent = scene.text;
+                choicesContainer.innerHTML = '';
+
+                scene.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.textContent = choice.text;
+                    button.className = 'choice-btn';
+                    if (choice.className) {
+                        button.classList.add(choice.className);
+                    }
+
+                    if (choice.nextScene !== undefined) {
+                        button.onclick = () => renderScene(choice.nextScene);
+                    } else if (choice.action) {
+                        button.onclick = choice.action;
+                    }
+                    choicesContainer.appendChild(button);
+                });
+
+                characterImage.style.opacity = 1;
+                dialogueText.style.opacity = 1;
+            }, 400);
+        }
+
+        renderScene(0);
+    </script>
+
+</body>
+</html>
