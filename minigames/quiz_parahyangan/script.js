@@ -31,22 +31,51 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             for (const line of lines) {
                 const trimmedLine = line.trim();
+
                 if (trimmedLine.startsWith('🔹 III. Soal Tujuan 3:')) {
                     inParahyanganSection = true;
                     continue;
                 }
+
                 if (inParahyanganSection) {
+                    if (trimmedLine.endsWith('.png')) {
+                        if (currentQuestion) {
+                            currentQuestion.image = trimmedLine;
+                        }
+                        continue;
+                    }
+
                     if (/^\d+\.\s/.test(trimmedLine)) {
-                        if (currentQuestion) parahyanganQuestions.push(currentQuestion);
-                        currentQuestion = { question: trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim(), options: [], correctAnswer: '' };
-                    } else if (/^[A-D]\.\s/.test(trimmedLine) || /^[a-d]\.\s/.test(trimmedLine)) {
-                        if (currentQuestion) currentQuestion.options.push(trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim());
+                        if (currentQuestion) {
+                            // Clean up options before adding
+                            currentQuestion.options = currentQuestion.options.map(opt => opt.replace(/^[a-zA-Z]\.\s?/, '').replace('✅', '').trim());
+                            parahyanganQuestions.push(currentQuestion);
+                        }
+                        currentQuestion = {
+                            question: trimmedLine.substring(trimmedLine.indexOf('.') + 1).trim(),
+                            options: [],
+                            correctAnswer: '',
+                            image: ''
+                        };
+                    } else if (/^[A-D]\.\s/i.test(trimmedLine)) {
+                        if (currentQuestion) {
+                            currentQuestion.options.push(trimmedLine);
+                            if (trimmedLine.includes('✅')) {
+                                currentQuestion.correctAnswer = trimmedLine.charAt(0).toUpperCase();
+                            }
+                        }
                     } else if (trimmedLine.startsWith('Kunci jawaban:') || trimmedLine.startsWith('Jawaban:')) {
-                        if (currentQuestion) currentQuestion.correctAnswer = trimmedLine.slice(-1);
+                        if (currentQuestion) {
+                            const answer = trimmedLine.split(':')[-1].trim().charAt(0).toUpperCase();
+                            currentQuestion.correctAnswer = answer;
+                        }
                     }
                 }
             }
-            if (currentQuestion) parahyanganQuestions.push(currentQuestion);
+            if (currentQuestion) {
+                 currentQuestion.options = currentQuestion.options.map(opt => opt.replace(/^[a-zA-Z]\.\s?/, '').replace('✅', '').trim());
+                parahyanganQuestions.push(currentQuestion);
+            }
             return parahyanganQuestions;
         } catch (error) {
             console.error('Error loading or parsing soal.txt:', error);
@@ -59,8 +88,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             const question = quizQuestions[currentQuestionIndex];
             quizQuestion.textContent = question.question;
             quizOptions.innerHTML = '';
+
             quizImage.classList.add('hidden');
             quizImage.src = '';
+
+            if (question.image) {
+                quizImage.src = `../quiz/assets/img/${question.image}`;
+                quizImage.classList.remove('hidden');
+            }
 
             question.options.forEach((option, index) => {
                 const button = document.createElement('button');

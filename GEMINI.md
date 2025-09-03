@@ -19,6 +19,8 @@ To create an interactive web-based educational game, "Sahabat Tumbuhanku," that 
 
 - **Educational Video & Quiz Integration:**
   - A video lesson (`Fotosintesis.mp4`) and a quiz are shown after the Palemahan minigame.
-  - A video lesson and a quiz are planned for after the Pawongan and Parahyangan minigames.
+  - **Enhanced Quiz Feedback:** All three quizzes (Palemahan, Pawongan, Parahyangan) now feature character-specific, score-based feedback displayed on a dedicated results screen.
+    - The feedback includes varying messages and character expressions (Loka, Sari, Yana) based on the player's score.
+    - **Bug Fixes:** Resolved issues with the quiz feedback screen not appearing and corrected font colors to ensure readability.
 
 **To resume work:** When you return, please ask me to `read_file` this `GEMINI.md` file to load the context.

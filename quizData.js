@@ -1,89 +1,113 @@
+
 export const quizQuestions = [
   {
-    "question": "Perhatikan gambar berikut! Bagian tumbuhan yang ditunjuk pada gambar di atas berfungsi untuk …",
+    "question": "Bagian tumbuhan yang ditunjuk pada gambar di atas berfungsi untuk …",
     "options": [
-      "A. Menyerap air dan mineral dari tanah",
-      "B. Mengangkut hasil fotosintesis",
-      "C. Tempat terjadinya fotosintesis",
-      "D. Menarik serangga penyerbuk"
+      "Menyerap air dan mineral dari tanah",
+      "Mengangkut hasil fotosintesis",
+      "Tempat terjadinya fotosintesis",
+      "Menarik serangga penyerbuk"
     ],
     "correctAnswer": "A",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": "",
-    "image": "assets/img/question1.jpg"
+    "image": "soal1.png"
   },
   {
-    "question": "Perhatikan gambar daun berikut ini:",
+    "question": "Gambar tersebut yang ditunjukkan pada tanda panah adalah bagian tumbuhan yang yaitu …",
     "options": [
-      "A. Akar",
-      "B. Daun",
-      "C. Batang",
-      "D. Bunga"
+      "Akar",
+      "Daun",
+      "Batang",
+      "Bunga"
     ],
     "correctAnswer": "B",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": ""
+    "image": "soal2.png"
   },
   {
-    "question": "Pak Guru membawa bunga mawar  ke kelas. Siswa diminta menyebutkan bagian tumbuhan yang memiliki kelopak dan benang sari.",
+    "question": "Pak Guru membawa gambar bunga  ke kelas. Siswa diminta menyebutkan bagian tumbuhan yang memiliki kelopak dan benang sari. Bagian apakah itu?",
     "options": [
-      "A. Akar",
-      "B. Batang",
-      "C. Bunga",
-      "D. Daun"
+      "Akar",
+      "Batang",
+      "Bunga",
+      "Daun"
     ],
     "correctAnswer": "C",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": "",
-    "image": "assets/img/question3.jpg"
+    "image": "soal3.png"
   },
   {
-    "question": "Gambar berikut menunjukkan bagian tumbuhan yang tegak dan menghubungkan akar dengan daun:",
+    "question": "Bagian tumbuhan yang berfungsi utama sebagai tempat fotosintesis adalah...",
     "options": [
-      "A. Batang",
-      "B. Bunga",
-      "C. Akar",
-      "D. Buah"
+      "Akar",
+      "Batang",
+      "Daun",
+      "Biji"
+    ],
+    "correctAnswer": "C",
+    "image": ""
+  },
+  {
+    "question": "Gambar berikut pada tanda panah adalah bagian tumbuhan yang tegak dan menghubungkan akar dengan daun yaitu Bagian tumbuhan pada gambar tersebut adalah …",
+    "options": [
+      "Batang",
+      "Bunga",
+      "Akar",
+      "Buah"
     ],
     "correctAnswer": "A",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": "",
-    "image": "assets/img/question5.jpg"
+    "image": "soal4.png"
   },
   {
     "question": "Bagian tumbuhan yang menyerap nutrisi dari tanah adalah ...",
     "options": [
-      "A. Daun",
-      "B. Biji",
-      "C. Batang",
-      "D. Akar"
+      "Daun",
+      "Biji",
+      "Batang",
+      "Akar"
     ],
     "correctAnswer": "D",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": ""
+    "image": ""
   },
   {
     "question": "Bagian yang melindungi biji di dalam buah disebut ...",
     "options": [
-      "A. Kulit batang",
-      "B. Daun",
-      "C. Daging buah",
-      "D. Kloroplas"
+      "Kulit batang",
+      "Daun",
+      "Daging buah",
+      "Kloroplas"
     ],
     "correctAnswer": "C",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": ""
+    "image": ""
   },
   {
     "question": "Akar serabut biasa dimiliki oleh tumbuhan ...",
     "options": [
-      "A. Kacang tanah",
-      "B. Padi",
-      "C. Mangga",
-      "D. Jambu"
+      "Kacang tanah",
+      "Padi",
+      "Mangga",
+      "Jambu"
     ],
     "correctAnswer": "B",
-    "category": "Mengidentifikasi bagian-bagian tubuh dari tumbuhan",
-    "notes": ""
+    "image": ""
+  },
+  {
+    "question": "Apa nama bagian tumbuhan yang berkembang menjadi buah?",
+    "options": [
+      "Biji",
+      "Daun",
+      "Bunga",
+      "Akar"
+    ],
+    "correctAnswer": "C",
+    "image": ""
+  },
+  {
+    "question": "Manakah bagian tumbuhan yang biasanya paling banyak mengandung klorofil?",
+    "options": [
+      "(4) Akar",
+      "(3) Batang",
+      "(1) Daun",
+      "(2) Bunga"
+    ],
+    "correctAnswer": "C",
+    "image": "soal5.png"
   }
-]
+];

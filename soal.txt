@@ -9,7 +9,10 @@ ________________________________________
 🔹 I. Soal Tujuan 1: Mengidentifikasi bagian-bagian tubuh dari tumbuhan (10 Soal)
 Fokus 6C: Critical Thinking
 Nilai THK dominan: Palemahan (hubungan dengan alam)
-1.	Perhatikan gambar berikut! Bagian tumbuhan yang ditunjuk pada gambar di atas berfungsi untuk …
+
+1.	Perhatikan gambar berikut!
+soal1.png
+ Bagian tumbuhan yang ditunjuk pada gambar di atas berfungsi untuk …
 A. Menyerap air dan mineral dari tanah
 B. Mengangkut hasil fotosintesis
 C. Tempat terjadinya fotosintesis
@@ -17,14 +20,16 @@ D. Menarik serangga penyerbuk
 Kunci jawaban: A
 ________________________________________
 2.	Perhatikan gambar daun berikut ini:
-Gambar tersebut menunjukkan bagian tumbuhan yang bernama …
+soal2.png
+Gambar tersebut yang ditunjukkan pada tanda panah adalah bagian tumbuhan yang yaitu …
 A. Akar
 B. Daun
 C. Batang
 D. Bunga
 Kunci jawaban: B
 ________________________________________
-3.	Pak Guru membawa bunga mawar ( gambar) ke kelas. Siswa diminta menyebutkan bagian tumbuhan yang memiliki kelopak dan benang sari.
+soal3.png
+3.	Pak Guru membawa gambar bunga  ke kelas. Siswa diminta menyebutkan bagian tumbuhan yang memiliki kelopak dan benang sari.
 Bagian apakah itu?
 A. Akar
 B. Batang
@@ -32,12 +37,14 @@ C. Bunga
 D. Daun
 Kunci jawaban: C
 ________________________________________
-4.	Bagian ( gambar)  tumbuhan yang berfungsi utama sebagai tempat fotosintesis adalah...
+4.	Bagian tumbuhan yang berfungsi utama sebagai tempat fotosintesis adalah...
 a. Akar
 b. Batang
 c. Daun ✅
-d. Biji ________________________________________
-5.	Gambar berikut menunjukkan bagian tumbuhan yang tegak dan menghubungkan akar dengan daun:
+d. Biji 
+________________________________________
+soal4.png
+5.	Gambar berikut pada tanda panah adalah bagian tumbuhan yang tegak dan menghubungkan akar dengan daun yaitu
 Bagian tumbuhan pada gambar tersebut adalah …
 A. Batang
 B. Bunga
@@ -67,11 +74,13 @@ a. Biji
 b. Daun
 c. Bunga ✅
 d. Akar 
-10.  ( gambar) Manakah bagian tumbuhan yang biasanya paling banyak mengandung klorofil?
-a. Akar
-b. Batang
-c. Daun ✅
-d. Bunga ________________________________________
+
+soal5.png
+10.  Manakah bagian tumbuhan yang biasanya paling banyak mengandung klorofil?
+a. (4) Akar
+b. (3) Batang
+c. (1) Daun ✅
+d. (2) Bunga ________________________________________
 🔹 II. Soal Tujuan 2: Memahami fungsi bagian tubuh tumbuhan (10 Soal)
 Fokus 6C: Character (karakter), Critical Thinking
 Nilai THK dominan: Pawongan (hubungan antar makhluk hidup)
@@ -81,9 +90,9 @@ B. Karena berfungsi mengedarkan oksigen
 C. Karena menyerap air dan menancapkan tumbuhan
 D. Karena bisa menjadi tempat hidup serangga
 Jawaban: C
-12.	Jika daun tumbuhan dirusak, maka proses fotosintesis akan terganggu karena ...
+12.	Jika daun pada tumbuhan dirusak, maka proses fotosintesis akan terganggu karena ...
 A. Daun menyerap air
-B. Daun menghasilkan makanan
+B. mengurangi permukaan daun untuk menyerap cahaya matahari, yang merupakan energi utama fotosintesis
 C. Daun menarik penyerbuk
 D. Daun menyimpan cadangan makanan
 Jawaban: B
@@ -96,7 +105,7 @@ Jawaban: C
 14.	Mengapa batang penting untuk menyokong tumbuhan tegak berdiri?
 A. Karena batang berisi biji
 B. Karena batang mengandung tanah
-C. Karena batang kuat menopang tubuh
+C. menegakkan tumbuhan agar daun, bunga, dan buah dapat tumbuh untuk mendapatkan cahaya matahari 
 D. Karena batang bisa berubah jadi daun
 Jawaban: C
 15.	Jika akar tumbuhan tidak kuat, dampaknya adalah ...
@@ -117,13 +126,13 @@ B. Merusak akar tumbuhan liar
 C. Merawat tanaman dengan baik
 D. Menginjak tanaman untuk bermain
 Jawaban: C (nilai karakter, pawongan)
-18.	Buah yang matang mengandung biji untuk ...
+18.	Terdapat biji pada buah yang berfungsi untuk...
 A. Menjadi makanan manusia
 B. Tempat menyimpan air
 C. Perkembangbiakan tumbuhan
 D. Membuat daun baru
 Jawaban: C
-19.	Daun pada tumbuhan menghasilkan oksigen, yang dimanfaatkan oleh ...
+19.	Daun pada tumbuhan menghasilkan oksigen, oksigen tersebut  yang dimanfaatkan oleh ...
 A. Tumbuhan saja
 B. Hewan pemakan tumbuhan
 C. Semua makhluk hidup
