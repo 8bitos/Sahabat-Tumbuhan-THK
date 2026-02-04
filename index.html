@@ -22,8 +22,9 @@
                     <div id="dialogue-buttons"></div>
                 </div>
             </div>
-            
         </div>
+        <button id="book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Materi"><span>Buku Materi</span></button>
+        <button id="tts-toggle-button" class="btn">TTS ON</button>
     </div>
 
     <!-- Quiz Overlay Container -->
@@ -38,6 +39,129 @@
             <button id="finish-quiz-btn" class="hidden">Finish Quiz</button>
         </div>
     </div>
+    <script src="tts.js"></script>
     <script src="script.js"></script>
+
+    <audio id="background-music" src="assets/audio/bgm.mp3" loop volume="0"></audio>
+
+    <!-- Intro Overlay Container -->
+    <div id="intro-overlay-container" class="active"> <!-- Active by default for intro -->
+        <div id="intro-content">
+            <h1 id="intro-title"></h1>
+            <div id="intro-text-area"></div>
+            <div id="intro-buttons">
+                <button id="intro-next-btn">Lanjut</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Material Modal (for the book) -->
+    <div id="material-modal" class="hidden">
+        <div class="material-content">
+            <span class="close-button" id="material-close-button">&times;</span>
+            <div class="material-text-area">
+                <h2>Bagian-Bagian dan Fungsi Tumbuhan</h2>
+
+                <h3>A. Bagian-Bagian Tubuh Tumbuhan</h3>
+                <p>Tumbuhan adalah makhluk hidup yang memiliki bagian-bagian tubuh. Setiap bagian tubuh tumbuhan memiliki tugas atau fungsi masing-masing. Semua bagian tersebut saling bekerja sama agar tumbuhan dapat hidup, tumbuh, dan berkembang.</p>
+                <p>Bagian-bagian utama tubuh tumbuhan terdiri dari:</p>
+                <ul>
+                    <li>Akar</li>
+                    <li>Batang</li>
+                    <li>Daun</li>
+                    <li>Bunga</li>
+                    <li>Buah</li>
+                    <li>Biji</li>
+                </ul>
+                <p>Meskipun bentuk dan ukuran tumbuhan berbeda-beda, pada umumnya tumbuhan memiliki bagian-bagian tersebut.</p>
+
+                <h3>B. Fungsi Masing-Masing Bagian Tubuh Tumbuhan</h3>
+                <h4>1. Akar</h4>
+                <p>Akar adalah bagian tumbuhan yang tumbuh ke dalam tanah.</p>
+                <p>Fungsi akar secara lebih jelas adalah:</p>
+                <ul>
+                    <li>Menyerap air dan zat hara (makanan) dari dalam tanah yang dibutuhkan tumbuhan untuk hidup.</li>
+                    <li>Menjaga tumbuhan agar berdiri tegak dan tidak mudah roboh.</li>
+                    <li>Pada beberapa tumbuhan, akar menyimpan cadangan makanan, misalnya wortel, singkong, dan ubi.</li>
+                </ul>
+                <p>Tanpa akar, tumbuhan tidak dapat menyerap air sehingga akan layu dan mati.</p>
+
+                <h4>2. Batang</h4>
+                <p>Batang merupakan bagian tumbuhan yang berada di atas tanah dan menjadi penghubung antara akar dan daun.</p>
+                <p>Fungsi batang adalah:</p>
+                <ul>
+                    <li>Menopang tumbuhan agar dapat berdiri tegak.</li>
+                    <li>Menyalurkan air dan zat hara dari akar ke daun.</li>
+                    <li>Menyalurkan makanan hasil fotosintesis dari daun ke seluruh bagian tumbuhan.</li>
+                    <li>Pada tumbuhan tertentu, batang juga berfungsi sebagai tempat menyimpan makanan, seperti pada tebu.</li>
+                </ul>
+                <p>Batang sangat penting karena menjadi jalan bagi air dan makanan di dalam tumbuhan.</p>
+
+                <h4>3. Daun</h4>
+                <p>Daun biasanya berwarna hijau karena mengandung zat hijau daun yang disebut klorofil.</p>
+                <p>Fungsi daun adalah:</p>
+                <ul>
+                    <li>Tempat pembuatan makanan melalui proses fotosintesis dengan bantuan cahaya matahari.</li>
+                    <li>Tempat pertukaran gas, yaitu mengambil karbon dioksida dan melepaskan oksigen.</li>
+                    <li>Tempat terjadinya penguapan air.</li>
+                </ul>
+                <p>Daun disebut sebagai dapur tumbuhan karena berfungsi membuat makanan.</p>
+
+                <h4>4. Bunga</h4>
+                <p>Bunga merupakan bagian tumbuhan yang berperan dalam perkembangbiakan.</p>
+                <p>Fungsi bunga adalah:</p>
+                <ul>
+                    <li>Tempat terjadinya penyerbukan.</li>
+                    <li>Tempat terjadinya pembuahan.</li>
+                    <li>Menghasilkan biji yang dapat tumbuh menjadi tumbuhan baru.</li>
+                </ul>
+                <p>Bunga membantu tumbuhan agar dapat menghasilkan keturunan.</p>
+
+                <h4>5. Buah</h4>
+                <p>Buah adalah bagian tumbuhan yang terbentuk dari bunga setelah terjadi pembuahan.</p>
+                <p>Fungsi buah adalah:</p>
+                <ul>
+                    <li>Melindungi biji agar tidak rusak.</li>
+                    <li>Membantu penyebaran biji, misalnya dengan bantuan hewan, manusia, atau air.</li>
+                </ul>
+
+                <h4>6. Biji</h4>
+                <p>Biji merupakan hasil dari pembuahan dan merupakan calon tumbuhan baru.</p>
+                <p>Fungsi biji adalah:</p>
+                <ul>
+                    <li>Menjadi cikal bakal tumbuhan baru.</li>
+                    <li>Menyimpan cadangan makanan yang digunakan saat biji mulai tumbuh.</li>
+                </ul>
+
+                <h3>C. Kaitan Fungsi Bagian Tubuh Tumbuhan dengan Kebutuhan Tumbuhan</h3>
+                <h4>1. Untuk Tumbuh</h4>
+                <p>Agar dapat tumbuh dengan baik, tumbuhan memerlukan air, zat hara, dan cahaya matahari.</p>
+                <ul>
+                    <li>Akar menyerap air dan zat hara dari tanah.</li>
+                    <li>Batang menyalurkan air dan zat hara ke seluruh bagian tumbuhan.</li>
+                    <li>Daun membuat makanan melalui fotosintesis.</li>
+                </ul>
+
+                <h4>2. Untuk Mempertahankan Diri</h4>
+                <p>Beberapa bagian tubuh tumbuhan membantu tumbuhan melindungi diri dari gangguan.</p>
+                <ul>
+                    <li>Batang berduri (seperti pada mawar) melindungi tumbuhan dari hewan pemakan tumbuhan.</li>
+                    <li>Daun berduri atau beracun melindungi tumbuhan dari musuh.</li>
+                    <li>Kulit batang yang keras melindungi bagian dalam tumbuhan.</li>
+                </ul>
+
+                <h4>3. Untuk Berkembang Biak</h4>
+                <p>Tumbuhan berkembang biak agar tidak punah.</p>
+                <ul>
+                    <li>Bunga berperan dalam proses penyerbukan dan pembuahan.</li>
+                    <li>Buah dan biji membantu menghasilkan tumbuhan baru.</li>
+                    <li>Biji tumbuh menjadi tanaman baru jika mendapat air, udara, dan cahaya yang cukup.</li>
+                </ul>
+
+                <h3>Kesimpulan</h3>
+                <p>Bagian-bagian tubuh tumbuhan memiliki fungsi yang berbeda-beda tetapi saling berkaitan. Dengan bagian tubuh tersebut, tumbuhan dapat tumbuh, mempertahankan diri, dan berkembang biak sehingga dapat terus hidup dan berkembang di lingkungan sekitarnya.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

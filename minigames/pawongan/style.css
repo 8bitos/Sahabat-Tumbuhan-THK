@@ -84,26 +84,43 @@
     gap: 1rem;
 }
 
+.ingredient-item-wrapper {
+    width: 80px;
+    display: flex; /* Flex container to stack image and name */
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    cursor: grab;
+    transition: transform 0.2s;
+    background-color: transparent;
+    border: none;
+}
+
+.ingredient-item-wrapper:hover {
+    transform: scale(1.1);
+}
+
+.ingredient-item-wrapper.selected .ingredient-shape {
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
 .ingredient-shape {
     width: 80px;
     height: 80px;
     border: 2px solid #ddd;
     border-radius: var(--border-radius);
-    cursor: grab;
-    transition: transform 0.2s, box-shadow 0.2s;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    transition: box-shadow 0.2s;
 }
 
-.ingredient-shape:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-}
-
-.ingredient-shape.selected {
-    border: 3px solid var(--primary-color);
-    box-shadow: 0 0 15px var(--primary-color);
+.ingredient-name {
+    font-size: 0.8em;
+    color: #5d4037; /* Dark brown for readability */
+    text-align: center;
+    width: 100%;
+    margin-top: 5px; /* Space between box and name */
 }
 
 #mixing-bowl {

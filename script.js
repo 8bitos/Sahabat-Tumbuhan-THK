@@ -5,6 +5,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const characterName = document.getElementById('character-name');
     const dialogueText = document.getElementById('dialogue-text');
 
+    const bookButton = document.getElementById('book-button');
+    const materialModal = document.getElementById('material-modal');
+    const materialCloseButton = document.getElementById('material-close-button');
+
+    const ttsToggleButton = document.getElementById('tts-toggle-button');
+    let ttsEnabled = localStorage.getItem('ttsEnabled') === 'false' ? false : true; // Default to true
+
+    const backgroundMusic = document.getElementById('background-music');
+    let currentVolume = 0;
+    const maxVolume = 0.7; // Adjust as needed
+    const fadeDuration = 3000; // 3 seconds
+    const fadeInterval = 50; // Milliseconds between volume adjustments
+
+    function fadeInMusic() {
+        if (!backgroundMusic.paused) {
+            backgroundMusic.volume = currentVolume;
+            const fadeAudio = setInterval(() => {
+                currentVolume += maxVolume / (fadeDuration / fadeInterval);
+                if (currentVolume >= maxVolume) {
+                    currentVolume = maxVolume;
+                    clearInterval(fadeAudio);
+                }
+                backgroundMusic.volume = currentVolume;
+            }, fadeInterval);
+        }
+    }
+
+    // Set initial button text and class
+    ttsToggleButton.textContent = ttsEnabled ? 'TTS ON' : 'TTS OFF';
+    if (!ttsEnabled) {
+        ttsToggleButton.classList.add('tts-off');
+    }
+
+    // Initialize TTS module with initial state
+    if (typeof TTS !== 'undefined') {
+        TTS.init(); // Initialize voices
+        TTS.setTtsEnabled(ttsEnabled); // Set initial state
+    }
+
     // Import quiz questions
     
 
@@ -26,6 +65,67 @@ document.addEventListener('DOMContentLoaded', () => {
         currentLocation: 'hub',
     };
 
+    let currentIntroStep = 0;
+    const introSteps = [
+        {
+            title: 'Sahabat Tumbuhanku: Petualangan Tri Hita Karana',
+            text: '' // Splash screen, text will be button
+        },
+        {
+            title: 'Petunjuk Penggunaan Game',
+            text: '1. Klik pada lokasi di peta untuk berinteraksi dengan karakter dan memulai minigame.\n2. Ikuti petunjuk dalam dialog untuk memainkan minigame.\n3. Jawab kuis untuk menguji pemahamanmu.\n4. Selesaikan semua misi untuk membantu menjaga keseimbangan Tri Hita Karana!'
+        },
+        {
+            title: 'Tujuan Pembelajaran',
+            text: `a. Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK, siswa mampu mengidentifikasi bagian-bagian tubuh dari tumbuhan.\nb. Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK, siswa mampu memahami fungsi dari masing-masing bagian tubuh tumbuhan.\nc. Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK siswa mampu mengaitkan fungsi bagian tubuh dengan kebutuhan tumbuhan untuk tumbuh dan mempertahankan diri, serta berkembang biak.`
+        },
+        {
+            title: 'Capaian Pembelajaran',
+            text: `Peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada tumbuhan (akar, batang, daun, bunga, buah, dan biji) serta kaitannya dengan kebutuhan tumbuhan untuk tumbuh, mempertahankan diri, dan berkembang biak, dengan mengaplikasikan media game edukasi Jagadipa berbasis nilai-nilai Tri Hita Karana`
+        }
+    ];
+
+    function startIntroOverlaySequence() {
+        const introOverlayContainer = document.getElementById('intro-overlay-container');
+        const introTitle = document.getElementById('intro-title');
+        const introTextArea = document.getElementById('intro-text-area');
+        const introNextBtn = document.getElementById('intro-next-btn');
+
+        function showIntroStep(stepIndex) {
+            currentIntroStep = stepIndex;
+            if (currentIntroStep < introSteps.length) {
+                introTitle.textContent = introSteps[currentIntroStep].title;
+                introTextArea.textContent = introSteps[currentIntroStep].text;
+
+                if (currentIntroStep === 0) {
+                    introNextBtn.textContent = 'Mulai';
+                } else if (currentIntroStep === introSteps.length - 1) {
+                    introNextBtn.textContent = 'Masuk ke menu map';
+                } else {
+                    introNextBtn.textContent = 'Lanjut';
+                }
+            }
+        }
+
+        introNextBtn.addEventListener('click', () => {
+            if (currentIntroStep < introSteps.length - 1) {
+                showIntroStep(currentIntroStep + 1);
+            } else {
+                introOverlayContainer.classList.add('hidden'); // Hide the intro
+                renderHub(); // Start the main game
+                // Start background music after user interaction
+                backgroundMusic.play().then(() => {
+                    fadeInMusic();
+                }).catch(error => {
+                    console.error("Error playing music:", error);
+                });
+            }
+        });
+
+        introOverlayContainer.classList.remove('hidden'); // Ensure it's visible
+        showIntroStep(0); // Start with the first step
+    }
+
     // --- CORE FUNCTIONS ---
 
     function updateUI() {
@@ -35,6 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function setDialogue(char, text, expression = '', buttons = []) {
         characterName.textContent = char;
         dialogueText.textContent = text;
+        TTS.speak(text, char); // Add TTS call
+
         if (char !== 'Narator' && expression) {
             characterImage.src = `assets/img/${char}/${char}-${expression}.png`;
             characterImage.style.display = 'block';
@@ -60,10 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
         gameWorld.classList.remove('minigame-active');
         setDialogue('Narator', 'Kamu berada di halaman sekolah. Ke mana kamu akan pergi selanjutnya? Klik salah satu lokasi.');
 
+        // Check if the book is unlocked
+        if (localStorage.getItem('palemahanBookUnlocked') === 'true') {
+            bookButton.classList.remove('hidden');
+        }
+
         const locations = [
-            { id: 'loka', name: 'Taman (Loka)', top: '20%', left: '15%', mission: 'palemahan' },
-            { id: 'sari', name: 'Kantin (Sari)', top: '50%', left: '50%', mission: 'pawongan' },
-            { id: 'yana', name: 'Pura (Yana)', top: '75%', left: '25%', mission: 'parahyangan' }
+            { id: 'yana', name: 'Parahyangan', top: '75%', left: '25%', mission: 'parahyangan' }, // Bottom: Parahyangan
+            { id: 'sari', name: 'Pawongan', top: '50%', left: '50%', mission: 'pawongan' }, // Middle: Pawongan
+            { id: 'loka', name: 'Palemahan', top: '25%', left: '15%', mission: 'palemahan' }  // Top: Palemahan
         ];
 
         locations.forEach(loc => {
@@ -102,6 +209,33 @@ document.addEventListener('DOMContentLoaded', () => {
             gameWorld.appendChild(locElement);
         });
     }
+
+    bookButton.addEventListener('click', () => {
+        materialModal.classList.remove('hidden');
+    });
+
+    materialCloseButton.addEventListener('click', () => {
+        materialModal.classList.add('hidden');
+    });
+
+    ttsToggleButton.addEventListener('click', () => {
+        ttsEnabled = !ttsEnabled;
+        localStorage.setItem('ttsEnabled', ttsEnabled);
+        ttsToggleButton.textContent = ttsEnabled ? 'TTS ON' : 'TTS OFF';
+        if (ttsEnabled) {
+            ttsToggleButton.classList.remove('tts-off');
+        } else {
+            ttsToggleButton.classList.add('tts-off');
+            // Optionally, stop any ongoing speech when TTS is turned off
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+        }
+        // Also update TTS module's internal state
+        if (typeof TTS !== 'undefined' && typeof TTS.setTtsEnabled === 'function') {
+            TTS.setTtsEnabled(ttsEnabled);
+        }
+    });
 
     // --- DRAGGABLE HELPER ---
     function makeDraggable(element, container) {
@@ -527,8 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- INITIALIZE GAME ---
     function init() {
-        renderHub();
-        
+        startIntroOverlaySequence();
     }
 
     init();

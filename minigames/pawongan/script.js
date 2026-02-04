@@ -75,64 +75,73 @@ document.addEventListener('DOMContentLoaded', () => {
         tooltip.style.visibility = 'hidden';
     }
 
-    // --- Core Functions ---
-    function renderIngredients() {
-        ingredientsShelf.innerHTML = '';
-        ingredients.forEach(ing => {
-            const ingEl = document.createElement('div');
-            ingEl.className = 'ingredient-shape';
-            ingEl.id = ing.id;
-            ingEl.dataset.id = ing.id; // Set data-id attribute
-            ingEl.style.backgroundImage = `url('assets/img/${ing.image}')`; // Use image
-            console.log(`Loading image for ${ing.id}: ${ingEl.style.backgroundImage}`);
-            ingEl.draggable = true;
-
-            ingEl.addEventListener('dragstart', e => {
-                e.dataTransfer.setData('text/plain', e.target.dataset.id); // Get id from dataset
-            });
-            ingEl.addEventListener('mouseover', e => {
-                tooltip.textContent = ing.clue;
-                tooltip.style.left = `${e.pageX + 15}px`;
-                tooltip.style.top = `${e.pageY + 15}px`;
-                tooltip.style.visibility = 'visible';
-                setDialogue('explain', ing.clue); // Dialogue on hover
-            });
-            ingEl.addEventListener('mousemove', e => {
-                tooltip.style.left = `${e.pageX + 15}px`;
-                tooltip.style.top = `${e.pageY + 15}px`;
-            });
-            ingEl.addEventListener('mouseout', () => {
-                tooltip.style.visibility = 'hidden';
-                setDialogue('explain', 'Bantu aku memecahkan resep nenek ini!'); // Reset dialogue
-            });
-
-            // --- Tap and Drop Logic ---
-            ingEl.addEventListener('click', () => {
-                // Show the clue in the dialogue box on click
-                setDialogue('explain', ing.clue);
-
-                // If this ingredient is already selected, deselect it
-                if (ingEl.classList.contains('selected')) {
-                    ingEl.classList.remove('selected');
-                    selectedIngredient = null;
-                } else {
-                    // Deselect any other selected ingredient
-                    const currentlySelected = document.querySelector('.ingredient-shape.selected');
-                    if (currentlySelected) {
-                        currentlySelected.classList.remove('selected');
+                // --- Core Functions ---
+        function renderIngredients() {
+            ingredientsShelf.innerHTML = '';
+            ingredients.forEach(ing => {
+                const wrapperEl = document.createElement('div');
+                wrapperEl.className = 'ingredient-item-wrapper';
+                wrapperEl.id = `wrapper-${ing.id}`; // Give wrapper an ID for easier selection
+                wrapperEl.dataset.id = ing.id; // Store ingredient ID on wrapper
+                wrapperEl.draggable = true; // Make wrapper draggable
+    
+                wrapperEl.addEventListener('dragstart', e => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.id); // Get id from dataset on wrapper
+                });
+                wrapperEl.addEventListener('mouseover', e => {
+                    tooltip.textContent = ing.clue;
+                    tooltip.style.left = `${e.pageX + 15}px`;
+                    tooltip.style.top = `${e.pageY + 15}px`;
+                    tooltip.style.visibility = 'visible';
+                    setDialogue('explain', ing.clue); // Dialogue on hover
+                });
+                wrapperEl.addEventListener('mousemove', e => {
+                    tooltip.style.left = `${e.pageX + 15}px`;
+                    tooltip.style.top = `${e.pageY + 15}px`;
+                });
+                wrapperEl.addEventListener('mouseout', () => {
+                    tooltip.style.visibility = 'hidden';
+                    setDialogue('explain', 'Bantu aku memecahkan resep nenek ini!'); // Reset dialogue
+                });
+    
+                // --- Tap and Drop Logic ---
+                wrapperEl.addEventListener('click', () => {
+                    // Show the clue in the dialogue box on click
+                    setDialogue('explain', ing.clue);
+    
+                    // If this ingredient is already selected, deselect it
+                    if (wrapperEl.classList.contains('selected')) {
+                        wrapperEl.classList.remove('selected');
+                        selectedIngredient = null;
+                    } else {
+                        // Deselect any other selected ingredient
+                        const currentlySelected = document.querySelector('.ingredient-item-wrapper.selected');
+                        if (currentlySelected) {
+                            currentlySelected.classList.remove('selected');
+                        }
+                        // Select the new ingredient
+                        wrapperEl.classList.add('selected');
+                        selectedIngredient = ing.id;
                     }
-                    // Select the new ingredient
-                    ingEl.classList.add('selected');
-                    selectedIngredient = ing.id;
-                }
+                });
+    
+                const ingEl = document.createElement('div');
+                ingEl.className = 'ingredient-shape'; // This will now represent the image only
+                ingEl.style.backgroundImage = `url('assets/img/${ing.image}')`;
+                ingEl.style.width = '100%'; // Make it fill the wrapper
+                ingEl.style.height = '80%'; // Adjust height for name
+                
+                const nameEl = document.createElement('span');
+                nameEl.textContent = ing.name;
+                nameEl.className = 'ingredient-name';
+    
+                wrapperEl.appendChild(ingEl);
+                wrapperEl.appendChild(nameEl);
+                ingredientsShelf.appendChild(wrapperEl);
             });
-
-            ingredientsShelf.appendChild(ingEl);
-        });
-    }
-
-    function addIngredientToMix(id) {
-        const ingredient = ingredients.find(ing => ing.id === id);
+        }
+    
+        function addIngredientToMix(id) {        const ingredient = ingredients.find(ing => ing.id === id);
         if (ingredient) {
             if (currentMix.length < 3) {
                 if (!currentMix.includes(id)) {
@@ -185,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setDialogue(type, text) {
         dialogueTextEl.textContent = text;
+        TTS.speak(text, 'Sari'); // Add TTS call
         let imageName = 'Sari-Smile.png';
         switch (type) {
             case 'explain':

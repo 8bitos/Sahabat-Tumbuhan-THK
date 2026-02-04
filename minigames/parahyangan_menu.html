@@ -94,6 +94,7 @@
         </div>
     </div>
 
+    <script src="../../tts.js"></script>
     <script>
         const characterImage = document.getElementById('character-expression');
         const dialogueText = document.getElementById('dialogue-text');
@@ -177,6 +178,7 @@
             setTimeout(() => {
                 characterImage.src = `../assets/img/${scene.character}/${scene.character}-${scene.expression}.png`;
                 dialogueText.textContent = scene.text;
+                TTS.speak(scene.text, scene.character); // Add TTS call
                 choicesContainer.innerHTML = '';
 
                 scene.choices.forEach(choice => {
@@ -197,7 +199,7 @@
 
                 characterImage.style.opacity = 1;
                 dialogueText.style.opacity = 1;
-            }, 400);
+            }, 800);
         }
 
         renderScene(0);

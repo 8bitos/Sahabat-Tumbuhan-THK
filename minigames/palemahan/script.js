@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setDialogue(text, character = 'Loka-Smile') {
         dialogueText.textContent = text;
+        TTS.speak(text, 'Loka'); // Add TTS call
         lokaAvatar.src = `../../assets/img/Loka/${character}.png`;
     }
 
@@ -185,7 +186,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hide any active needs/pests
         needBubble.classList.add('hidden');
         pestElement.classList.add('hidden');
-        setTimeout(() => videoModal.classList.remove('hidden'), 2000);
+
+        // Loka's dialogue about the book
+        Swal.fire({
+            title: 'Hadiah Istimewa!',
+            html: `Wah, kamu hebat sekali! Tanaman kita sudah panen dengan sempurna. Sebagai hadiah atas kerja kerasmu dalam merawat alam, aku punya sesuatu untukmu. Ini ada buku tentang semua bagian tumbuhan dan fungsinya. Semoga bermanfaat!`,
+            icon: 'success',
+            confirmButtonText: 'Terima Buku',
+            allowOutsideClick: false,
+        }).then(() => {
+            // Set flag in localStorage to unlock the book
+            localStorage.setItem('palemahanBookUnlocked', 'true');
+            // Show video modal after user confirms
+            setTimeout(() => videoModal.classList.remove('hidden'), 500); // Short delay before video appears
+        });
     }
 
     // --- Event Listeners ---
@@ -212,6 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     explanationVideo.addEventListener('ended', () => {
+        // Set flag in localStorage to unlock the book
+        localStorage.setItem('palemahanBookUnlocked', 'true');
         // Redirect to quiz after video ends
         window.location.href = '../quiz/index.html';
     });

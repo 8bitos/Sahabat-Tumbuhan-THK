@@ -141,6 +141,7 @@ html, body {
     align-items: center; /* Center horizontally */
     gap: 5px; /* Space between image and text */
     text-align: center;
+    z-index: 10; /* Ensure map locations are above background */
 }
 
 .map-location-avatar {
@@ -149,6 +150,7 @@ html, body {
     border-radius: 50%; /* Make it round */
     object-fit: cover;
     border: 2px solid white;
+    z-index: 11; /* Ensure avatar is above map location background */
 }
 
 .map-location span {
@@ -161,9 +163,9 @@ html, body {
     background-color: rgba(255, 165, 0, 0.9);
 }
 
-#location-loka { top: 20%; left: 15%; }
-#location-sari { top: 50%; left: 50%; }
-#location-yana { top: 75%; left: 25%; }
+#location-yana { top: 75%; left: 25%; } /* Bottom: Parahyangan */
+#location-sari { top: 50%; left: 50%; } /* Middle: Pawongan */
+#location-loka { top: 25%; left: 15%; } /* Top: Palemahan */
 
 /* Generic Minigame Styles - These will be centered by .minigame-active on #game-world */
 .minigame-board {
@@ -603,3 +605,205 @@ html, body {
 #next-question-btn.hidden, #finish-quiz-btn.hidden {
     display: none !important;
 }
+
+/* Intro Overlay Styles */
+#intro-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000; /* Ensure it's on top of everything */
+    color: white;
+    text-align: center;
+    flex-direction: column;
+}
+
+#intro-overlay-container.hidden {
+    display: none !important;
+}
+
+#intro-content {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 800px;
+    margin: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#intro-title {
+    font-size: 2.5rem;
+    color: #ffd700; /* Gold-like color */
+    margin-bottom: 10px;
+}
+
+#intro-text-area {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    white-space: pre-wrap; /* Preserve newlines */
+    text-align: left;
+}
+
+#intro-buttons {
+    margin-top: 20px;
+}
+
+#intro-next-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3b5998;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#intro-next-btn:hover {
+    background-color: #2a4270;
+}
+
+/* Responsive adjustments for intro */
+@media (max-width: 768px) {
+    #intro-title {
+        font-size: 1.8rem;
+    }
+
+    #intro-text-area {
+        font-size: 1rem;
+    }
+
+    #intro-next-btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+/* --- Book Button --- */
+#book-button {
+    position: absolute; /* Position independently */
+    top: 10px;
+    left: 10px;
+    z-index: 100; /* Ensure it's above other elements */
+    padding: 8px 12px; /* Adjust padding */
+    background-color: rgba(139, 69, 19, 0.8); /* Semi-transparent brown */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex; /* Use flexbox for content alignment */
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+}
+
+#book-button:hover {
+    background-color: #a0522d;
+}
+
+#book-button img {
+    width: 30px; /* Smaller icon size */
+    height: 30px;
+    object-fit: contain;
+}
+
+/* --- TTS Toggle Button --- */
+#tts-toggle-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    padding: 8px 12px;
+    background-color: rgba(0, 128, 0, 0.8); /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#tts-toggle-button.tts-off {
+    background-color: rgba(128, 128, 128, 0.8); /* Gray when off */
+}
+
+#tts-toggle-button:hover {
+    background-color: rgba(0, 128, 0, 1);
+}
+
+#tts-toggle-button.tts-off:hover {
+    background-color: rgba(128, 128, 128, 1);
+}
+
+/* --- Material Modal Styles (for the book) --- */
+#material-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000; /* Ensure it's on top of everything */
+    color: #333;
+}
+
+#material-modal .material-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90vh; /* Limit height to allow scrolling */
+    overflow-y: auto; /* Enable scrolling for long content */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    text-align: left;
+}
+
+#material-modal .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #555;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+#material-modal .close-button:hover {
+    color: #000;
+}
+
+#material-modal .material-text-area h2,
+#material-modal .material-text-area h3,
+#material-modal .material-text-area h4 {
+    color: #8B4513; /* Brown color */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#material-modal .material-text-area p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+#material-modal .material-text-area ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 0.8rem;
+}
+
+#material-modal .material-text-area li {
+    margin-bottom: 0.4rem;
+}
+
