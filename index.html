@@ -23,29 +23,47 @@
                 </div>
             </div>
         </div>
-        <button id="book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Materi"><span>Buku Materi</span></button>
-        <button id="tts-toggle-button" class="btn">TTS ON</button>
+        <button id="book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Tumbuhan"><span>Buku Tumbuhan</span></button>
+        <button id="medicine-book-button" class="btn hidden"><img src="assets/img/bukuobat.png" alt="Buku Obat"><span>Buku Obat</span></button>
+        <button id="yadnya-book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Yadnya"><span>Buku Yadnya</span></button>
+
+        <button id="quiz-button" class="btn hidden" style="position: absolute; top: 160px; left: 10px; z-index: 100; padding: 8px 12px; background-color: rgba(75, 0, 130, 0.8); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;"><img src="assets/img/quiz.png" alt="Quiz" style="width: 30px; height: 30px; object-fit: contain;"><span>Quiz</span></button>
     </div>
 
     <!-- Quiz Overlay Container -->
-    <div id="quiz-overlay-container" class="hidden"> <!-- Hidden by default -->
-        <div id="quiz-content">
-            <h2 id="quiz-question"></h2>
-            <div id="quiz-options">
-                <!-- Options will be dynamically loaded here -->
+    <div id="quiz-overlay-container" class="hidden">
+        <div id="quiz-card">
+            <h2 id="quiz-title">Quiz Tri Hita Karana</h2>
+            <div id="quiz-body">
+                <div id="question-number"></div>
+                <div id="quiz-question-text"></div>
+                <div id="quiz-image-container"></div>
+                <div id="quiz-options-container"></div>
             </div>
-            <div id="quiz-feedback"></div>
-            <button id="next-question-btn" class="hidden">Next Question</button>
-            <button id="finish-quiz-btn" class="hidden">Finish Quiz</button>
+            <div id="quiz-navigation">
+                <button id="prev-question-btn" class="nav-button" disabled>Sebelumnya</button>
+                <button id="next-question-btn" class="nav-button">Selanjutnya</button>
+                <button id="submit-quiz-btn" class="nav-button hidden">Selesai</button>
+            </div>
         </div>
     </div>
-    <script src="tts.js"></script>
-    <script src="script.js"></script>
 
-    <audio id="background-music" src="assets/audio/bgm.mp3" loop volume="0"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/globals.js"></script>
+    <script src="js/audio_utils.js"></script>
+    <script src="js/core_functions.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/minigames.js"></script>
+    <script src="js/intro_sequence.js"></script>
+    <script src="js/quiz.js"></script> <!-- New quiz script -->
+    <script src="js/main.js"></script>
+
+    <audio id="background-music" src="assets/audio/bgm.mp3" loop></audio>
 
     <!-- Intro Overlay Container -->
-    <div id="intro-overlay-container" class="active"> <!-- Active by default for intro -->
+    <div id="intro-overlay-container"> <!-- Active by default for intro -->
         <div id="intro-content">
             <h1 id="intro-title"></h1>
             <div id="intro-text-area"></div>
@@ -60,106 +78,76 @@
         <div class="material-content">
             <span class="close-button" id="material-close-button">&times;</span>
             <div class="material-text-area">
-                <h2>Bagian-Bagian dan Fungsi Tumbuhan</h2>
+                <!-- Content for book will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
 
-                <h3>A. Bagian-Bagian Tubuh Tumbuhan</h3>
-                <p>Tumbuhan adalah makhluk hidup yang memiliki bagian-bagian tubuh. Setiap bagian tubuh tumbuhan memiliki tugas atau fungsi masing-masing. Semua bagian tersebut saling bekerja sama agar tumbuhan dapat hidup, tumbuh, dan berkembang.</p>
-                <p>Bagian-bagian utama tubuh tumbuhan terdiri dari:</p>
-                <ul>
-                    <li>Akar</li>
-                    <li>Batang</li>
-                    <li>Daun</li>
-                    <li>Bunga</li>
-                    <li>Buah</li>
-                    <li>Biji</li>
-                </ul>
-                <p>Meskipun bentuk dan ukuran tumbuhan berbeda-beda, pada umumnya tumbuhan memiliki bagian-bagian tersebut.</p>
+    <!-- Medicine Material Modal (for the book of medicine) -->
+    <div id="medicine-material-modal" class="hidden">
+        <div class="material-content">
+            <span class="close-button" id="medicine-material-close-button">&times;</span>
+            <div class="material-text-area">
+                <h2>Informasi Bahan Obat</h2>
+                
+                <h3>1. Jahe</h3>
+                <p>Jahe adalah tanaman rimpang yang sangat populer sebagai rempah-rempah dan bahan obat. Rimpangnya berbentuk jemari yang menggembung di ruas-ruas tengah.</p>
+                <p><strong>Fungsi:</strong> Memberi rasa hangat, meredakan masuk angin, mual, dan batuk.</p>
+                
+                <h3>2. Kunyit</h3>
+                <p>Kunyit dikenal sebagai "Raja Jamu" karena khasiatnya yang luar biasa. Rimpang kunyit berwarna kuning cerah dan memiliki aroma yang khas.</p>
+                <p><strong>Fungsi:</strong> Meningkatkan daya tahan tubuh, sebagai anti-inflamasi (anti-radang), dan baik untuk kesehatan pencernaan.</p>
+                
+                <h3>3. Daun Pandan</h3>
+                <p>Daun pandan adalah tumbuhan tropis yang memiliki aroma wangi dan khas. Daunnya sering digunakan sebagai pewangi dan pewarna alami makanan.</p>
+                <p><strong>Fungsi:</strong> Memberikan aroma menenangkan, meredakan stres, dan menurunkan tekanan darah tinggi.</p>
+                
+                <h3>4. Gula Merah</h3>
+                <p>Gula merah adalah pemanis alami yang dibuat dari nira pohon kelapa atau aren. Warnanya coklat kemerahan dan rasanya legit.</p>
+                <p><strong>Fungsi:</strong> Sumber energi, mengandung mineral seperti zat besi dan kalsium.</p>
+                
+                <h3>5. Jeruk Nipis</h3>
+                <p>Jeruk nipis adalah buah kecil berwarna hijau yang sangat asam. Buah ini kaya akan vitamin C.</p>
+                <p><strong>Fungsi:</strong> Meningkatkan imunitas, meredakan batuk, dan membantu detoksifikasi tubuh.</p>
+                
+                <h3>6. Garam</h3>
+                <p>Garam adalah mineral kristal yang terutama terdiri dari natrium klorida (NaCl). Garam sangat penting untuk kehidupan.</p>
+                <p><strong>Fungsi:</strong> Menyeimbangkan rasa, menjaga keseimbangan cairan tubuh, dan membantu fungsi saraf.</p>
+                
+            </div>
+        </div>
+    </div>
 
-                <h3>B. Fungsi Masing-Masing Bagian Tubuh Tumbuhan</h3>
-                <h4>1. Akar</h4>
-                <p>Akar adalah bagian tumbuhan yang tumbuh ke dalam tanah.</p>
-                <p>Fungsi akar secara lebih jelas adalah:</p>
+    <!-- Yadnya Material Modal (for the book of offerings) -->
+    <div id="yadnya-material-modal" class="hidden">
+        <div class="material-content">
+            <span class="close-button" id="yadnya-material-close-button">&times;</span>
+            <div class="material-text-area">
+                <h2>Informasi Mengenai Yadnya</h2>
+                
+                <h3>Yadnya: Wujud Syukur dan Harmoni</h3>
+                <p>Yadnya adalah persembahan suci dengan tulus ikhlas kepada Ida Sang Hyang Widhi Wasa (Tuhan Yang Maha Esa) beserta manifestasi-Nya, leluhur, sesama manusia, dan alam semesta.</p>
+                <p>Yadnya merupakan salah satu pilar utama dalam ajaran Tri Hita Karana, khususnya dalam aspek <b>Parahyangan</b>, yaitu hubungan harmonis antara manusia dengan Tuhan.</p>
+                
+                <h3>Jenis-Jenis Yadnya</h3>
                 <ul>
-                    <li>Menyerap air dan zat hara (makanan) dari dalam tanah yang dibutuhkan tumbuhan untuk hidup.</li>
-                    <li>Menjaga tumbuhan agar berdiri tegak dan tidak mudah roboh.</li>
-                    <li>Pada beberapa tumbuhan, akar menyimpan cadangan makanan, misalnya wortel, singkong, dan ubi.</li>
-                </ul>
-                <p>Tanpa akar, tumbuhan tidak dapat menyerap air sehingga akan layu dan mati.</p>
-
-                <h4>2. Batang</h4>
-                <p>Batang merupakan bagian tumbuhan yang berada di atas tanah dan menjadi penghubung antara akar dan daun.</p>
-                <p>Fungsi batang adalah:</p>
-                <ul>
-                    <li>Menopang tumbuhan agar dapat berdiri tegak.</li>
-                    <li>Menyalurkan air dan zat hara dari akar ke daun.</li>
-                    <li>Menyalurkan makanan hasil fotosintesis dari daun ke seluruh bagian tumbuhan.</li>
-                    <li>Pada tumbuhan tertentu, batang juga berfungsi sebagai tempat menyimpan makanan, seperti pada tebu.</li>
-                </ul>
-                <p>Batang sangat penting karena menjadi jalan bagi air dan makanan di dalam tumbuhan.</p>
-
-                <h4>3. Daun</h4>
-                <p>Daun biasanya berwarna hijau karena mengandung zat hijau daun yang disebut klorofil.</p>
-                <p>Fungsi daun adalah:</p>
-                <ul>
-                    <li>Tempat pembuatan makanan melalui proses fotosintesis dengan bantuan cahaya matahari.</li>
-                    <li>Tempat pertukaran gas, yaitu mengambil karbon dioksida dan melepaskan oksigen.</li>
-                    <li>Tempat terjadinya penguapan air.</li>
-                </ul>
-                <p>Daun disebut sebagai dapur tumbuhan karena berfungsi membuat makanan.</p>
-
-                <h4>4. Bunga</h4>
-                <p>Bunga merupakan bagian tumbuhan yang berperan dalam perkembangbiakan.</p>
-                <p>Fungsi bunga adalah:</p>
-                <ul>
-                    <li>Tempat terjadinya penyerbukan.</li>
-                    <li>Tempat terjadinya pembuahan.</li>
-                    <li>Menghasilkan biji yang dapat tumbuh menjadi tumbuhan baru.</li>
-                </ul>
-                <p>Bunga membantu tumbuhan agar dapat menghasilkan keturunan.</p>
-
-                <h4>5. Buah</h4>
-                <p>Buah adalah bagian tumbuhan yang terbentuk dari bunga setelah terjadi pembuahan.</p>
-                <p>Fungsi buah adalah:</p>
-                <ul>
-                    <li>Melindungi biji agar tidak rusak.</li>
-                    <li>Membantu penyebaran biji, misalnya dengan bantuan hewan, manusia, atau air.</li>
+                    <li><strong>Dewa Yadnya:</strong> Persembahan kepada Tuhan dan para dewa.</li>
+                    <li><strong>Rsi Yadnya:</strong> Persembahan kepada para Rsi atau orang suci yang telah menyebarkan ajaran kebaikan.</li>
+                    <li><strong>Pitra Yadnya:</strong> Persembahan kepada leluhur.</li>
+                    <li><strong>Manusa Yadnya:</strong> Upacara untuk menyucikan dan menyempurnakan hidup manusia.</li>
+                    <li><strong>Bhuta Yadnya:</strong> Persembahan kepada Bhuta Kala (kekuatan alam negatif) untuk menjaga keseimbangan dan keharmonisan alam.</li>
                 </ul>
 
-                <h4>6. Biji</h4>
-                <p>Biji merupakan hasil dari pembuahan dan merupakan calon tumbuhan baru.</p>
-                <p>Fungsi biji adalah:</p>
+                <h3>Canang Sari: Persembahan Harian</h3>
+                <p>Salah satu bentuk Yadnya yang paling umum dan dilakukan setiap hari adalah Canang Sari. Canang Sari adalah sebuah wadah kecil yang terbuat dari daun janur, berisi bunga-bunga, daun-daunan, porosan, dan jajanan.</p>
+                <p><strong>Makna Simbolis Canang Sari:</strong></p>
                 <ul>
-                    <li>Menjadi cikal bakal tumbuhan baru.</li>
-                    <li>Menyimpan cadangan makanan yang digunakan saat biji mulai tumbuh.</li>
+                    <li><strong>Bunga-bunga:</strong> Warna dan jenis bunga melambangkan trimurti (Brahma, Wisnu, Siwa) serta dewa-dewa penjuru mata angin, sebagai simbol ketulusan.</li>
+                    <li><strong>Porosan:</strong> Terbuat dari sirih, kapur, dan pinang, melambangkan Tri Kona (lahir, hidup, mati) dan esensi kehidupan.</li>
+                    <li><strong>Kembang Rampai:</strong> Irisan daun pandan yang harum, sebagai lambang kebijaksanaan dan keikhlasan.</li>
+                    <li><strong>Jajanan dan Buah:</strong> Melambangkan hasil bumi sebagai anugerah Tuhan.</li>
                 </ul>
-
-                <h3>C. Kaitan Fungsi Bagian Tubuh Tumbuhan dengan Kebutuhan Tumbuhan</h3>
-                <h4>1. Untuk Tumbuh</h4>
-                <p>Agar dapat tumbuh dengan baik, tumbuhan memerlukan air, zat hara, dan cahaya matahari.</p>
-                <ul>
-                    <li>Akar menyerap air dan zat hara dari tanah.</li>
-                    <li>Batang menyalurkan air dan zat hara ke seluruh bagian tumbuhan.</li>
-                    <li>Daun membuat makanan melalui fotosintesis.</li>
-                </ul>
-
-                <h4>2. Untuk Mempertahankan Diri</h4>
-                <p>Beberapa bagian tubuh tumbuhan membantu tumbuhan melindungi diri dari gangguan.</p>
-                <ul>
-                    <li>Batang berduri (seperti pada mawar) melindungi tumbuhan dari hewan pemakan tumbuhan.</li>
-                    <li>Daun berduri atau beracun melindungi tumbuhan dari musuh.</li>
-                    <li>Kulit batang yang keras melindungi bagian dalam tumbuhan.</li>
-                </ul>
-
-                <h4>3. Untuk Berkembang Biak</h4>
-                <p>Tumbuhan berkembang biak agar tidak punah.</p>
-                <ul>
-                    <li>Bunga berperan dalam proses penyerbukan dan pembuahan.</li>
-                    <li>Buah dan biji membantu menghasilkan tumbuhan baru.</li>
-                    <li>Biji tumbuh menjadi tanaman baru jika mendapat air, udara, dan cahaya yang cukup.</li>
-                </ul>
-
-                <h3>Kesimpulan</h3>
-                <p>Bagian-bagian tubuh tumbuhan memiliki fungsi yang berbeda-beda tetapi saling berkaitan. Dengan bagian tubuh tersebut, tumbuhan dapat tumbuh, mempertahankan diri, dan berkembang biak sehingga dapat terus hidup dan berkembang di lingkungan sekitarnya.</p>
+                <p>Melalui Canang Sari, umat Hindu mengungkapkan rasa syukur dan permohonan agar tercipta kedamaian dan keseimbangan di alam semesta.</p>
             </div>
         </div>
     </div>

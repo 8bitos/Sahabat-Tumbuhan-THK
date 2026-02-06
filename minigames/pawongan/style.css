@@ -85,7 +85,7 @@
 }
 
 .ingredient-item-wrapper {
-    width: 80px;
+    width: 100px; /* Increased width to better contain ingredient-shape (90px) */
     display: flex; /* Flex container to stack image and name */
     flex-direction: column;
     align-items: center; /* Center horizontally */
@@ -105,10 +105,12 @@
 }
 
 .ingredient-shape {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    min-height: 80px; /* Ensure a minimum height */
     border: 2px solid #ddd;
     border-radius: var(--border-radius);
+    background-color: #f8f8f8; /* Light background for visibility */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -143,10 +145,12 @@
 }
 
 .mixed-ingredient {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
+    min-height: 60px; /* Ensure a minimum height */
     border-radius: var(--border-radius);
     flex-shrink: 0;
+    background-color: #f8f8f8; /* Light background for visibility */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -193,10 +197,20 @@
     position: relative;
 }
 
+#explanation-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto; /* Add some vertical margin */
+    border-radius: var(--border-radius); /* Match container border-radius */
+}
+
 #popup-product-shape {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
+    min-height: 120px; /* Ensure a minimum height */
     margin: 1rem auto;
+    background-color: #f8f8f8; /* Light background for visibility */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -252,16 +266,22 @@
     }
 
     .ingredient-shape {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
+        min-height: 60px; /* Ensure a minimum height */
+        background-color: #f8f8f8; /* Light background for visibility */
     }
 
     .mixed-ingredient {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
+        min-height: 50px; /* Ensure a minimum height */
+        background-color: #f8f8f8; /* Light background for visibility */
     }
 
     .popup-content, .video-content {
-        padding: 1.5rem;
+        padding: 1rem; /* Slightly reduce padding on mobile */
+        width: 100%; /* Take full width of parent on mobile */
+        max-width: 100%; /* Override desktop max-width */
     }
 }

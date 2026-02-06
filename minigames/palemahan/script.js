@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setDialogue(text, character = 'Loka-Smile') {
         dialogueText.textContent = text;
-        TTS.speak(text, 'Loka'); // Add TTS call
         lokaAvatar.src = `../../assets/img/Loka/${character}.png`;
     }
 
@@ -83,20 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
         gameScreen.classList.remove('hidden');
 
         setDialogue(`Kamu memilih menanam ${plantType === 'sunflower' ? 'Bunga Matahari' : 'Cabai'}. Ayo kita rawat baik-baik!`);
-
+        attemptNewInteraction(); // Generate first need/pest immediately
         gameState.gameInterval = setInterval(gameLoop, 2000); // Game loop runs every 2 seconds
     }
 
     function gameLoop() {
-        // 1. Chance to generate a need if one isn't active
-        if (!gameState.currentNeed && Math.random() < 0.4) { // 40% chance
-            generateNeed();
-        }
-
-        // 2. Chance for a pest attack if one isn't active
-        if (!gameState.pestActive && Math.random() < 0.15) { // 15% chance
-            spawnPest();
-        }
+        attemptNewInteraction();
     }
 
     function generateNeed() {
@@ -113,8 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
             setDialogue('Terima kasih! Tanaman ini terlihat lebih sehat.', 'Loka-Excited');
             gameState.currentNeed = null;
             needBubble.classList.add('hidden');
+            // Immediately try to generate a new need or pest after satisfying the current one
+            attemptNewInteraction();
         } else {
             setDialogue('Oh, bukan itu yang dibutuhkan sekarang.', 'Loka-Sad');
+        }
+    }
+
+    function attemptNewInteraction() {
+        // First, check for pest, as it's more urgent
+        if (!gameState.pestActive && Math.random() < 0.15) { // 15% chance
+            spawnPest();
+        } else if (!gameState.currentNeed && Math.random() < 0.4) { // 40% chance for need
+            generateNeed();
         }
     }
 
@@ -130,6 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.pestActive = false;
         pestElement.classList.add('hidden');
         setDialogue('Hama sudah hilang! Kerja bagus!', 'Loka-Smile');
+        // Immediately try to generate a new need or pest after removing the pest
+        attemptNewInteraction();
     }
 
     function addGrowthPoints(points) {
@@ -183,23 +187,45 @@ document.addEventListener('DOMContentLoaded', () => {
         setDialogue('Hore! Kita berhasil panen!', 'Loka-Excited');
         growthStageText.textContent = 'Panen!';
         growthProgressBar.style.width = `100%`;
-        // Hide any active needs/pests
         needBubble.classList.add('hidden');
         pestElement.classList.add('hidden');
 
-        // Loka's dialogue about the book
-        Swal.fire({
-            title: 'Hadiah Istimewa!',
-            html: `Wah, kamu hebat sekali! Tanaman kita sudah panen dengan sempurna. Sebagai hadiah atas kerja kerasmu dalam merawat alam, aku punya sesuatu untukmu. Ini ada buku tentang semua bagian tumbuhan dan fungsinya. Semoga bermanfaat!`,
-            icon: 'success',
-            confirmButtonText: 'Terima Buku',
-            allowOutsideClick: false,
-        }).then(() => {
-            // Set flag in localStorage to unlock the book
-            localStorage.setItem('palemahanBookUnlocked', 'true');
-            // Show video modal after user confirms
-            setTimeout(() => videoModal.classList.remove('hidden'), 500); // Short delay before video appears
-        });
+        // Show the video modal immediately
+        videoModal.classList.remove('hidden');
+        explanationVideo.play(); // Attempt to autoplay the video
+
+        // Show the confirmation popup after a delay
+        setTimeout(() => {
+            Swal.fire({
+                title: 'Hadiah Istimewa!',
+                html: `Wah, kamu hebat sekali! Tanaman kita sudah panen dengan sempurna. Sebagai hadiah atas kerja kerasmu merawat alam, tonton video ini untuk belajar lebih banyak!`,
+                icon: 'success',
+                confirmButtonText: 'Lanjutkan',
+                allowOutsideClick: false,
+            }).then(() => {
+                // After closing the alert, the user can interact with the video.
+                // If they close the video, they go back to the main map.
+                // The actual redirection is handled by the videoCloseButton listener and explanationVideo ended listener
+            });
+        }, 1500); // Delay for the popup to appear
+    }
+
+    function showLokaBookDialogue() {
+        // Hide the video modal first
+        videoModal.classList.add('hidden');
+        explanationVideo.pause();
+        explanationVideo.currentTime = 0;
+
+        // Display Loka's dialogue directly on the game screen
+        setDialogue('Lihat! Saat sedang merapikan kebun, aku menemukan sebuah buku! Sepertinya ini buku tentang semua bagian tumbuhan dan fungsinya. Kamu pasti akan sangat terbantu dengan ini. Aku berikan kepadamu, ya!', 'Loka-Excited');
+
+        localStorage.setItem('lokaBookUnlocked', 'true'); // Set the flag for the book
+        localStorage.setItem('palemahanCompleted', 'true'); // Set the flag for minigame completion
+
+        // Redirect to main map after a short delay for the dialogue to be read
+        setTimeout(() => {
+            window.location.href = '../../index.html';
+        }, 3000); // 3-second delay
     }
 
     // --- Event Listeners ---
@@ -220,15 +246,11 @@ document.addEventListener('DOMContentLoaded', () => {
     pestElement.addEventListener('click', removePest);
 
     videoCloseButton.addEventListener('click', () => {
-        videoModal.classList.add('hidden');
-        // Redirect to quiz after closing video
-        window.location.href = '../quiz/index.html';
+        showLokaBookDialogue(); // Call the new function to show Loka's book dialogue
     });
 
     explanationVideo.addEventListener('ended', () => {
-        // Set flag in localStorage to unlock the book
-        localStorage.setItem('palemahanBookUnlocked', 'true');
-        // Redirect to quiz after video ends
-        window.location.href = '../quiz/index.html';
+        showLokaBookDialogue(); // Call the new function to show Loka's book dialogue
     });
-});
+}); // Proper closing for DOMContentLoaded
+

@@ -201,21 +201,55 @@ body {
 }
 
 /* --- Video Modal --- */
+#video-modal {
+    position: fixed; /* Fixed position to cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above other content */
+    padding: 1rem; /* Add some padding for smaller screens */
+    box-sizing: border-box; /* Include padding in width/height */
+}
+
 #video-modal .video-content {
     background: var(--white-color);
-    padding: 2rem;
+    padding: 1.5rem; /* Slightly reduced padding */
     border-radius: var(--border-radius);
     text-align: center;
-    width: 90%;
-    max-width: 800px;
+    width: 95%; /* Take up more width on smaller screens */
+    max-width: 900px; /* Allow wider on larger screens, but with a max */
     box-shadow: var(--box-shadow);
     position: relative;
+    display: flex; /* Use flexbox for internal content */
+    flex-direction: column;
+    align-items: center;
 }
 
 #video-modal video {
     width: 100%;
+    max-width: 700px; /* Max width for video */
     border-radius: var(--border-radius);
     margin: 1rem 0;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    #video-modal .video-content {
+        padding: 1rem;
+    }
+
+    #video-modal h2 {
+        font-size: 1.2rem;
+    }
+
+    #video-modal p {
+        font-size: 0.9rem;
+    }
 }
 
 /* --- Mobile Responsiveness --- */

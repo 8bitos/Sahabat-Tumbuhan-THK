@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pawonganTarget: 'Ini akan kubuatkan untuk Pak Satpam yang sering berjaga malam.',
             productName: 'Wedang Jahe Kunyit',
             productDescription: 'Ramuan hangat yang cocok untuk menghangatkan badan dan meningkatkan daya tahan tubuh.',
-            productImage: 'wedang _jahe_kunyit.png'
+            productImage: 'wedang _jahe_kunyit.png' // Corrected filename with space
         },
         {
             riddle: `"Membuat minuman penenang pikiran, butuh 'Si Hijau Harum dari Pekarangan', 'Si Asam yang Mencerahkan', dan sedikit 'Penyeimbang Rasa'."`,
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
                 const ingEl = document.createElement('div');
                 ingEl.className = 'ingredient-shape'; // This will now represent the image only
-                ingEl.style.backgroundImage = `url('assets/img/${ing.image}')`;
+                ingEl.style.backgroundImage = `url('assets/img/${ing.image}')`; // Corrected path
                 ingEl.style.width = '100%'; // Make it fill the wrapper
                 ingEl.style.height = '80%'; // Adjust height for name
                 
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentMix.push(id);
                     const mixedEl = document.createElement('div');
                     mixedEl.className = 'mixed-ingredient';
-                    mixedEl.style.backgroundImage = `url('assets/img/${ingredient.image}')`; // Use image
+                    mixedEl.style.backgroundImage = `url('assets/img/${ingredient.image}')`; // Corrected path
                     mixedEl.style.backgroundSize = 'contain';
                     mixedEl.style.backgroundRepeat = 'no-repeat';
                     mixedEl.style.backgroundPosition = 'center';
@@ -194,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setDialogue(type, text) {
         dialogueTextEl.textContent = text;
-        TTS.speak(text, 'Sari'); // Add TTS call
         let imageName = 'Sari-Smile.png';
         switch (type) {
             case 'explain':
@@ -238,9 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isCorrect = recipe.solution.length === currentMix.length && recipe.solution.sort().every((v, i) => v === currentMix.sort()[i]);
 
         if (isCorrect) {
-            setDialogue('excited', `Berhasil! Kombinasi ini benar. ${recipe.pawonganTarget}`);
-            checkButton.disabled = true;
-            showSuccessPopup(recipe); // Call function to show popup
+            // Directly grant the book and complete the minigame
+            showSariBookDialogue();
         } else {
             setDialogue('sad', 'Hmm, sepertinya ini bukan kombinasi yang tepat. Coba lagi.');
             setTimeout(resetMix, 2000);
@@ -267,15 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
         videoModal.classList.add('hidden');
     }
 
-    // --- Event Listener for Video Close Button ---
-    videoCloseButton.addEventListener('click', hideVideoModal);
-
-    // --- Event Listener for Video Ended ---
-    explanationVideo.addEventListener('ended', () => {
-        hideVideoModal();
-        window.location.href = '../../minigames/quiz_pawongan/index.html'; // Redirect to new Pawongan quiz folder
-    });
-
     // --- Success Popup Functions ---
     const successPopup = document.getElementById('success-popup');
     const popupProductName = document.getElementById('popup-product-name');
@@ -283,10 +272,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const popupProductShape = document.getElementById('popup-product-shape');
     const nextRecipeButton = document.getElementById('next-recipe-button');
 
+    function showSariBookDialogue() {
+        // Hide the video modal first
+        videoModal.classList.add('hidden');
+        explanationVideo.pause();
+        explanationVideo.currentTime = 0;
+
+        Swal.fire({
+            title: 'Hadiah Spesial!',
+            html: `Wah, kamu hebat! Kamu berhasil membuat resep nenek. Aku menemukan buku catatannya yang berisi semua informasi tentang bahan-bahan ini. Aku berikan padamu sebagai hadiah!`,
+            icon: 'success',
+            confirmButtonText: 'Terima Buku Obat',
+            allowOutsideClick: false,
+        }).then(() => {
+            localStorage.setItem('pawonganBookUnlocked', 'true');
+            localStorage.setItem('pawonganCompleted', 'true'); // Set the flag for minigame completion
+            window.location.href = '../../index.html'; // Redirect to main map
+        });
+    }
+
     function showSuccessPopup(recipe) {
         popupProductName.textContent = recipe.productName;
         popupProductDescription.textContent = recipe.productDescription;
-        popupProductShape.style.backgroundImage = `url('assets/img/${recipe.productImage}')`;
+        popupProductShape.style.backgroundImage = `url('assets/img/${recipe.productImage}')`; // Corrected path
         successPopup.style.visibility = 'visible';
     }
 
@@ -296,11 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentRecipeIndex < recipes.length) {
             loadRecipe(currentRecipeIndex);
         } else {
-            // All recipes completed, show video
+            // All recipes completed, show video then grant the "Buku Obat"
             setDialogue('excited', 'Selamat! Kamu telah menyelesaikan semua resep nenek!');
             showVideoModal('assets/video/video_placeholder.mp4', 'Pawongan: Hubungan harmonis antara manusia dengan sesama dan tumbuhan, diwujudkan melalui kepedulian dan berbagi manfaat tumbuhan dalam Tri Hita Karana.');
-            // Optionally, reset to first recipe or navigate to another scene
-            // loadRecipe(0);
         }
     });
 

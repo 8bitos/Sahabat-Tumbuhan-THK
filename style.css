@@ -408,100 +408,7 @@ html, body {
     }
 }
 
-/* Quiz Styles */
-#quiz-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    max-width: 700px;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
 
-#quiz-question {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-#quiz-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-}
-
-.quiz-option-button {
-    background-color: #e0f0e0;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
-    padding: 12px 15px;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.quiz-option-button:hover {
-    background-color: #d0e0d0;
-    border-color: #388E3C;
-}
-
-.quiz-option-button.correct {
-    background-color: #c8e6c9; /* Light green */
-    border-color: #4CAF50;
-}
-
-.quiz-option-button.wrong {
-    background-color: #ffcdd2; /* Light red */
-    border-color: #F44336;
-}
-
-#quiz-feedback {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-#quiz-navigation {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-#quiz-navigation button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #3b5998;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-#quiz-navigation button:hover {
-    background-color: #2a4270;
-}
-
-/* Responsive adjustments for quiz */
-@media (max-width: 768px) {
-    #quiz-question {
-        font-size: 1rem;
-    }
-
-    .quiz-option-button {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-
-    #quiz-navigation button {
-        font-size: 0.9rem;
-        padding: 8px 15px;
-    }
-}
 
 /* Desktop Layout */
 @media (min-width: 768px) {
@@ -540,70 +447,129 @@ html, body {
     display: none !important;
 }
 
+
+
+/* Quiz Styles - New Card Layout */
 #quiz-overlay-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 5000; /* Ensure it's on top of everything */
+    color: white;
+    text-align: center;
 }
 
-#quiz-content {
-    background-color: white;
-    padding: 25px;
-    border-radius: 15px;
+#quiz-overlay-container.hidden {
+    display: none !important;
+}
+
+#quiz-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 800px;
     width: 90%;
-    max-width: 600px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #333; /* Darker text for readability on white background */
+    max-height: 90vh; /* Limit height to 90% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
-#quiz-options button {
-    display: block;
-    width: 100%;
-    padding: 12px;
+#quiz-title {
+    font-size: 2rem;
+    color: #3b5998; /* Theme color */
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    cursor: pointer;
 }
 
-#quiz-options button:hover {
+#question-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #666;
+}
+
+#quiz-question-text {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+#quiz-image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px auto; /* Center image */
+    display: block; /* Ensure block level for margin auto */
+}
+
+#quiz-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+#quiz-options-container label {
+    display: flex; /* For better alignment of radio and text */
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none; /* Prevent text selection */
+}
+
+#quiz-options-container label:hover {
     background-color: #e0e0e0;
 }
 
-#quiz-options button.correct {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+#quiz-options-container input[type="radio"] {
+    margin-right: 10px;
+    /* Custom radio button styling if needed */
+    flex-shrink: 0; /* Prevent radio button from shrinking */
 }
 
-#quiz-options button.wrong {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-#quiz-feedback {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-#next-question-btn, #finish-quiz-btn {
+#quiz-navigation {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
-    padding: 10px 20px;
+}
+
+.nav-button {
+    padding: 12px 25px;
     border: none;
+    border-radius: 8px;
     background-color: #3b5998;
     color: white;
-    border-radius: 8px;
+    font-size: 1.1rem;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-#next-question-btn.hidden, #finish-quiz-btn.hidden {
-    display: none !important;
+.nav-button:hover {
+    background-color: #2a4270;
+}
+
+.nav-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#submit-quiz-btn {
+    background-color: #4CAF50; /* Green for submit */
+}
+
+#submit-quiz-btn:hover {
+    background-color: #45a049;
 }
 
 /* Intro Overlay Styles */
@@ -671,6 +637,22 @@ html, body {
     background-color: #2a4270;
 }
 
+#reset-progress-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #d33; /* Red for reset */
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 10px; /* Space it from the next button */
+}
+
+#reset-progress-btn:hover {
+    background-color: #a00; /* Darker red */
+}
+
 /* Responsive adjustments for intro */
 @media (max-width: 768px) {
     #intro-title {
@@ -685,6 +667,29 @@ html, body {
         font-size: 1rem;
         padding: 10px 20px;
     }
+
+    #reset-progress-btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+        margin-top: 10px; /* Stack on mobile if needed */
+        margin-left: 0;
+    }
+}
+
+#player-name-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 80%;
+    max-width: 300px;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+#player-name-input::placeholder {
+    color: #999;
 }
 
 /* --- Book Button --- */
@@ -711,6 +716,60 @@ html, body {
 
 #book-button img {
     width: 30px; /* Smaller icon size */
+    height: 30px;
+    object-fit: contain;
+}
+
+#medicine-book-button {
+    position: absolute;
+    top: 60px; /* Position below the first book button (10px top + ~40px height + 10px gap) */
+    left: 10px;
+    z-index: 100;
+    padding: 8px 12px;
+    background-color: rgba(30, 144, 255, 0.8); /* A distinct blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#medicine-book-button:hover {
+    background-color: #1a75c1; /* Darker blue */
+}
+
+#medicine-book-button img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+#yadnya-book-button {
+    position: absolute;
+    top: 110px; /* Position below medicine book button (60px + ~40px height + 10px gap) */
+    left: 10px;
+    z-index: 100;
+    padding: 8px 12px;
+    background-color: rgba(255, 165, 0, 0.8); /* An orange distinct color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#yadnya-book-button:hover {
+    background-color: #cc8400; /* Darker orange */
+}
+
+#yadnya-book-button img {
+    width: 30px;
     height: 30px;
     object-fit: contain;
 }
