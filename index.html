@@ -24,10 +24,7 @@
             </div>
         </div>
         <button id="book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Tumbuhan"><span>Buku Tumbuhan</span></button>
-        <button id="medicine-book-button" class="btn hidden"><img src="assets/img/bukuobat.png" alt="Buku Obat"><span>Buku Obat</span></button>
-        <button id="yadnya-book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Yadnya"><span>Buku Yadnya</span></button>
-
-        <button id="quiz-button" class="btn hidden" style="position: absolute; top: 160px; left: 10px; z-index: 100; padding: 8px 12px; background-color: rgba(75, 0, 130, 0.8); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;"><img src="assets/img/quiz.png" alt="Quiz" style="width: 30px; height: 30px; object-fit: contain;"><span>Quiz</span></button>
+        <button id="quiz-button" class="btn hidden"><img src="assets/img/quiz.png" alt="Quiz"><span>Quiz</span></button>
     </div>
 
     <!-- Quiz Overlay Container -->
@@ -48,17 +45,6 @@
         </div>
     </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script src="js/globals.js"></script>
-    <script src="js/audio_utils.js"></script>
-    <script src="js/core_functions.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/minigames.js"></script>
-    <script src="js/intro_sequence.js"></script>
-    <script src="js/quiz.js"></script> <!-- New quiz script -->
-    <script src="js/main.js"></script>
 
     <audio id="background-music" src="assets/audio/bgm.mp3" loop></audio>
 
@@ -82,74 +68,14 @@
             </div>
         </div>
     </div>
-
-    <!-- Medicine Material Modal (for the book of medicine) -->
-    <div id="medicine-material-modal" class="hidden">
-        <div class="material-content">
-            <span class="close-button" id="medicine-material-close-button">&times;</span>
-            <div class="material-text-area">
-                <h2>Informasi Bahan Obat</h2>
-                
-                <h3>1. Jahe</h3>
-                <p>Jahe adalah tanaman rimpang yang sangat populer sebagai rempah-rempah dan bahan obat. Rimpangnya berbentuk jemari yang menggembung di ruas-ruas tengah.</p>
-                <p><strong>Fungsi:</strong> Memberi rasa hangat, meredakan masuk angin, mual, dan batuk.</p>
-                
-                <h3>2. Kunyit</h3>
-                <p>Kunyit dikenal sebagai "Raja Jamu" karena khasiatnya yang luar biasa. Rimpang kunyit berwarna kuning cerah dan memiliki aroma yang khas.</p>
-                <p><strong>Fungsi:</strong> Meningkatkan daya tahan tubuh, sebagai anti-inflamasi (anti-radang), dan baik untuk kesehatan pencernaan.</p>
-                
-                <h3>3. Daun Pandan</h3>
-                <p>Daun pandan adalah tumbuhan tropis yang memiliki aroma wangi dan khas. Daunnya sering digunakan sebagai pewangi dan pewarna alami makanan.</p>
-                <p><strong>Fungsi:</strong> Memberikan aroma menenangkan, meredakan stres, dan menurunkan tekanan darah tinggi.</p>
-                
-                <h3>4. Gula Merah</h3>
-                <p>Gula merah adalah pemanis alami yang dibuat dari nira pohon kelapa atau aren. Warnanya coklat kemerahan dan rasanya legit.</p>
-                <p><strong>Fungsi:</strong> Sumber energi, mengandung mineral seperti zat besi dan kalsium.</p>
-                
-                <h3>5. Jeruk Nipis</h3>
-                <p>Jeruk nipis adalah buah kecil berwarna hijau yang sangat asam. Buah ini kaya akan vitamin C.</p>
-                <p><strong>Fungsi:</strong> Meningkatkan imunitas, meredakan batuk, dan membantu detoksifikasi tubuh.</p>
-                
-                <h3>6. Garam</h3>
-                <p>Garam adalah mineral kristal yang terutama terdiri dari natrium klorida (NaCl). Garam sangat penting untuk kehidupan.</p>
-                <p><strong>Fungsi:</strong> Menyeimbangkan rasa, menjaga keseimbangan cairan tubuh, dan membantu fungsi saraf.</p>
-                
-            </div>
-        </div>
-    </div>
-
-    <!-- Yadnya Material Modal (for the book of offerings) -->
-    <div id="yadnya-material-modal" class="hidden">
-        <div class="material-content">
-            <span class="close-button" id="yadnya-material-close-button">&times;</span>
-            <div class="material-text-area">
-                <h2>Informasi Mengenai Yadnya</h2>
-                
-                <h3>Yadnya: Wujud Syukur dan Harmoni</h3>
-                <p>Yadnya adalah persembahan suci dengan tulus ikhlas kepada Ida Sang Hyang Widhi Wasa (Tuhan Yang Maha Esa) beserta manifestasi-Nya, leluhur, sesama manusia, dan alam semesta.</p>
-                <p>Yadnya merupakan salah satu pilar utama dalam ajaran Tri Hita Karana, khususnya dalam aspek <b>Parahyangan</b>, yaitu hubungan harmonis antara manusia dengan Tuhan.</p>
-                
-                <h3>Jenis-Jenis Yadnya</h3>
-                <ul>
-                    <li><strong>Dewa Yadnya:</strong> Persembahan kepada Tuhan dan para dewa.</li>
-                    <li><strong>Rsi Yadnya:</strong> Persembahan kepada para Rsi atau orang suci yang telah menyebarkan ajaran kebaikan.</li>
-                    <li><strong>Pitra Yadnya:</strong> Persembahan kepada leluhur.</li>
-                    <li><strong>Manusa Yadnya:</strong> Upacara untuk menyucikan dan menyempurnakan hidup manusia.</li>
-                    <li><strong>Bhuta Yadnya:</strong> Persembahan kepada Bhuta Kala (kekuatan alam negatif) untuk menjaga keseimbangan dan keharmonisan alam.</li>
-                </ul>
-
-                <h3>Canang Sari: Persembahan Harian</h3>
-                <p>Salah satu bentuk Yadnya yang paling umum dan dilakukan setiap hari adalah Canang Sari. Canang Sari adalah sebuah wadah kecil yang terbuat dari daun janur, berisi bunga-bunga, daun-daunan, porosan, dan jajanan.</p>
-                <p><strong>Makna Simbolis Canang Sari:</strong></p>
-                <ul>
-                    <li><strong>Bunga-bunga:</strong> Warna dan jenis bunga melambangkan trimurti (Brahma, Wisnu, Siwa) serta dewa-dewa penjuru mata angin, sebagai simbol ketulusan.</li>
-                    <li><strong>Porosan:</strong> Terbuat dari sirih, kapur, dan pinang, melambangkan Tri Kona (lahir, hidup, mati) dan esensi kehidupan.</li>
-                    <li><strong>Kembang Rampai:</strong> Irisan daun pandan yang harum, sebagai lambang kebijaksanaan dan keikhlasan.</li>
-                    <li><strong>Jajanan dan Buah:</strong> Melambangkan hasil bumi sebagai anugerah Tuhan.</li>
-                </ul>
-                <p>Melalui Canang Sari, umat Hindu mengungkapkan rasa syukur dan permohonan agar tercipta kedamaian dan keseimbangan di alam semesta.</p>
-            </div>
-        </div>
-    </div>
+    <script src="js/globals.js"></script>
+    <script src="js/audio_utils.js"></script>
+    <script src="js/core_functions.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/minigames.js"></script>
+    <script src="js/intro_sequence.js"></script>
+    <script src="js/quiz.js"></script> <!-- New quiz script -->
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

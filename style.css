@@ -720,6 +720,34 @@ html, body {
     object-fit: contain;
 }
 
+/* --- Quiz Button --- */
+#quiz-button {
+    position: absolute;
+    top: 60px; /* Position below book button (approx 10px + 40px height + 10px gap) */
+    left: 10px;
+    z-index: 100;
+    padding: 8px 12px;
+    background-color: rgba(75, 0, 130, 0.8); /* Original quiz button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#quiz-button img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+#quiz-button:hover {
+    background-color: rgba(75, 0, 130, 1);
+}
+
 #medicine-book-button {
     position: absolute;
     top: 60px; /* Position below the first book button (10px top + ~40px height + 10px gap) */
@@ -856,10 +884,27 @@ html, body {
     line-height: 1.5;
 }
 
+.material-text-justify {
+    text-align: justify;
+}
+
 #material-modal .material-text-area ul {
     list-style-type: disc;
     margin-left: 20px;
     margin-bottom: 0.8rem;
+}
+
+.material-image-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0; /* Add some vertical spacing */
+}
+
+.material-image-container img {
+    max-width: 80%; /* Ensure images don't overflow */
+    height: auto;
+    border-radius: 8px; /* Slightly rounded corners for images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 #material-modal .material-text-area li {

@@ -72,34 +72,47 @@ function formatPlantMaterialContent(plainText) {
     let inList = false;
 
     lines.forEach(line => {
+        // Image handling: [IMAGE:path/to/image.png|alt text]
+        const imageMatch = line.match(/\[IMAGE:(.+?)\|(.+?)\]/);
+        if (imageMatch) {
+            if (inList) {
+                html += '</ul>';
+                inList = false;
+            }
+            const imagePath = imageMatch[1];
+            const altText = imageMatch[2];
+            html += `<div class="material-image-container"><img src="${imagePath}" alt="${altText}"></div>`;
+            return; // Skip to next line after handling image
+        }
+
         if (line.match(/^[A-C]\.\s/)) {
             // Main sections (e.g., "A. Bagian-Bagian Tubuh Tumbuhan")
             if (inList) {
                 html += '</ul>';
                 inList = false;
             }
-            html += `<h2>${line}</h2>`;
+            html += `<h2 class="material-text-justify">${line}</h2>`;
         } else if (line.match(/^\d+\.\s/)) {
             // Numbered sub-sections (e.g., "1. Akar")
             if (inList) {
                 html += '</ul>';
                 inList = false;
             }
-            html += `<h3>${line}</h3>`;
+            html += `<h3 class="material-text-justify">${line}</h3>`;
         } else if (line.startsWith('* ') || line.startsWith('- ')) {
             // List items
             if (!inList) {
-                html += '<ul>';
+                html += '<ul class="material-text-justify">'; // Apply to UL for all list items
                 inList = true;
             }
-            html += `<li>${line.substring(2)}</li>`;
+            html += `<li class="material-text-justify">${line.substring(2)}</li>`;
         } else if (line.startsWith('Fungsi: ') || line.startsWith('Fungsi akar secara lebih jelas adalah: ')) {
             // Bold specific function descriptions
             if (inList) {
                 html += '</ul>';
                 inList = false;
             }
-            html += `<p><strong>${line}</strong></p>`;
+            html += `<p class="material-text-justify"><strong>${line}</strong></p>`;
         }
         else {
             // Regular paragraphs
@@ -107,7 +120,7 @@ function formatPlantMaterialContent(plainText) {
                 html += '</ul>';
                 inList = false;
             }
-            html += `<p>${line}</p>`;
+            html += `<p class="material-text-justify">${line}</p>`;
         }
     });
 

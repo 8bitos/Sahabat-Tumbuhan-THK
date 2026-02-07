@@ -11,14 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         materialModal = document.getElementById('material-modal');
         materialCloseButton = document.getElementById('material-close-button');
 
-        medicineBookButton = document.getElementById('medicine-book-button');
-        medicineMaterialModal = document.getElementById('medicine-material-modal');
-        medicineMaterialCloseButton = document.getElementById('medicine-material-close-button');
-
-        yadnyaBookButton = document.getElementById('yadnya-book-button');
-        yadnyaMaterialModal = document.getElementById('yadnya-material-modal');
-        yadnyaMaterialCloseButton = document.getElementById('yadnya-material-close-button');
-
         quizButton = document.getElementById('quiz-button');
         backgroundMusic = document.getElementById('background-music');
 
@@ -35,30 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         materialCloseButton.addEventListener('click', () => {
             materialModal.classList.add('hidden');
             materialModal.style.display = 'none';
-        });
-
-        medicineBookButton.addEventListener('click', () => {
-            const materialTextArea = medicineMaterialModal.querySelector('.material-text-area');
-            if (materialTextArea) {
-                materialTextArea.innerHTML = formatPlantMaterialContent(medicineMaterialContent); // Use the formatter
-            }
-            medicineMaterialModal.classList.remove('hidden');
-            medicineMaterialModal.style.display = 'flex';
-        });
-
-        medicineMaterialCloseButton.addEventListener('click', () => {
-            medicineMaterialModal.classList.add('hidden');
-            medicineMaterialModal.style.display = 'none';
-        });
-
-        yadnyaBookButton.addEventListener('click', () => {
-            yadnyaMaterialModal.classList.remove('hidden');
-            yadnyaMaterialModal.style.display = 'flex';
-        });
-
-        yadnyaMaterialCloseButton.addEventListener('click', () => {
-            yadnyaMaterialModal.classList.add('hidden');
-            yadnyaMaterialModal.style.display = 'none';
         });
 
         quizButton.addEventListener('click', () => {
