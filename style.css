@@ -692,10 +692,38 @@ html, body {
     color: #999;
 }
 
+/* --- Settings Button --- */
+#settings-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    padding: 8px 12px;
+    background-color: rgba(100, 100, 100, 0.8); /* Greyish color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#settings-button:hover {
+    background-color: rgba(100, 100, 100, 1);
+}
+
+#settings-button img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
 /* --- Book Button --- */
 #book-button {
     position: absolute; /* Position independently */
-    top: 10px;
+    top: 60px; /* Adjusted position below settings button */
     left: 10px;
     z-index: 100; /* Ensure it's above other elements */
     padding: 8px 12px; /* Adjust padding */
@@ -723,7 +751,7 @@ html, body {
 /* --- Quiz Button --- */
 #quiz-button {
     position: absolute;
-    top: 60px; /* Position below book button (approx 10px + 40px height + 10px gap) */
+    top: 110px; /* Adjusted position below book button */
     left: 10px;
     z-index: 100;
     padding: 8px 12px;
@@ -746,6 +774,71 @@ html, body {
 
 #quiz-button:hover {
     background-color: rgba(75, 0, 130, 1);
+}
+
+/* --- Settings Modal --- */
+#settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000; /* Ensure it's on top of everything */
+    color: #333;
+}
+
+#settings-modal .settings-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    text-align: center; /* Center content */
+}
+
+#settings-modal .settings-content h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+#settings-modal .settings-option-button {
+    display: block; /* Each button on a new line */
+    width: 80%; /* Take up most of the width */
+    margin: 1rem auto; /* Center with auto margin */
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #3b5998;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#settings-modal .settings-option-button:hover {
+    background-color: #2a4270;
+}
+
+#settings-modal .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #555;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+#settings-modal .close-button:hover {
+    color: #000;
 }
 
 #medicine-book-button {

@@ -23,6 +23,7 @@
                 </div>
             </div>
         </div>
+        <button id="settings-button" class="btn"><img src="assets/img/set.png" alt="Settings"><span></span></button>
         <button id="book-button" class="btn hidden"><img src="assets/img/buku.png" alt="Buku Tumbuhan"><span>Buku Tumbuhan</span></button>
         <button id="quiz-button" class="btn hidden"><img src="assets/img/quiz.png" alt="Quiz"><span>Quiz</span></button>
     </div>
@@ -66,6 +67,16 @@
             <div class="material-text-area">
                 <!-- Content for book will be loaded dynamically -->
             </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="hidden">
+        <div class="settings-content">
+            <span class="close-button" id="settings-close-button">&times;</span>
+            <h2>Pengaturan</h2>
+            <button id="toggle-music-button" class="settings-option-button">Matikan Musik</button>
+            <button id="reset-progress-button"  class="settings-option-button">Reset Progress</button>
         </div>
     </div>
     <script src="js/globals.js"></script>

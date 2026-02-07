@@ -11,6 +11,12 @@ let bookButton = null;
 let materialModal = null;
 let materialCloseButton = null;
 
+let settingsButton = null;
+let settingsModal = null;
+let settingsCloseButton = null;
+let toggleMusicButton = null;
+let resetProgressButton = null;
+
 let quizButton = null;
 let backgroundMusic = null;
 
