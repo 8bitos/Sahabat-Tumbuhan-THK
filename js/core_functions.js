@@ -73,7 +73,6 @@ function renderHub() {
     // --- Then, display "Book Received" messages if a minigame was just completed ---
     const parahyanganCompleted = localStorage.getItem('parahyanganCompleted');
     if (parahyanganCompleted === 'true') {
-        localStorage.removeItem('parahyanganCompleted'); // Now clear the flag
         Swal.fire({
             title: 'Selamat!',
             html: `Kamu telah mendapatkan Buku Yadnya! Sekarang kamu bisa mempelajarinya lebih dalam.`,
@@ -84,7 +83,6 @@ function renderHub() {
 
     const pawonganBookUnlocked = localStorage.getItem('pawonganBookUnlocked');
     if (pawonganBookUnlocked === 'true') {
-        localStorage.removeItem('pawonganBookUnlocked'); // Now clear the flag
         Swal.fire({
             title: 'Selamat!',
             html: `Kamu telah mendapatkan Buku Obat-obatan! Sekarang kamu bisa mempelajarinya lebih dalam.`,
@@ -95,7 +93,6 @@ function renderHub() {
 
     const palemahanBookUnlocked = localStorage.getItem('palemahanBookUnlocked');
     if (palemahanBookUnlocked === 'true') {
-        localStorage.removeItem('palemahanBookUnlocked'); // Now clear the flag
         Swal.fire({
             title: 'Selamat!',
             html: `Kamu telah mendapatkan Buku Material Tanaman! Sekarang kamu bisa mempelajarinya lebih dalam.`,

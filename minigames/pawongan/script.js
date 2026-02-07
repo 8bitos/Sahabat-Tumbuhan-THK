@@ -237,8 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const isCorrect = recipe.solution.length === currentMix.length && recipe.solution.sort().every((v, i) => v === currentMix.sort()[i]);
 
         if (isCorrect) {
-            // Directly grant the book and complete the minigame
-            showSariBookDialogue();
+            setDialogue('excited', `Berhasil! Kombinasi ini benar. ${recipe.pawonganTarget}`);
+            checkButton.disabled = true;
+            showSuccessPopup(recipe); // Call function to show popup
         } else {
             setDialogue('sad', 'Hmm, sepertinya ini bukan kombinasi yang tepat. Coba lagi.');
             setTimeout(resetMix, 2000);
@@ -264,10 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
         explanationVideo.currentTime = 0; // Reset video to start
         videoModal.classList.add('hidden');
     }
-
+    
     // --- Success Popup Functions ---
-    const successPopup = document.getElementById('success-popup');
-    const popupProductName = document.getElementById('popup-product-name');
+    const successPopup = document.getElementById('success-popup');    const popupProductName = document.getElementById('popup-product-name');
     const popupProductDescription = document.getElementById('popup-product-description');
     const popupProductShape = document.getElementById('popup-product-shape');
     const nextRecipeButton = document.getElementById('next-recipe-button');
@@ -280,14 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         Swal.fire({
             title: 'Hadiah Spesial!',
-            html: `Wah, kamu hebat! Kamu berhasil membuat resep nenek. Aku menemukan buku catatannya yang berisi semua informasi tentang bahan-bahan ini. Aku berikan padamu sebagai hadiah!`,
+            html: `Wah, kamu hebat! Kamu berhasil membuat semua resep nenek. Saat merapikan, aku menemukan buku catatannya yang berisi semua informasi tentang bahan-bahan ini. Aku berikan padamu sebagai hadiah!`,
             icon: 'success',
             confirmButtonText: 'Terima Buku Obat',
             allowOutsideClick: false,
         }).then(() => {
             localStorage.setItem('pawonganBookUnlocked', 'true');
             localStorage.setItem('pawonganCompleted', 'true'); // Set the flag for minigame completion
-            window.location.href = '../../index.html'; // Redirect to main map
+            window.location.href = '../../../index.html'; // Redirect to main map
         });
     }
 
@@ -310,6 +310,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Event Listener for Video Close Button ---
+    videoCloseButton.addEventListener('click', hideVideoModal);
+
+    // --- Event Listener for Video Ended ---
+    explanationVideo.addEventListener('ended', () => {
+        hideVideoModal();
+        window.location.href = '../../../index.html'; // Redirect to main map
+    });
+
+    // --- Event Listener for Video Close Button ---
+    videoCloseButton.addEventListener('click', () => {
+        showSariBookDialogue(); // Call the new function to show Sari's book dialogue
+    });
+
+    // --- Event Listener for Video Ended ---
+    explanationVideo.addEventListener('ended', () => {
+        showSariBookDialogue(); // Call the new function to show Sari's book dialogue
+    });
+    
     // --- Initial Load ---
     renderIngredients();
     loadRecipe(0);
