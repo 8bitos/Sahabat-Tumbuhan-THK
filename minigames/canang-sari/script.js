@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         explanationVideo.src = videoSrc;
         videoExplanationText.textContent = explanationText;
         videoModal.classList.remove('hidden');
-        explanationVideo.play();
+        // explanationVideo.play(); // Removed autoplay
     }
 
     function hideVideoModal() {
@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameContainer.classList.add('hidden');
                 // Show video modal after user confirms
                 showVideoModal('assets/video/video_placeholder.mp4', 'Parahyangan: Hubungan harmonis antara manusia dengan Tuhan, diwujudkan melalui rasa syukur dan persembahan.');
+                explanationVideo.play(); // Play video explicitly after user confirmation
             }
         });
     }
