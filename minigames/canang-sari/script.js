@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function setDialogue(expression, text) {
         yanaCharacter.src = `../../assets/img/Yana/${expression}`;
         dialogueText.textContent = text;
-        TTS.speak(text, 'Yana'); // Add TTS call
     }
 
     function initializeItems() {
@@ -134,33 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listener for Video Close Button ---
-    videoCloseButton.addEventListener('click', () => {
-        showYanaBookDialogue(); // Call the new function to show Yana's book dialogue
-    });
+    videoCloseButton.addEventListener('click', hideVideoModal);
 
     // --- Event Listener for Video Ended ---
     explanationVideo.addEventListener('ended', () => {
-        showYanaBookDialogue(); // Call the new function to show Yana's book dialogue
+        hideVideoModal();
+        // Redirect to quiz after video ends
+        window.location.href = '../../index.html';
     });
-
-    function showYanaBookDialogue() {
-        // Hide the video modal first
-        videoModal.classList.add('hidden');
-        explanationVideo.pause();
-        explanationVideo.currentTime = 0;
-
-        Swal.fire({
-            title: 'Hadiah Spesial!',
-            html: `Wah, Yana senang sekali kamu sudah selesai merangkai Canang Sari! Sebagai tanda terima kasih dan untuk membantumu lebih memahami Yadnya, Yana ingin memberikan buku ini.`,
-            icon: 'success',
-            confirmButtonText: 'Terima Buku Yadnya',
-            allowOutsideClick: false,
-        }).then(() => {
-            localStorage.setItem('parahyanganBookUnlocked', 'true'); // Set the flag
-            localStorage.setItem('parahyanganCompleted', 'true'); // Set the flag for minigame completion
-            window.location.href = '../../../index.html'; // Redirect to main map
-        });
-    }
 
     function showCompletionPopup() {
         Swal.fire({
@@ -277,8 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setDialogue('Yana-Sad.png', "Hmm, coba letakkan di tempat yang benar.");
         }
     }
-
-
 
     // --- Event Listeners ---
     gameContainer.addEventListener('dragover', dragOver);
