@@ -99,13 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function advanceStep() {
+        console.log(`[Debug] advanceStep called. currentStepIndex BEFORE: ${currentStepIndex}`);
         if (currentStepIndex < gameSteps.length - 1) { // Check if there are more steps
             currentStepIndex++;
+            console.log(`[Debug] Advancing to next step. currentStepIndex AFTER: ${currentStepIndex}`);
             const currentStep = gameSteps[currentStepIndex];
             setDialogue(currentStep.expression, currentStep.dialogue);
             updateDraggableItems();
         } else {
             // --- Game Completion ---
+            console.log('[Debug] All steps complete. Calling showCompletionPopup().');
             showCompletionPopup();
         }
     }
@@ -234,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (isCorrectPlacement) {
+            console.log(`[Debug] Correct item placed: ${id}`);
             playSound('pas'); // Play success sound
             
             if (currentStep.targetZone !== 'base') { // Only create placed item for non-base items
