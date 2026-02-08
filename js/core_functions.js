@@ -71,36 +71,16 @@ function renderHub() {
     updateBookButtonVisibility();
 
     // --- Then, display "Book Received" messages if a minigame was just completed ---
-    const parahyanganCompleted = localStorage.getItem('parahyanganCompleted');
-    if (parahyanganCompleted === 'true') {
+    const lokaBookUnlocked = localStorage.getItem('lokaBookUnlocked');
+    if (lokaBookUnlocked === 'true') {
         Swal.fire({
             title: 'Selamat!',
-            html: `Kamu telah mendapatkan Buku Yadnya! Sekarang kamu bisa mempelajarinya lebih dalam.`,
+            html: `Kamu telah mendapatkan Buku Tumbuhan! Sekarang kamu bisa mempelajarinya lebih dalam.`,
             icon: 'success',
             confirmButtonText: 'Oke'
         });
+        localStorage.removeItem('lokaBookUnlocked'); // Remove after displaying
     }
-
-    const pawonganBookUnlocked = localStorage.getItem('pawonganBookUnlocked');
-    if (pawonganBookUnlocked === 'true') {
-        Swal.fire({
-            title: 'Selamat!',
-            html: `Kamu telah mendapatkan Buku Obat-obatan! Sekarang kamu bisa mempelajarinya lebih dalam.`,
-            icon: 'success',
-            confirmButtonText: 'Oke'
-        });
-    }
-
-    const palemahanBookUnlocked = localStorage.getItem('palemahanBookUnlocked');
-    if (palemahanBookUnlocked === 'true') {
-        Swal.fire({
-            title: 'Selamat!',
-            html: `Kamu telah mendapatkan Buku Material Tanaman! Sekarang kamu bisa mempelajarinya lebih dalam.`,
-            icon: 'success',
-            confirmButtonText: 'Oke'
-        });
-    }
-
 
     // Check if at least one minigame is completed to show the quiz button
     const anyMinigameCompleted = localStorage.getItem('palemahanCompleted') === 'true' ||
