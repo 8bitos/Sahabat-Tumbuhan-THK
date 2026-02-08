@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const explanationVideo = document.getElementById('explanation-video');
     const videoExplanationText = document.getElementById('video-explanation-text');
     const videoCloseButton = videoModal.querySelector('.close-button');
+    const exitVideoButton = document.getElementById('exit-video-button'); // New element
 
     // --- Video Functions ---
     function showVideoModal(videoSrc, explanationText) {
@@ -135,10 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listener for Video Close Button ---
     videoCloseButton.addEventListener('click', hideVideoModal);
 
+    // --- Event Listener for Exit Video Button ---
+    exitVideoButton.addEventListener('click', () => {
+        hideVideoModal();
+        window.location.href = '../../index.html'; // Redirect to main hub
+    });
+
     // --- Event Listener for Video Ended ---
     explanationVideo.addEventListener('ended', () => {
         hideVideoModal();
-        // Redirect to quiz after video ends
+        // Redirect to main hub after video ends
         window.location.href = '../../index.html';
     });
 
