@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then(() => {
             localStorage.setItem('pawonganBookUnlocked', 'true');
             localStorage.setItem('pawonganCompleted', 'true'); // Set the flag for minigame completion
-            window.location.href = '../../../index.html'; // Redirect to main map
+            window.location.href = '../../index.html'; // Redirect to main map
         });
     }
 
