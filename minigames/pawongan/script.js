@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listener for Video Ended ---
     explanationVideo.addEventListener('ended', () => {
         hideVideoModal();
-        window.location.href = '../../../index.html'; // Redirect to main map
+        window.location.href = '../../index.html'; // Redirect to main map
     });
 
     // --- Event Listener for Video Close Button ---
