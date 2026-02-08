@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStepIndex = 0;
     let isBasePlaced = false;
     let selectedItem = null; // For tap-and-drop
+    let isGameComplete = false; // New guard variable
 
     // --- Functions ---
     function setDialogue(expression, text) {
@@ -109,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // --- Game Completion ---
             console.log('[Debug] All steps complete. Calling showCompletionPopup().');
+            isGameComplete = true; // Mark game as complete
             showCompletionPopup();
         }
     }
@@ -122,6 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Video Functions ---
     function showVideoModal(videoSrc, explanationText) {
+        if (!isGameComplete) {
+            console.log('[Debug] showVideoModal call blocked because game is not complete.');
+            return; // Guard against premature calls
+        }
         explanationVideo.src = videoSrc;
         videoExplanationText.textContent = explanationText;
         videoModal.classList.remove('hidden');
