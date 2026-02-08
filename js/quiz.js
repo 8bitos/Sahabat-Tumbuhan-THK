@@ -320,10 +320,10 @@ const quizQuestionsData = [
         question: "Merawat tumbuhan berarti melaksanakan ajaran Tri Hita Karana karena dapat menciptakan…",
         image: null,
         options: {
-            A: "Membantu perkembangbiakan",
-            B: "Mempercepat pertumbuhan",
-            C: "Mempertahankan diri dari musuh",
-            D: "Menyerap air dari tanah"
+            A: "Kerusakan alam",
+            B: "Keharmonisan antara manusia, alam, dan Tuhan",
+            C: "Persaingan hidup",
+            D: "Kepentingan pribadi"
         },
         answer: "B"
     },
