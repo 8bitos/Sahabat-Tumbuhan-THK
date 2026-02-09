@@ -346,7 +346,7 @@ const quizQuestionsData = [
             B: "Hubungan manusia dan alam menjadi seimbang",
             C: "Fungsi tumbuhan terganggu dan merusak hubungan manusia dengan alam",
             D: "Perkembangbiakan tumbuhan meningkat"
-        },
+            },
         answer: "C"
     }
 ];
@@ -381,8 +381,6 @@ async function startQuiz() {
 }
 
 function displayQuestion(index) {
-    recordAnswer(); // Save answer for the question we're leaving
-
     const q = quizQuestions[index];
     questionNumberEl.textContent = `Pertanyaan ${index + 1} dari ${quizQuestions.length}`;
     quizQuestionTextEl.textContent = q.question;
@@ -437,6 +435,7 @@ function recordAnswer() {
 
 function goToNextQuestion() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
+        recordAnswer(); // Save answer for the current question
         currentQuestionIndex++;
         displayQuestion(currentQuestionIndex);
     }
@@ -444,6 +443,7 @@ function goToNextQuestion() {
 
 function goToPreviousQuestion() {
     if (currentQuestionIndex > 0) {
+        recordAnswer(); // Save answer for the current question
         currentQuestionIndex--;
         displayQuestion(currentQuestionIndex);
     }
