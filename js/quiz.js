@@ -423,12 +423,16 @@ function displayQuestion(index) {
 }
 
 function recordAnswer() {
+    console.log(`recordAnswer called for question index: ${currentQuestionIndex}`);
     const selectedOption = quizOptionsContainerEl.querySelector('input[name="currentQuestion"]:checked');
     if (selectedOption) {
         userAnswers[currentQuestionIndex] = selectedOption.value;
+        console.log(`Answer recorded for question ${currentQuestionIndex}: ${selectedOption.value}`);
     } else {
         delete userAnswers[currentQuestionIndex]; // No answer selected, ensure it's not stored
+        console.log(`No answer selected for question ${currentQuestionIndex}. Removing from userAnswers.`);
     }
+    console.log('Current userAnswers state:', { ...userAnswers });
 }
 
 function goToNextQuestion() {
@@ -451,7 +455,11 @@ function submitQuiz() {
     let correctAnswers = 0;
     // Iterate over quizQuestionsData to ensure correct answer comparison
     quizQuestionsData.forEach((q, index) => {
-        if (userAnswers[index] && userAnswers[index] === q.answer) {
+        const userAnswer = userAnswers[index];
+        const correctAnswer = q.answer;
+        const isCorrect = userAnswer === correctAnswer;
+        console.log(`Question ${index}: User Answer = ${userAnswer}, Correct Answer = ${correctAnswer}, Is Correct = ${isCorrect}`);
+        if (isCorrect) {
             correctAnswers++;
         }
     });
