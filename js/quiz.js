@@ -465,18 +465,3 @@ function submitQuiz() {
     console.log('Incorrect Answers:', totalQuestions - correctAnswers);
     console.log('Score:', score);
 
-    Swal.fire({
-        title: 'Quiz Selesai!',
-        html: `
-            <p>Total Soal: ${totalQuestions}</p>
-            <p>Jawaban Benar: ${correctAnswers}</p>
-            <p>Jawaban Salah: ${totalQuestions - correctAnswers}</p>
-            <p>Skor Kamu: <strong>${score} / 100</strong></p>
-        `,
-        icon: 'info',
-        confirmButtonText: 'OK'
-    }).then(() => {
-        quizOverlay.classList.add('hidden'); // Hide the quiz
-        renderHub(); // Go back to the main map
-    });
-}
