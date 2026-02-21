@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const tools = document.querySelectorAll('.tool');
     const videoCloseButton = videoModal.querySelector('.close-button');
     const explanationVideo = document.getElementById('explanation-video');
+    const tutorialModal = document.getElementById('tutorial-modal');
+    const tutorialStartButton = document.getElementById('tutorial-start-button');
+    const speedButton = document.getElementById('speed-button');
+    const speedModal = document.getElementById('speed-modal');
+    const speedCloseButton = document.getElementById('speed-close-button');
+    const speedOptions = document.querySelectorAll('.speed-option');
 
     // --- Game Data & State ---
     const plantData = {
@@ -58,7 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentStage: 0,
         currentNeed: null,
         pestActive: false,
-        gameInterval: null
+        gameInterval: null,
+        interactionTimer: null,
+        tutorialDismissed: false,
+        isGameActive: false,
+        speedMultiplier: 1,
+        instantMode: false
     };
 
     // --- Functions ---
@@ -69,11 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame(plantType) {
+        if (!gameState.tutorialDismissed) {
+            if (tutorialModal) {
+                tutorialModal.classList.remove('hidden');
+                tutorialModal.style.display = 'flex';
+            }
+            return;
+        }
         gameState.plantType = plantType;
         gameState.growthPoints = 0;
         gameState.currentStage = 0;
         gameState.currentNeed = null;
         gameState.pestActive = false;
+        gameState.isGameActive = true;
 
         plantImage.src = plantData[plantType].seed;
         updateGrowthUI();
@@ -83,11 +102,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setDialogue(`Kamu memilih menanam ${plantType === 'sunflower' ? 'Bunga Matahari' : 'Cabai'}. Ayo kita rawat baik-baik!`);
         attemptNewInteraction(); // Generate first need/pest immediately
-        gameState.gameInterval = setInterval(gameLoop, 2000); // Game loop runs every 2 seconds
+        scheduleNextInteraction();
     }
 
-    function gameLoop() {
-        attemptNewInteraction();
+    function scheduleNextInteraction() {
+        if (!gameState.isGameActive) return;
+        const stages = plantData[gameState.plantType]?.stages || [];
+        if (gameState.currentStage >= stages.length - 1) return;
+        clearTimeout(gameState.interactionTimer);
+        let baseDelay = 1400 + Math.random() * 1600; // 1.4s - 3.0s
+        if (gameState.instantMode) baseDelay = 200; // near-instant
+        const delay = baseDelay / gameState.speedMultiplier;
+        gameState.interactionTimer = setTimeout(() => {
+            if (!gameState.isGameActive) return;
+            if (!gameState.pestActive && !gameState.currentNeed) {
+                attemptNewInteraction();
+            }
+            scheduleNextInteraction();
+        }, delay);
     }
 
     function generateNeed() {
@@ -104,8 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setDialogue('Terima kasih! Tanaman ini terlihat lebih sehat.', 'Loka-Excited');
             gameState.currentNeed = null;
             needBubble.classList.add('hidden');
-            // Immediately try to generate a new need or pest after satisfying the current one
-            attemptNewInteraction();
+            // Let the next interaction be scheduled naturally
+            scheduleNextInteraction();
         } else {
             setDialogue('Oh, bukan itu yang dibutuhkan sekarang.', 'Loka-Sad');
         }
@@ -132,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gameState.pestActive = false;
         pestElement.classList.add('hidden');
         setDialogue('Hama sudah hilang! Kerja bagus!', 'Loka-Smile');
-        // Immediately try to generate a new need or pest after removing the pest
-        attemptNewInteraction();
+        // Let the next interaction be scheduled naturally
+        scheduleNextInteraction();
     }
 
     function addGrowthPoints(points) {
@@ -153,9 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const plantType = gameState.plantType;
         const stageIndex = gameState.currentStage - 1;
+        const isFinalStage = gameState.currentStage >= plantData[plantType].stages.length - 1;
 
         // Check if it's the final, blooming stage
-        if (gameState.currentStage >= plantData[plantType].stages.length - 1) {
+        if (isFinalStage) {
+            gameState.isGameActive = false;
+            clearTimeout(gameState.interactionTimer);
+            gameState.currentNeed = null;
+            gameState.pestActive = false;
+            needBubble.classList.add('hidden');
+            pestElement.classList.add('hidden');
             const funFact = plantFunFacts[plantType][stageIndex];
             setDialogue(funFact, 'Loka-Explain');
             // Wait a few seconds for user to read, then start harvest sequence
@@ -183,7 +222,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function harvest() {
-        clearInterval(gameState.gameInterval);
+        gameState.isGameActive = false;
+        clearTimeout(gameState.interactionTimer);
         setDialogue('Hore! Kita berhasil panen!', 'Loka-Excited');
         growthStageText.textContent = 'Panen!';
         growthProgressBar.style.width = `100%`;
@@ -201,7 +241,10 @@ document.addEventListener('DOMContentLoaded', () => {
         explanationVideo.pause();
         explanationVideo.currentTime = 0;
 
+        const currentCount = parseInt(localStorage.getItem('palemahanCompleteCount') || '0', 10);
+        localStorage.setItem('palemahanCompleteCount', String(currentCount + 1));
         localStorage.setItem('palemahanCompleted', 'true'); // Set the flag for minigame completion
+        localStorage.setItem('skipIntroOnce', 'true');
 
         // Redirect to main map immediately
         window.location.href = '../../index.html';
@@ -231,5 +274,49 @@ document.addEventListener('DOMContentLoaded', () => {
     explanationVideo.addEventListener('ended', () => {
         showLokaBookDialogue(); // Call the new function to show Loka's book dialogue
     });
-}); // Proper closing for DOMContentLoaded
 
+    // --- Tutorial Modal ---
+    if (tutorialModal && tutorialStartButton) {
+        tutorialModal.classList.remove('hidden');
+        tutorialModal.style.display = 'flex';
+        tutorialStartButton.addEventListener('click', () => {
+            tutorialModal.classList.add('hidden');
+            tutorialModal.style.display = 'none';
+            gameState.tutorialDismissed = true;
+        });
+    }
+
+    // --- Speed Controls ---
+    function setSpeed(mode) {
+        gameState.instantMode = mode === 'instant';
+        gameState.speedMultiplier = mode === 'instant' ? 3 : parseInt(mode, 10);
+        speedOptions.forEach(btn => btn.classList.remove('active'));
+        const activeBtn = Array.from(speedOptions).find(btn => btn.dataset.speed === mode);
+        if (activeBtn) activeBtn.classList.add('active');
+        scheduleNextInteraction();
+        if (gameState.instantMode && !gameState.currentNeed && !gameState.pestActive) {
+            attemptNewInteraction();
+        }
+    }
+
+    if (speedButton && speedModal) {
+        speedButton.addEventListener('click', () => {
+            speedModal.classList.remove('hidden');
+        });
+    }
+
+    if (speedCloseButton && speedModal) {
+        speedCloseButton.addEventListener('click', () => {
+            speedModal.classList.add('hidden');
+        });
+    }
+
+    speedOptions.forEach(btn => {
+        btn.addEventListener('click', () => {
+            setSpeed(btn.dataset.speed);
+        });
+    });
+
+    // Default active speed
+    setSpeed('1');
+}); // Proper closing for DOMContentLoaded

@@ -91,14 +91,20 @@ function formatPlantMaterialContent(plainText) {
                 html += '</ul>';
                 inList = false;
             }
-            html += `<h2 class="material-text-justify">${line}</h2>`;
-        } else if (line.match(/^\d+\.\s/)) {
+            html += `<h2 class="material-heading">${line}</h2>`;
+        } else if (line.match(/^\d+(\.\d+)*\.\s/)) {
             // Numbered sub-sections (e.g., "1. Akar")
             if (inList) {
                 html += '</ul>';
                 inList = false;
             }
-            html += `<h3 class="material-text-justify">${line}</h3>`;
+            html += `<h3 class="material-subheading">${line}</h3>`;
+        } else if (line.match(/^\d+\)\s/)) {
+            if (!inList) {
+                html += '<ul class="material-text-justify">';
+                inList = true;
+            }
+            html += `<li class="material-text-justify">${line.replace(/^\d+\)\s/, '')}</li>`;
         } else if (line.startsWith('* ') || line.startsWith('- ')) {
             // List items
             if (!inList) {
@@ -130,4 +136,3 @@ function formatPlantMaterialContent(plainText) {
 
     return html;
 }
-

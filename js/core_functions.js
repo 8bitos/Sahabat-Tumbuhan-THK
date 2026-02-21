@@ -6,6 +6,17 @@ function updateUI() {
     // This function is now empty after removing progress bars
 }
 
+function updatePlayerNameBadge() {
+    if (!playerNameBadge) return;
+    const name = localStorage.getItem('playerName');
+    if (name) {
+        playerNameBadge.textContent = `Pemain: ${name}`;
+        playerNameBadge.classList.remove('hidden');
+    } else {
+        playerNameBadge.classList.add('hidden');
+    }
+}
+
 function setDialogue(char, text, expression = '', buttons = []) {
     characterName.textContent = char;
     dialogueText.textContent = text;
@@ -39,9 +50,13 @@ function checkAllMinigamesCompleted() {
     // localStorage.setItem('palemahanCompleted', 'true');
     // localStorage.setItem('pawonganCompleted', 'true');
     // localStorage.setItem('parahyanganCompleted', 'true');
-    return localStorage.getItem('palemahanCompleted') === 'true' &&
-           localStorage.getItem('pawonganCompleted') === 'true' &&
-           localStorage.getItem('parahyanganCompleted') === 'true';
+    const palemahanCount = parseInt(localStorage.getItem('palemahanCompleteCount') || '0', 10);
+    const pawonganCount = parseInt(localStorage.getItem('pawonganCompleteCount') || '0', 10);
+    const parahyanganCount = parseInt(localStorage.getItem('parahyanganCompleteCount') || '0', 10);
+    const palemahanDone = localStorage.getItem('palemahanCompleted') === 'true' || palemahanCount > 0;
+    const pawonganDone = localStorage.getItem('pawonganCompleted') === 'true' || pawonganCount > 0;
+    const parahyanganDone = localStorage.getItem('parahyanganCompleted') === 'true' || parahyanganCount > 0;
+    return palemahanDone && pawonganDone && parahyanganDone;
 }
 
 function renderHub() {
@@ -66,6 +81,7 @@ function renderHub() {
     gameWorld.innerHTML = '';
     gameWorld.classList.remove('minigame-active');
     setDialogue('Narator', 'Kamu berada di halaman sekolah. Ke mana kamu akan pergi selanjutnya? Klik salah satu lokasi.');
+    updatePlayerNameBadge();
 
     // --- Update book button visibility FIRST ---
     updateBookButtonVisibility();
@@ -82,13 +98,25 @@ function renderHub() {
         localStorage.removeItem('lokaBookUnlocked'); // Remove after displaying
     }
 
-    // Check if at least one minigame is completed to show the quiz button
-    const anyMinigameCompleted = localStorage.getItem('palemahanCompleted') === 'true' ||
-                                 localStorage.getItem('pawonganCompleted') === 'true' ||
-                                 localStorage.getItem('parahyanganCompleted') === 'true';
-
-    if (anyMinigameCompleted) {
+    // Show quiz button only when all minigames are completed
+    if (checkAllMinigamesCompleted()) {
         quizButton.classList.remove('hidden');
+        const popupShown = localStorage.getItem('allMinigamesCompletedPopupShown') === 'true';
+        if (!popupShown) {
+            Swal.fire({
+                title: 'Hebat!',
+                text: 'Semua minigame sudah selesai. Saatnya mengerjakan quiz.',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Mulai Quiz',
+                cancelButtonText: 'Nanti'
+            }).then((result) => {
+                localStorage.setItem('allMinigamesCompletedPopupShown', 'true');
+                if (result.isConfirmed) startQuiz();
+            });
+        }
+    } else {
+        quizButton.classList.add('hidden');
     }
 
     const locations = [
@@ -102,11 +130,8 @@ function renderHub() {
         locElement.id = `location-${loc.id}`;
         locElement.className = 'map-location';
         
-        const avatarImg = document.createElement('img');
-        avatarImg.src = `assets/img/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}-Smile.png`;
-        avatarImg.alt = loc.name;
-        avatarImg.className = 'map-location-avatar';
-        locElement.appendChild(avatarImg);
+        const avatarPath = `assets/img/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}/${loc.id}.png`;
+        locElement.style.backgroundImage = `url('${avatarPath}')`;
 
         const nameSpan = document.createElement('span');
         nameSpan.textContent = loc.name;

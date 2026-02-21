@@ -1,8 +1,12 @@
 /* Inherits from shared_style.css */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap');
 
 body {
-    background-color: #e0e0e0; /* Fallback color */
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
     overflow: hidden;
+    color: #3b2314;
 }
 
 .game-background {
@@ -33,15 +37,17 @@ body {
     width: 100%;
     max-width: 800px; /* Limit width */
     margin: 0 auto; /* Center it */
-    padding: 1rem;
+    padding: 0.9rem 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    background: #fff2dd;
+    border: 3px solid #b05a2a;
+    border-radius: 6px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+    backdrop-filter: blur(6px);
 }
 
 .item {
@@ -53,7 +59,9 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     transition: transform 0.2s, box-shadow 0.2s;
-    border-radius: var(--border-radius);
+    border-radius: 6px;
+    background-color: #fff7eb;
+    border: 2px solid rgba(123, 44, 22, 0.2);
 }
 
 .item:hover {
@@ -61,7 +69,7 @@ body {
 }
 
 .item.selected {
-    box-shadow: 0 0 15px var(--primary-color);
+    box-shadow: 0 0 15px rgba(176, 90, 42, 0.6);
     transform: scale(1.1);
 }
 
@@ -71,13 +79,14 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 45vh;
-    max-height: 350px;
+    height: 48vh;
+    max-height: 380px;
     padding: 1rem;
     position: relative;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.2));
 }
 
 #canang-base.placed {
@@ -94,17 +103,20 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    background-color: transparent;
+    border: none;
 }
 
 /* --- Bottom Section: Character and Dialogue --- */
 .bottom-ui-container {
     display: flex;
     align-items: center; /* Vertically center items in dialogue */
-    padding: 0.75rem;
+    padding: 0.75rem 0.9rem;
     gap: 1rem;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    background: #fff2dd;
+    border: 3px solid #b05a2a;
+    border-radius: 6px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
     max-width: 800px; /* Limit width */
     margin: 0 auto; /* Center it */
     width: 100%;
@@ -114,6 +126,10 @@ body {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
+    border-radius: 10px;
+    background-color: #fff4e6;
+    padding: 6px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 .dialogue-box {
@@ -122,8 +138,18 @@ body {
 
 #character-name {
     font-weight: 600;
-    color: var(--primary-color);
+    color: #7b2c16;
+    font-family: 'Cinzel', serif;
     margin-bottom: 0.25rem;
+}
+
+#dialogue-text {
+    line-height: 1.5;
+    color: #3b2314;
+    background: #ffecd2;
+    border-left: 4px solid #b05a2a;
+    padding: 0.45rem 0.6rem;
+    border-radius: 4px;
 }
 
 /* --- Item Images --- */
@@ -142,7 +168,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -150,19 +178,20 @@ body {
 }
 
 #video-modal .video-content {
-    background: var(--white-color);
+    background: #fff2dd;
     padding: 2rem;
-    border-radius: var(--border-radius);
+    border-radius: 6px;
     text-align: center;
     width: 90%;
     max-width: 800px;
-    box-shadow: var(--box-shadow);
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
     position: relative;
 }
 
 #video-modal video {
     width: 100%;
-    border-radius: var(--border-radius);
+    border-radius: 6px;
     margin: 1rem 0;
 }
 
@@ -172,17 +201,67 @@ body {
     right: -15px;
     width: 35px;
     height: 35px;
-    background: var(--secondary-color);
-    color: var(--text-color);
+    background: #b93422;
+    color: #fff4e6;
     border-radius: 50%;
-    border: 2px solid var(--white-color);
+    border: 2px solid #fff4e6;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Tutorial Modal */
+#tutorial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#tutorial-modal.hidden {
+    display: none;
+}
+
+.tutorial-content {
+    background: #fff2dd;
+    padding: 2rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 90%;
+    max-width: 520px;
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+}
+
+/* --- Canang Sari Button Style --- */
+.dialogue-button {
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #b93422, #7b2c16);
+    color: #fff4e6;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(123, 44, 22, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dialogue-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(123, 44, 22, 0.55);
 }
 
 /* --- Mobile Responsiveness --- */

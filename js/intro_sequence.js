@@ -23,13 +23,13 @@ function startIntroOverlaySequence() {
     
     // Check for saved player name
     const savedPlayerName = localStorage.getItem('playerName');
-    if (savedPlayerName) {
+    const shouldSkipNameInput = Boolean(savedPlayerName);
+    const skipIntroOnce = localStorage.getItem('skipIntroOnce') === 'true';
+    if (skipIntroOnce) {
+        localStorage.removeItem('skipIntroOnce');
         introOverlayContainer.classList.add('hidden');
         renderHub();
-        // Music will be handled by the first user interaction on the map (e.g. clicking a location)
-        // or explicitly played on page load with muted status if that's acceptable.
-        // For now, it will start on the first click in the main game.
-        return; // Skip intro if name exists
+        return;
     }
     
     function showIntroStep(stepIndex) {
@@ -42,6 +42,11 @@ function startIntroOverlaySequence() {
             introTitle.textContent = step.title;
     
             if (step.type === 'name-input') {
+                if (shouldSkipNameInput) {
+                    // Skip name input if already saved
+                    showIntroStep(currentIntroStep + 1);
+                    return;
+                }
                 introTextArea.innerHTML = `<p>${step.text}</p><input type="text" id="player-name-input" placeholder="Nama Kamu" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 80%; max-width: 300px; margin-top: 10px;">`;
                 const startButton = document.createElement('button');
                 startButton.id = 'intro-start-game-btn';
@@ -54,6 +59,7 @@ function startIntroOverlaySequence() {
                     const playerName = playerNameInput.value.trim();
                     if (playerName) {
                         localStorage.setItem('playerName', playerName);
+                        updatePlayerNameBadge();
                         // Play music on this interaction
                         playBackgroundMusicSafely();
                         // Proceed to next step or directly to game if this is the last "intro" step
@@ -75,6 +81,18 @@ function startIntroOverlaySequence() {
                     introNextBtn.textContent = 'Lanjut';
                 }
                 introButtons.appendChild(introNextBtn); // Append default next button
+
+                if (shouldSkipNameInput) {
+                    const skipAllButton = document.createElement('button');
+                    skipAllButton.textContent = 'Skip Semua';
+                    skipAllButton.className = 'intro-next-btn secondary';
+                    skipAllButton.addEventListener('click', () => {
+                        introOverlayContainer.classList.add('hidden');
+                        renderHub();
+                        playBackgroundMusicSafely();
+                    });
+                    introButtons.appendChild(skipAllButton);
+                }
             }
         }
     }

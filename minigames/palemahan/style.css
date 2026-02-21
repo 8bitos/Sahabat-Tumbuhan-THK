@@ -1,10 +1,12 @@
 /* Inherits from shared_style.css */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap');
 
 body {
     background-image: url('assets/img/bgmn1.png');
     background-size: cover;
     background-position: center;
     overflow: hidden; /* Prevent scrolling on the whole page */
+    color: #3b2314;
 }
 
 .screen {
@@ -22,7 +24,10 @@ body {
 
 /* --- Start Screen --- */
 #start-screen .game-container {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #fff2dd;
+    border: 3px solid #b05a2a;
+    border-radius: 6px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
 }
 
 .seed-selection {
@@ -38,7 +43,10 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 1.5rem;
-    background-color: var(--white-color);
+    background-color: #fff7eb;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
 }
 
 .seed-choice img {
@@ -53,6 +61,8 @@ body {
     justify-content: space-evenly; /* Changed for better vertical spacing */
     padding: 1rem;
     gap: 1rem; /* Add gap between main sections */
+    height: 100vh;
+    overflow: hidden;
 }
 
 .top-bar {
@@ -67,32 +77,39 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #fff7eb;
     padding: 0.75rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
     flex-grow: 1;
 }
 
 #loka-avatar {
     width: 80px;
     height: 80px;
+    border-radius: 10px;
+    background-color: #fff4e6;
+    padding: 6px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 #plant-stats {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #fff7eb;
     padding: 0.75rem 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
     width: 200px;
     text-align: center;
+    color: #3b2314;
 }
 
 #growth-progress-bar {
     width: 100%;
     height: 20px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
+    background-color: #f1e2cf;
+    border-radius: 6px;
     margin-top: 0.5rem;
     overflow: hidden;
 }
@@ -100,7 +117,7 @@ body {
 #growth-progress {
     width: 0%;
     height: 100%;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, #9b8f2c, #6f5c16);
     transition: width 0.5s ease;
 }
 
@@ -133,7 +150,7 @@ body {
 
 #need-bubble {
     position: absolute;
-    top: -20px;
+    top: 0px;
     left: 50%;
     transform: translateX(-50%);
     width: 80px;
@@ -171,10 +188,32 @@ body {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #fff7eb;
     padding: 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 769px) {
+    #game-screen {
+        justify-content: flex-start;
+        gap: 0.75rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    #garden-area {
+        flex: 1;
+        min-height: 0;
+    }
+
+    #toolbar {
+        margin-top: 0;
+        padding: 0.75rem;
+        position: relative;
+        top: -18px;
+    }
 }
 
 .tool {
@@ -183,16 +222,16 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem;
-    border: 2px solid transparent;
-    border-radius: var(--border-radius);
-    background-color: #f0f0f0;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    border-radius: 6px;
+    background-color: #fff0dc;
     cursor: pointer;
     transition: border-color 0.3s, background-color 0.3s;
 }
 
 .tool:hover, .tool.selected {
-    border-color: var(--primary-color);
-    background-color: #e8f5e9;
+    border-color: #b05a2a;
+    background-color: #ffe7c6;
 }
 
 .tool img {
@@ -207,7 +246,9 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
     display: flex; /* Use flexbox to center content */
     justify-content: center;
     align-items: center;
@@ -217,13 +258,14 @@ body {
 }
 
 #video-modal .video-content {
-    background: var(--white-color);
+    background: #fff2dd;
     padding: 1.5rem; /* Slightly reduced padding */
-    border-radius: var(--border-radius);
+    border-radius: 6px;
     text-align: center;
     width: 95%; /* Take up more width on smaller screens */
     max-width: 900px; /* Allow wider on larger screens, but with a max */
-    box-shadow: var(--box-shadow);
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
     position: relative;
     display: flex; /* Use flexbox for internal content */
     flex-direction: column;
@@ -233,8 +275,119 @@ body {
 #video-modal video {
     width: 100%;
     max-width: 700px; /* Max width for video */
-    border-radius: var(--border-radius);
+    border-radius: 6px;
     margin: 1rem 0;
+}
+
+/* Speed Controls */
+#speed-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #9c6b2e, #6f4a1f);
+    color: #fff4e6;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(111, 74, 31, 0.35);
+}
+
+#speed-button:hover {
+    background: linear-gradient(135deg, #8a5e27, #5f3e17);
+}
+
+#speed-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#speed-modal.hidden {
+    display: none;
+}
+
+.speed-content {
+    background: #fff2dd;
+    padding: 1.5rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 90%;
+    max-width: 420px;
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+}
+
+.speed-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+.speed-option.active {
+    outline: 2px solid #7b2c16;
+}
+
+/* Tutorial Modal */
+#tutorial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#tutorial-modal.hidden {
+    display: none;
+}
+
+.tutorial-content {
+    background: #fff2dd;
+    padding: 2rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 90%;
+    max-width: 520px;
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+}
+
+/* Button style override to match Bali theme */
+.btn {
+    border-radius: 4px;
+    background: linear-gradient(135deg, #b93422, #7b2c16);
+    color: #fff4e6;
+    font-weight: 700;
+    box-shadow: 0 8px 18px rgba(123, 44, 22, 0.45);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #a62e1f, #6a2412);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(123, 44, 22, 0.55);
 }
 
 /* Adjustments for smaller screens */

@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mixingBowl = document.getElementById('mixing-bowl');
     const checkButton = document.getElementById('check-button');
     const sariAvatarEl = document.getElementById('sari-avatar');
+    const tutorialModal = document.getElementById('tutorial-modal');
+    const tutorialStartButton = document.getElementById('tutorial-start-button');
 
     // --- Game Data ---
     const ingredients = [
@@ -175,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadRecipe(index) {
         currentRecipeIndex = index;
         const recipe = recipes[index];
-        riddleTextEl.textContent = recipe.riddle;
+        riddleTextEl.textContent = `${index + 1}. ${recipe.riddle}`;
         setDialogue('explain', 'Bantu aku memecahkan resep nenek ini!');
         resetMix();
     }
@@ -278,6 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
         explanationVideo.pause();
         explanationVideo.currentTime = 0;
 
+        const currentCount = parseInt(localStorage.getItem('pawonganCompleteCount') || '0', 10);
+        localStorage.setItem('pawonganCompleteCount', String(currentCount + 1));
         Swal.fire({
             title: 'Hadiah Spesial!',
             html: `Wah, kamu hebat! Kamu berhasil membuat semua resep nenek. Saat merapikan, aku menemukan buku catatannya yang berisi semua informasi tentang bahan-bahan ini. Aku berikan padamu sebagai hadiah!`,
@@ -287,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then(() => {
             localStorage.setItem('pawonganBookUnlocked', 'true');
             localStorage.setItem('pawonganCompleted', 'true'); // Set the flag for minigame completion
+            localStorage.setItem('skipIntroOnce', 'true');
             window.location.href = '../../index.html'; // Redirect to main map
         });
     }
@@ -332,4 +337,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Load ---
     renderIngredients();
     loadRecipe(0);
+
+    // --- Tutorial Modal ---
+    if (tutorialModal && tutorialStartButton) {
+        tutorialModal.classList.remove('hidden');
+        tutorialModal.style.display = 'flex';
+        tutorialStartButton.addEventListener('click', () => {
+            tutorialModal.classList.add('hidden');
+            tutorialModal.style.display = 'none';
+        });
+    }
 });

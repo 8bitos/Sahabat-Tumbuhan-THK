@@ -466,6 +466,7 @@ function submitQuiz() {
 
     const totalQuestions = quizQuestionsData.length;
     const score = Math.round((correctAnswers / totalQuestions) * 100);
+    localStorage.setItem('quizScore', String(score));
 
     console.log('Quiz Result - Debug:');
     console.log('Total Questions:', totalQuestions);

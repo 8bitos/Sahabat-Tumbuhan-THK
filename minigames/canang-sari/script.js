@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const yanaCharacter = document.getElementById('yana-character');
     const dialogueText = document.getElementById('dialogue-text');
     const gameContainer = document.querySelector('.game-container');
+    const tutorialModal = document.getElementById('tutorial-modal');
+    const tutorialStartButton = document.getElementById('tutorial-start-button');
 
     // --- Game Data ---
     const items = [
@@ -19,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gameSteps = [
         { dialogue: "Halo! Mari kita buat Canang Sari. Pertama, kita butuh Alas Canang sebagai dasarnya.", expression: 'Yana-Smile.png', requiredItem: 'canang-base-item', targetZone: 'base' },
-        { dialogue: "Bagus! Sekarang, letakkan Porosan di tengahnya. Ini adalah simbol pemujaan.", expression: 'Yana-Smile.png', requiredItem: 'porosan', targetZone: 'center' },
+        { dialogue: "Bagus! Sekarang, letakkan Porosan di tengahnya. Porosan berisi unsur pinang, sirih, dan kapur sebagai simbol penyatuan pikiran, ucapan, dan tindakan dalam sembahyang.", expression: 'Yana-Smile.png', requiredItem: 'porosan', targetZone: 'center' },
         { dialogue: "Selanjutnya, Bunga Putih untuk Dewa Iswara di arah Timur (kanan).", expression: 'Yana-Smile.png', requiredItem: 'flower-white', targetZone: 'east' },
         { dialogue: "Lalu, Bunga Merah untuk Dewa Brahma di arah Selatan (bawah).", expression: 'Yana-Smile.png', requiredItem: 'flower-red', targetZone: 'south' },
         { dialogue: "Sekarang Bunga Kuning untuk Dewa Mahadewa di arah Barat (kiri).", expression: 'Yana-Smile.png', requiredItem: 'flower-yellow', targetZone: 'west' },
         { dialogue: "Hampir selesai! Bunga Biru untuk Dewa Wisnu di arah Utara (atas).", expression: 'Yana-Smile.png', requiredItem: 'flower-blue', targetZone: 'north' },
-        { dialogue: "Terakhir, tambahkan Pandan sebagai simbol keharuman.", expression: 'Yana-Excited.png', requiredItem: 'pandan', targetZone: 'anywhere' },
+        { dialogue: "Terakhir, tambahkan Pandan sebagai simbol keharuman dan ketulusan hati dalam persembahan.", expression: 'Yana-Excited.png', requiredItem: 'pandan', targetZone: 'anywhere' },
     ];
 
     // --- Game State ---
@@ -148,12 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listener for Exit Video Button ---
     exitVideoButton.addEventListener('click', () => {
         hideVideoModal();
+        localStorage.setItem('skipIntroOnce', 'true');
         window.location.href = '../../index.html'; // Redirect to main hub
     });
 
     // --- Event Listener for Video Ended ---
     explanationVideo.addEventListener('ended', () => {
         hideVideoModal();
+        localStorage.setItem('skipIntroOnce', 'true');
         // Redirect to main hub after video ends
         window.location.href = '../../index.html';
     });
@@ -167,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
             allowOutsideClick: false,
         }).then((result) => {
             if (result.isConfirmed) {
+                const currentCount = parseInt(localStorage.getItem('parahyanganCompleteCount') || '0', 10);
+                localStorage.setItem('parahyanganCompleteCount', String(currentCount + 1));
+                localStorage.setItem('parahyanganCompleted', 'true');
                 // Hide the game container before showing the video
                 gameContainer.classList.add('hidden');
                 // Show video modal after user confirms
@@ -285,4 +292,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeItems();
     const firstStep = gameSteps[0];
     setDialogue(firstStep.expression, firstStep.dialogue);
+
+    // --- Tutorial Modal ---
+    if (tutorialModal && tutorialStartButton) {
+        tutorialModal.classList.remove('hidden');
+        tutorialModal.style.display = 'flex';
+        tutorialStartButton.addEventListener('click', () => {
+            tutorialModal.classList.add('hidden');
+            tutorialModal.style.display = 'none';
+        });
+    }
 });

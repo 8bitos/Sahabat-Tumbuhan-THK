@@ -1,4 +1,16 @@
 /* Inherits from shared_style.css */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap');
+
+body {
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
+    color: #3b2314;
+}
+
+.game-container {
+    background: transparent;
+}
 
 /* Override game-container for a two-panel layout on desktop */
 .game-container {
@@ -13,12 +25,13 @@
 /* --- Left Panel: The Recipe Book --- */
 .recipe-book-panel {
     width: 40%;
-    background-color: #fdfaf2; /* Old paper color */
-    border: 3px solid #8d6e63; /* Wood-like border */
-    border-radius: var(--border-radius);
+    background-color: #fff2dd; /* Old paper color */
+    border: 3px solid #b05a2a; /* Wood-like border */
+    border-radius: 6px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
 }
 
 .book-content h2 {
@@ -27,15 +40,25 @@
     color: #5d4037;
 }
 
+.recipe-book-panel h2 {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    color: #7b2c16;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
 #riddle-text {
     font-size: 1.1em;
     font-style: italic;
     line-height: 1.6;
     min-height: 120px; /* Give it some space */
     margin: 1rem 0;
-    background-color: rgba(255,255,255,0.5);
+    background-color: #ffecd2;
     padding: 1rem;
-    border-radius: var(--border-radius);
+    border-radius: 4px;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    color: #3b2314;
 }
 
 #sari-dialogue {
@@ -44,16 +67,21 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: var(--white-color);
+    background-color: #fff7eb;
     padding: 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    border: 2px solid rgba(123, 44, 22, 0.2);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
 }
 
 #sari-avatar {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
+    border-radius: 10px;
+    background-color: #fff4e6;
+    padding: 6px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 /* --- Right Panel: The Kitchen --- */
@@ -65,16 +93,20 @@
 }
 
 #pantry, #mixing-station {
-    background-color: var(--white-color);
+    background-color: #fff2dd;
     padding: 1.5rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
 }
 
 #pantry h3, #mixing-station h3 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 1rem;
+    font-family: 'Cinzel', serif;
+    color: #7b2c16;
+    text-transform: uppercase;
 }
 
 #ingredients-shelf {
@@ -100,17 +132,17 @@
 }
 
 .ingredient-item-wrapper.selected .ingredient-shape {
-    border: 3px solid var(--primary-color);
-    box-shadow: 0 0 15px var(--primary-color);
+    border: 3px solid #b05a2a;
+    box-shadow: 0 0 15px rgba(176, 90, 42, 0.6);
 }
 
 .ingredient-shape {
     width: 90px;
     height: 90px;
     min-height: 80px; /* Ensure a minimum height */
-    border: 2px solid #ddd;
-    border-radius: var(--border-radius);
-    background-color: #f8f8f8; /* Light background for visibility */
+    border: 2px solid rgba(123, 44, 22, 0.25);
+    border-radius: 6px;
+    background-color: #fff7eb; /* Light background for visibility */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -119,7 +151,7 @@
 
 .ingredient-name {
     font-size: 0.8em;
-    color: #5d4037; /* Dark brown for readability */
+    color: #6b4b3a; /* Dark brown for readability */
     text-align: center;
     width: 100%;
     margin-top: 5px; /* Space between box and name */
@@ -128,9 +160,9 @@
 #mixing-bowl {
     min-height: 100px;
     margin: 0 auto 1rem auto;
-    background-color: #f0f0f0;
-    border: 3px dashed #ccc;
-    border-radius: var(--border-radius);
+    background-color: #fff7eb;
+    border: 3px dashed rgba(123, 44, 22, 0.35);
+    border-radius: 6px;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -140,21 +172,21 @@
 }
 
 #mixing-bowl.drag-over {
-    border-color: var(--primary-color);
-    background-color: #e8f5e9; /* Light green */
+    border-color: #b05a2a;
+    background-color: #ffe7c6;
 }
 
 .mixed-ingredient {
     width: 70px;
     height: 70px;
     min-height: 60px; /* Ensure a minimum height */
-    border-radius: var(--border-radius);
+    border-radius: 6px;
     flex-shrink: 0;
-    background-color: #f8f8f8; /* Light background for visibility */
+    background-color: #fff7eb; /* Light background for visibility */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 #check-button {
@@ -167,10 +199,10 @@
 
 #tooltip {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
+    background-color: rgba(59, 35, 20, 0.9);
+    color: #fff4e6;
     padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
+    border-radius: 4px;
     font-size: 0.9em;
     pointer-events: none;
     z-index: 1000;
@@ -179,21 +211,55 @@
 
 #success-popup, #video-modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
     z-index: 1000;
     display: flex; justify-content: center; align-items: center;
     padding: 1rem;
     visibility: visible; /* Control with 'hidden' class */
 }
 
-.popup-content, .video-content {
-    background: var(--white-color);
+.tutorial-content {
+    background: #fff2dd;
     padding: 2rem;
-    border-radius: var(--border-radius);
+    border-radius: 6px;
+    text-align: center;
+    width: 90%;
+    max-width: 520px;
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+}
+
+#tutorial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at top, rgba(255, 239, 215, 0.95) 0%, rgba(245, 210, 170, 0.95) 40%, rgba(214, 142, 84, 0.95) 100%),
+        repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.18) 0 6px, rgba(120, 34, 24, 0.08) 6px 12px);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#tutorial-modal.hidden {
+    display: none;
+}
+
+.popup-content, .video-content {
+    background: #fff2dd;
+    padding: 2rem;
+    border-radius: 6px;
     text-align: center;
     width: 90%;
     max-width: 500px;
-    box-shadow: var(--box-shadow);
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
     position: relative;
 }
 
@@ -210,10 +276,35 @@
     height: 140px;
     min-height: 120px; /* Ensure a minimum height */
     margin: 1rem auto;
-    background-color: #f8f8f8; /* Light background for visibility */
+    background-color: #fff7eb; /* Light background for visibility */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/* Button style override to match Bali theme */
+.btn {
+    border-radius: 4px;
+    background: linear-gradient(135deg, #b93422, #7b2c16);
+    color: #fff4e6;
+    font-weight: 700;
+    box-shadow: 0 8px 18px rgba(123, 44, 22, 0.45);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #a62e1f, #6a2412);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(123, 44, 22, 0.55);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #9c6b2e, #6f4a1f);
+    color: #fff4e6;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #8a5e27, #5f3e17);
 }
 
 /* --- Mobile Responsiveness --- */
@@ -221,9 +312,9 @@
     .game-container {
         flex-direction: column; /* Stack panels vertically */
         gap: 1rem;
-        padding: 1rem;
-        /* Add padding at the bottom to avoid overlap with floating dialogue */
-        padding-bottom: 120px; 
+        padding: 0.75rem;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .recipe-book-panel, .kitchen-panel {
@@ -235,8 +326,9 @@
     }
 
     #riddle-text {
-        min-height: 80px;
-        font-size: 1em;
+        min-height: 64px;
+        font-size: 0.95em;
+        padding: 0.75rem;
     }
 
     /* --- Floating Dialogue Box --- */
@@ -257,7 +349,7 @@
         backdrop-filter: blur(5px);
         border-top: 1px solid #ddd;
         box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-        padding: 0.75rem 1rem;
+        padding: 0.6rem 0.8rem;
     }
 
     #sari-avatar {
@@ -266,16 +358,16 @@
     }
 
     .ingredient-shape {
-        width: 70px;
-        height: 70px;
-        min-height: 60px; /* Ensure a minimum height */
+        width: 60px;
+        height: 60px;
+        min-height: 50px; /* Ensure a minimum height */
         background-color: #f8f8f8; /* Light background for visibility */
     }
 
     .mixed-ingredient {
-        width: 60px;
-        height: 60px;
-        min-height: 50px; /* Ensure a minimum height */
+        width: 52px;
+        height: 52px;
+        min-height: 46px; /* Ensure a minimum height */
         background-color: #f8f8f8; /* Light background for visibility */
     }
 
@@ -283,5 +375,19 @@
         padding: 1rem; /* Slightly reduce padding on mobile */
         width: 100%; /* Take full width of parent on mobile */
         max-width: 100%; /* Override desktop max-width */
+    }
+
+    #pantry, #mixing-station {
+        padding: 0.9rem;
+    }
+
+    #ingredients-shelf {
+        gap: 0.6rem;
+    }
+
+    #mixing-bowl {
+        min-height: 70px;
+        padding: 6px;
+        gap: 6px;
     }
 }
