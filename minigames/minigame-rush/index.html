@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minigame Rush</title>
+    <link rel="stylesheet" href="../shared_style.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div id="loading-overlay" aria-live="polite" aria-busy="true">
+        <div class="loading-card">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <p class="loading-text">Memuat petualangan...</p>
+        </div>
+    </div>
+    <div class="rush-page">
+        <header class="rush-header">
+            <div class="stat-chip">Waktu: <span id="time-left">90</span>s</div>
+            <h1>Minigame Rush</h1>
+            <div class="stat-chip">Skor: <span id="score">0</span> | Ronde: <span id="round-time">7</span>s | Combo: <span id="combo">0</span> | Lv: <span id="level">1</span></div>
+        </header>
+
+        <main class="rush-card">
+            <div class="top-row">
+                <p id="challenge-tag">Mode Campuran</p>
+                <p id="challenge-text">Memuat tantangan...</p>
+            </div>
+            <div id="arena" class="arena"></div>
+            <p id="feedback" class="feedback"></p>
+        </main>
+    </div>
+
+    <audio id="bg-audio" src="../../assets/audio/SFX/rush_bgm_loop.ogg" loop></audio>
+    <audio id="click-sfx" src="../../assets/audio/click.wav" preload="auto"></audio>
+    <audio id="rush-start-sfx" src="../../assets/audio/SFX/rush_start.ogg" preload="auto"></audio>
+    <audio id="correct-sfx" src="../../assets/audio/SFX/correct_hit.wav" preload="auto"></audio>
+    <audio id="wrong-sfx" src="../../assets/audio/SFX/wrong_hit.wav" preload="auto"></audio>
+    <audio id="combo-up-sfx" src="../../assets/audio/SFX/combo_up.wav" preload="auto"></audio>
+    <audio id="time-bonus-sfx" src="../../assets/audio/SFX/time_bonus.wav" preload="auto"></audio>
+    <audio id="countdown-sfx" src="../../assets/audio/SFX/countdown_tick.wav" preload="auto"></audio>
+    <audio id="round-transition-sfx" src="../../assets/audio/SFX/round_transition.wav" preload="auto"></audio>
+    <audio id="new-best-sfx" src="../../assets/audio/SFX/new_best.wav" preload="auto"></audio>
+    <script src="script.js"></script>
+    <script>
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const hideLoadingOverlay = () => {
+            if (!loadingOverlay || loadingOverlay.classList.contains('hidden')) return;
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.setAttribute('aria-busy', 'false');
+        };
+
+        window.addEventListener('load', () => {
+            hideLoadingOverlay();
+        });
+
+        setTimeout(() => {
+            hideLoadingOverlay();
+        }, 2500);
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Minigame - Tantangan Cepat</title>
+    <link rel="stylesheet" href="shared_style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap');
+
+        body {
+            background-image: url('../assets/img/bg-desktop.png');
+            background-size: cover;
+            background-position: center;
+            color: #3b2314;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at top, rgba(255, 239, 215, 0.6) 0%, rgba(245, 210, 170, 0.35) 40%, rgba(214, 142, 84, 0.45) 100%),
+                repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.14) 0 6px, rgba(120, 34, 24, 0.04) 6px 12px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        #menu-scene {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            padding: 16px;
+        }
+        #menu-card {
+            width: min(920px, 94vw);
+            background: rgba(255, 242, 221, 0.96);
+            border: 3px solid #b05a2a;
+            border-radius: 8px;
+            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.25), inset 0 0 0 2px rgba(255, 235, 200, 0.85);
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0 0 12px;
+            color: #7b2c16;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+        .desc {
+            background: #ffecd2;
+            border: 2px solid rgba(123, 44, 22, 0.2);
+            border-radius: 6px;
+            padding: 12px;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 14px;
+        }
+        .meta {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .meta span {
+            background: #fff7eb;
+            border: 2px solid rgba(123, 44, 22, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-weight: 700;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-choice {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.96rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+            background: linear-gradient(135deg, #b93422, #7b2c16);
+            color: #fff4e6;
+            box-shadow: 0 8px 18px rgba(123, 44, 22, 0.45);
+        }
+        .btn-choice:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #a62e1f, #6a2412);
+            box-shadow: 0 10px 22px rgba(123, 44, 22, 0.55);
+        }
+        .btn-choice.secondary {
+            background: linear-gradient(135deg, #9c6b2e, #6f4a1f);
+        }
+        .btn-choice.secondary:hover {
+            background: linear-gradient(135deg, #8a5e27, #5f3e17);
+        }
+        @media (max-width: 768px) {
+            #menu-card { padding: 14px; }
+            .btn-choice { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay" aria-live="polite" aria-busy="true">
+        <div class="loading-card">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <p class="loading-text">Memuat petualangan...</p>
+        </div>
+    </div>
+
+    <div id="menu-scene">
+        <div id="menu-card">
+            <h1>Mode Minigame</h1>
+            <div class="desc">
+                Tantangan ini menggabungkan elemen Palemahan, Pawongan, dan Parahyangan dalam satu permainan cepat.
+                Soal akan muncul secara acak dan kamu berpacu dengan waktu. Jawab sebanyak mungkin dengan tepat
+                untuk mendapatkan skor tinggi.
+            </div>
+            <div class="meta">
+                <span>Mode: Random Campuran</span>
+                <span>Waktu: 90 Detik</span>
+                <span id="best-score">Best Score: 0</span>
+            </div>
+            <div class="actions">
+                <button class="btn-choice" id="start-btn">Mulai Tantangan</button>
+                <button class="btn-choice secondary" id="back-btn">Kembali ke Map</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bg-audio" src="../assets/audio/bgm.mp3" loop></audio>
+    <audio id="click-sfx" src="../assets/audio/click.wav" preload="auto"></audio>
+
+    <script>
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const hideLoadingOverlay = () => {
+            if (!loadingOverlay || loadingOverlay.classList.contains('hidden')) return;
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.setAttribute('aria-busy', 'false');
+        };
+
+        window.addEventListener('load', () => {
+            hideLoadingOverlay();
+        });
+
+        setTimeout(() => {
+            hideLoadingOverlay();
+        }, 2500);
+
+        const bestScoreEl = document.getElementById('best-score');
+        const startBtn = document.getElementById('start-btn');
+        const backBtn = document.getElementById('back-btn');
+        const bgAudio = document.getElementById('bg-audio');
+        const clickSfx = document.getElementById('click-sfx');
+        const isUnlocked = localStorage.getItem('quizCompleted') === 'true'
+            || (localStorage.getItem('quizScore') !== null && localStorage.getItem('quizScore') !== '');
+
+        if (!isUnlocked) {
+            alert('Mode Minigame terbuka setelah quiz selesai.');
+            window.location.href = '../index.html';
+        }
+        localStorage.setItem('minigameRushVisited', 'true');
+
+        const bestScore = parseInt(localStorage.getItem('minigameRushBestScore') || '0', 10);
+        bestScoreEl.textContent = `Best Score: ${bestScore}`;
+
+        startBtn.addEventListener('click', () => { window.location.href = 'minigame-rush/index.html'; });
+        backBtn.addEventListener('click', () => { window.location.href = '../index.html'; });
+
+        if (bgAudio) {
+            bgAudio.volume = 0.6;
+            const resume = () => {
+                bgAudio.play().finally(() => {
+                    document.removeEventListener('pointerdown', resume);
+                    document.removeEventListener('touchstart', resume);
+                    document.removeEventListener('keydown', resume);
+                });
+            };
+            document.addEventListener('pointerdown', resume, { once: true });
+            document.addEventListener('touchstart', resume, { once: true });
+            document.addEventListener('keydown', resume, { once: true });
+            bgAudio.play().catch(() => {});
+        }
+
+        document.addEventListener('click', (event) => {
+            if (!clickSfx) return;
+            const interactive = event.target.closest('button');
+            if (!interactive) return;
+            clickSfx.currentTime = 0;
+            clickSfx.play().catch(() => {});
+        });
+    </script>
+</body>
+</html>

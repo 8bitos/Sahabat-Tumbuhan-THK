@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="loading-overlay" aria-live="polite" aria-busy="true">
+        <div class="loading-card">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <p class="loading-text">Memuat petualangan...</p>
+        </div>
+    </div>
     <!-- Start Screen -->
     <div id="start-screen" class="screen">
         <div class="game-container">
@@ -82,6 +88,50 @@
         </div>
     </div>
 
+    <!-- Tomato Drag & Drop Minigame -->
+    <div id="tomato-game" class="screen hidden">
+        <div class="tomato-container">
+            <div class="tomato-layout">
+                <div class="tomato-header">
+                    <h2>Kenali Bagian Tanaman Tomat</h2>
+                    <p>Seret kata ke kotak yang tepat di gambar.</p>
+                    <p id="tomato-message" class="tomato-message"></p>
+                </div>
+                <div class="tomato-right">
+                    <div id="tomato-board" class="tomato-board">
+                        <img id="tomato-image" src="assets/img/tomato.png" alt="Bagian tanaman tomat" draggable="false">
+                        <div id="tomato-drop-layer" class="tomato-drop-layer"></div>
+                        <div id="tomato-debug-rect" class="tomato-debug-rect hidden"></div>
+                        <div id="tomato-debug-panel" class="tomato-debug hidden">
+                            <div><strong>Debug Koordinat</strong></div>
+                            <div id="tomato-debug-coords">Drag di gambar untuk membuat kotak.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tomato-left">
+                    <div id="tomato-words" class="tomato-words"></div>
+                    <div class="tomato-actions">
+                        <button id="tomato-reset" class="btn btn-secondary">Ulang</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transition Dialog Before Tomato Minigame -->
+    <div id="tomato-transition" class="screen hidden">
+        <div class="game-container tomato-transition">
+            <div class="transition-content">
+                <img class="transition-avatar" src="../../assets/img/Loka/Loka-Smile.png" alt="Loka">
+                <div class="transition-text">
+                    <h2>Hebat!</h2>
+                    <p>Wah, kamu sudah berhasil menumbuhkan tanaman. Yuk kenali bagian-bagiannya. Bisa tebak nggak?</p>
+                    <button id="tomato-transition-button" class="btn">Ayo Tebak!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Video Modal -->
     <div id="video-modal" class="hidden">
         <div class="video-content">
@@ -110,7 +160,27 @@
         </div>
     </div>
 
+    <audio id="bg-audio" src="../../assets/audio/palemahan.mp3" loop></audio>
+    <audio id="bubble-sfx" src="../../assets/audio/bubble.wav" preload="auto"></audio>
+    <audio id="click-sfx" src="../../assets/audio/click.wav" preload="auto"></audio>
+
     <script src="../../tts.js"></script>
     <script src="script.js"></script>
+    <script>
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const hideLoadingOverlay = () => {
+            if (!loadingOverlay || loadingOverlay.classList.contains('hidden')) return;
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.setAttribute('aria-busy', 'false');
+        };
+
+        window.addEventListener('load', () => {
+            hideLoadingOverlay();
+        });
+
+        setTimeout(() => {
+            hideLoadingOverlay();
+        }, 2500);
+    </script>
 </body>
 </html>

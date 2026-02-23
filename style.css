@@ -32,6 +32,54 @@ html, body {
     color: var(--ui-ink);
 }
 
+/* Loading Overlay */
+#loading-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(255, 215, 170, 0.45), transparent 60%),
+        radial-gradient(circle at 80% 0%, rgba(255, 186, 120, 0.35), transparent 55%),
+        #f6f1ea;
+    z-index: 9999;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+#loading-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loading-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 22px;
+    background: rgba(255, 247, 232, 0.95);
+    border: 2px solid rgba(123, 44, 22, 0.15);
+    border-radius: 14px;
+    box-shadow: var(--ui-soft-shadow);
+}
+
+.loading-spinner {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 4px solid rgba(123, 44, 22, 0.15);
+    border-top-color: #7b2c16;
+    animation: spinner-rotate 0.9s linear infinite;
+}
+
+.loading-text {
+    font-weight: 700;
+    color: #7b2c16;
+    letter-spacing: 0.3px;
+}
+
 /* Mobile-First Layout (Default) */
 #game-container {
     display: flex;
@@ -75,7 +123,7 @@ html, body {
     flex-direction: column;
     background:
         linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(255, 243, 227, 0.98));
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: none;
     padding: 16px;
     gap: 12px;
     flex-shrink: 0; /* Prevent shrinking on mobile */
@@ -84,14 +132,35 @@ html, body {
     animation: panel-slide-in 0.5s ease-out;
 }
 
+@media (max-width: 768px) {
+    #side-panel {
+        padding-top: 0;
+        max-height: 36vh;
+        overflow-y: auto;
+    }
+
+    #character-dialogue-area {
+        align-items: flex-start;
+    }
+
+    #dialogue-box {
+        padding-top: 4px;
+    }
+
+    #dialogue-text {
+        font-size: 1.1rem;
+        line-height: 1.55;
+    }
+}
+
 #character-dialogue-area {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     padding: 10px 12px;
-    background: linear-gradient(135deg, rgba(255, 247, 232, 0.95), rgba(255, 235, 210, 0.9));
-    border: 2px solid rgba(123, 44, 22, 0.18);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+    background: transparent;
+    border: none;
+    box-shadow: none;
     border-radius: 10px;
 }
 
@@ -112,10 +181,10 @@ html, body {
 
 #dialogue-box {
     flex-grow: 1;
-    background: #fff2dd;
-    border: 2px solid rgba(123, 44, 22, 0.2);
+    background: transparent;
+    border: none;
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 4px 12px 35px;
 }
 
 #character-name {
@@ -126,14 +195,15 @@ html, body {
 }
 
 #dialogue-text {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    line-height: 1.6;
     margin-bottom: 8px;
     color: var(--ui-ink);
     background: transparent;
     border-left: none;
     padding: 0;
     border-radius: 0;
+    text-align: left;
 }
 
 #dialogue-buttons {
@@ -214,6 +284,22 @@ html, body {
 #location-yana { top: 75%; left: 25%; } /* Bottom: Parahyangan */
 #location-sari { top: 50%; left: 50%; } /* Middle: Pawongan */
 #location-loka { top: 25%; left: 15%; } /* Top: Palemahan */
+#location-minigame {
+    top: 80%;
+    left: 84%;
+    width: 52px;
+    height: 52px;
+    padding: 3px;
+    border-width: 1px;
+    border-radius: 6px;
+} /* Challenge Mode */
+
+#location-minigame span {
+    display: inline-block;
+    font-size: 0.62rem;
+    padding: 2px 6px;
+    margin-bottom: 2px;
+}
 
 /* Generic Minigame Styles - These will be centered by .minigame-active on #game-world */
 .minigame-board {
@@ -474,7 +560,8 @@ html, body {
         height: 100vh;
         border-top: none;
         border-left: 2px solid rgba(0, 0, 0, 0.1);
-        justify-content: center; /* This centers content vertically */
+    justify-content: flex-start;
+    padding-top: 24px;
     }
 
     #character-image {
@@ -483,7 +570,7 @@ html, body {
     }
 
     #dialogue-text {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     h3 {
@@ -495,6 +582,11 @@ html, body {
 @keyframes panel-slide-in {
     from { transform: translateY(8px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes spinner-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .hidden {
@@ -662,7 +754,7 @@ html, body {
 @media (max-width: 768px) {
     #quiz-card {
         height: 100vh;
-        padding: 16px;
+        padding: 36px 16px;
         gap: 10px;
     }
 
@@ -684,6 +776,10 @@ html, body {
 
     #quiz-image-container img {
         max-height: 18vh;
+    }
+
+    #quiz-navigation {
+        margin-bottom: 14px;
     }
 }
 
@@ -770,7 +866,7 @@ html, body {
     font-size: 1.2rem;
     line-height: 1.6;
     white-space: pre-wrap; /* Preserve newlines */
-    text-align: left;
+    text-align: justify;
     color: #3b2314;
     background-color: #ffecd2;
     padding: 14px 16px;
@@ -818,26 +914,6 @@ html, body {
     box-shadow: 0 10px 22px rgba(111, 74, 31, 0.45);
 }
 
-#reset-progress-btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 4px;
-    background-color: #8b2d1a; /* Red for reset */
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-    margin-left: 10px; /* Space it from the next button */
-    box-shadow: 0 8px 18px rgba(139, 45, 26, 0.4);
-}
-
-#reset-progress-btn:hover {
-    background-color: #742314; /* Darker red */
-    transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(139, 45, 26, 0.5);
-}
-
 /* Responsive adjustments for intro */
 @media (max-width: 768px) {
     #intro-title {
@@ -851,13 +927,6 @@ html, body {
     #intro-next-btn {
         font-size: 1rem;
         padding: 10px 20px;
-    }
-
-    #reset-progress-btn {
-        font-size: 1rem;
-        padding: 10px 20px;
-        margin-top: 10px; /* Stack on mobile if needed */
-        margin-left: 0;
     }
 }
 
@@ -939,7 +1008,7 @@ html, body {
 /* --- Quiz Button --- */
 #quiz-button {
     position: absolute;
-    top: 174px; /* Adjusted position below book button */
+    top: 165px; /* Adjusted position below book button */
     left: 10px;
     z-index: 100;
     padding: 8px 12px;
@@ -1140,7 +1209,7 @@ html, body {
     }
 
     #quiz-button {
-        top: 90px;
+        top: 100px;
     }
 }
 

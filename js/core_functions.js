@@ -2,10 +2,6 @@
 
 // Depends on: globals.js, audio_utils.js, tts.js (external)
 
-function updateUI() {
-    // This function is now empty after removing progress bars
-}
-
 function updatePlayerNameBadge() {
     if (!playerNameBadge) return;
     const name = localStorage.getItem('playerName');
@@ -59,6 +55,17 @@ function checkAllMinigamesCompleted() {
     return palemahanDone && pawonganDone && parahyanganDone;
 }
 
+function isQuizCompleted() {
+    if (localStorage.getItem('quizCompleted') === 'true') return true;
+    // Backward compatibility: old progress only stored quizScore.
+    const legacyQuizScore = localStorage.getItem('quizScore');
+    return legacyQuizScore !== null && legacyQuizScore !== '';
+}
+
+function getMinigameMapLabel() {
+    return localStorage.getItem('minigameRushVisited') === 'true' ? 'Minigames' : '???';
+}
+
 function renderHub() {
     // --- Check if we need to launch a minigame directly ---
     const minigameToStart = localStorage.getItem('startMinigame');
@@ -80,7 +87,7 @@ function renderHub() {
     gameState.currentLocation = 'hub';
     gameWorld.innerHTML = '';
     gameWorld.classList.remove('minigame-active');
-    setDialogue('Narator', 'Kamu berada di halaman sekolah. Ke mana kamu akan pergi selanjutnya? Klik salah satu lokasi.');
+    setDialogue('Kamu berada di halaman sekolah. Ke mana kamu akan pergi selanjutnya? Klik salah satu lokasi', '                                                                                                                        ');
     updatePlayerNameBadge();
 
     // --- Update book button visibility FIRST ---
@@ -122,19 +129,25 @@ function renderHub() {
     const locations = [
         { id: 'yana', name: 'Parahyangan', top: '75%', left: '25%', mission: 'parahyangan' }, // Bottom: Parahyangan
         { id: 'sari', name: 'Pawongan', top: '50%', left: '50%', mission: 'pawongan' }, // Middle: Pawongan
-        { id: 'loka', name: 'Palemahan', top: '25%', left: '15%', mission: 'palemahan' }  // Top: Palemahan
+        { id: 'loka', name: 'Palemahan', top: '25%', left: '15%', mission: 'palemahan' } // Top: Palemahan
     ];
+
+    if (isQuizCompleted()) {
+        locations.push({ id: 'minigame', name: 'Minigame', top: '80%', left: '84%', mission: 'minigame-rush' });
+    }
 
     locations.forEach(loc => {
         const locElement = document.createElement('div');
         locElement.id = `location-${loc.id}`;
         locElement.className = 'map-location';
         
-        const avatarPath = `assets/img/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}/${loc.id}.png`;
+        const avatarPath = loc.id === 'minigame'
+            ? 'assets/img/minigames.png'
+            : `assets/img/${loc.id.charAt(0).toUpperCase() + loc.id.slice(1)}/${loc.id}.png`;
         locElement.style.backgroundImage = `url('${avatarPath}')`;
 
         const nameSpan = document.createElement('span');
-        nameSpan.textContent = loc.name;
+        nameSpan.textContent = loc.id === 'minigame' ? getMinigameMapLabel() : loc.name;
         locElement.appendChild(nameSpan);
 
         locElement.style.top = loc.top;
@@ -149,6 +162,10 @@ function renderHub() {
                     break;
                 case 'parahyangan':
                     window.location.href = 'minigames/parahyangan_menu.html';
+                    break;
+                case 'minigame-rush':
+                    localStorage.setItem('minigameRushVisited', 'true');
+                    window.location.href = 'minigames/minigame_menu.html';
                     break;
                 default:
                     setDialogue('Narator', `Misi untuk ${loc.name} belum siap.`);

@@ -1,39 +1,5 @@
 // js/utils.js
 
-// --- DRAGGABLE HELPER ---
-function makeDraggable(element, container) {
-    let isDragging = false, offsetX, offsetY;
-    element.style.cursor = 'grab';
-    element.addEventListener('mousedown', e => {
-        if (e.target !== element && !e.target.classList.contains('dropped-item')) return;
-        isDragging = true;
-        const elemRect = element.getBoundingClientRect();
-        offsetX = e.clientX - elemRect.left;
-        offsetY = e.clientY - elemRect.top;
-        element.style.cursor = 'grabbing';
-        element.style.zIndex = 1000;
-        e.stopPropagation();
-    });
-    document.addEventListener('mousemove', e => {
-        if (!isDragging) return;
-        const containerRect = container.getBoundingClientRect();
-        let x = e.clientX - containerRect.left - offsetX;
-        let y = e.clientY - containerRect.top - offsetY;
-        x = Math.max(0, Math.min(x, containerRect.width - element.offsetWidth));
-        y = Math.max(0, Math.min(y, containerRect.height - element.offsetHeight));
-        element.style.position = 'absolute';
-        element.style.left = `${x}px`;
-        element.style.top = `${y}px`;
-    });
-    document.addEventListener('mouseup', () => {
-        if (isDragging) {
-            isDragging = false;
-            element.style.cursor = 'grab';
-            element.style.zIndex = 'auto';
-        }
-    });
-}
-
 // --- VIDEO LESSON FUNCTION ---
 function startVideoLesson(videoPath, lessonTitle, lessonText, onVideoEndedCallback) {
     gameWorld.innerHTML = '';

@@ -6,10 +6,25 @@
     <title>Dialog Pawongan - Sari</title>
     <link rel="stylesheet" href="shared_style.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap');
+
         body {
             background-image: url('pawongan/assets/img/kantin.png');
             background-size: cover;
             background-position: center;
+            color: #3b2314;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at top, rgba(255, 239, 215, 0.6) 0%, rgba(245, 210, 170, 0.35) 40%, rgba(214, 142, 84, 0.45) 100%),
+                repeating-linear-gradient(135deg, rgba(120, 34, 24, 0.14) 0 6px, rgba(120, 34, 24, 0.04) 6px 12px);
+            pointer-events: none;
+            z-index: 0;
         }
         #dialogue-scene {
             display: flex;
@@ -19,69 +34,99 @@
             min-height: 100vh;
             width: 100%;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
         #character-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         #character-expression {
             max-width: 100%;
-            max-height: 50vh;
+            max-height: 48vh;
             object-fit: contain;
             transition: opacity 0.5s ease-in-out;
-            border: 5px solid white;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            background-color: rgba(255, 255, 255, 0.5);
+            border: 3px solid #b05a2a;
+            border-radius: 8px;
+            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+            background-color: rgba(255, 242, 221, 0.92);
         }
         #dialogue-box {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background-color: rgba(255, 242, 221, 0.96);
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.25), inset 0 0 0 2px rgba(255, 235, 200, 0.85);
             width: 90%;
             max-width: 800px;
             text-align: center;
-            border: 3px solid #ffc107; /* Sari's theme color */
+            border: 3px solid #b05a2a;
             flex-shrink: 0;
         }
         #dialogue-text {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.08rem;
+            line-height: 1.55;
+            margin-bottom: 16px;
+            text-align: justify;
+            background: #ffecd2;
+            border: 2px solid rgba(123, 44, 22, 0.2);
+            border-radius: 6px;
+            padding: 10px 12px;
         }
         #choices {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
         }
         .choice-btn {
-            padding: 12px 25px;
+            padding: 11px 20px;
             border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 4px;
+            font-size: 0.96rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.3s ease;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+            background: linear-gradient(135deg, #b93422, #7b2c16);
+            color: #fff4e6;
+            box-shadow: 0 8px 18px rgba(123, 44, 22, 0.45);
         }
         .choice-btn:hover {
-            transform: translateY(-3px);
-            background-color: #ffb300;
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #a62e1f, #6a2412);
+            box-shadow: 0 10px 22px rgba(123, 44, 22, 0.55);
         }
         .choice-btn.secondary {
-            background-color: #6c757d;
-            color: white;
+            background: linear-gradient(135deg, #9c6b2e, #6f4a1f);
+            color: #fff4e6;
         }
         .choice-btn.secondary:hover {
-            background-color: #5a6268;
+            background: linear-gradient(135deg, #8a5e27, #5f3e17);
+        }
+        @media (max-width: 768px) {
+            #dialogue-scene {
+                padding: 14px;
+            }
+            #dialogue-box {
+                padding: 14px;
+            }
+            #dialogue-text {
+                font-size: 0.95rem;
+            }
+            .choice-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="loading-overlay" aria-live="polite" aria-busy="true">
+        <div class="loading-card">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <p class="loading-text">Memuat petualangan...</p>
+        </div>
+    </div>
 
     <div id="dialogue-scene">
         <div id="character-container">
@@ -95,10 +140,30 @@
         </div>
     </div>
 
+    <audio id="bg-audio" src="../assets/audio/pawongan.mp3" loop></audio>
+    <audio id="click-sfx" src="../assets/audio/click.wav" preload="auto"></audio>
+
     <script>
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const hideLoadingOverlay = () => {
+            if (!loadingOverlay || loadingOverlay.classList.contains('hidden')) return;
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.setAttribute('aria-busy', 'false');
+        };
+
+        window.addEventListener('load', () => {
+            hideLoadingOverlay();
+        });
+
+        setTimeout(() => {
+            hideLoadingOverlay();
+        }, 2500);
+
         const characterImage = document.getElementById('character-expression');
         const dialogueText = document.getElementById('dialogue-text');
         const choicesContainer = document.getElementById('choices');
+        const bgAudio = document.getElementById('bg-audio');
+        const clickSfx = document.getElementById('click-sfx');
 
         const dialogueTree = [
             { // 0: Initial
@@ -198,6 +263,31 @@
         }
 
         renderScene(0);
+
+        // Background audio
+        if (bgAudio) {
+            bgAudio.volume = 0.6;
+            const resume = () => {
+                bgAudio.play().finally(() => {
+                    document.removeEventListener('pointerdown', resume);
+                    document.removeEventListener('touchstart', resume);
+                    document.removeEventListener('keydown', resume);
+                });
+            };
+            document.addEventListener('pointerdown', resume, { once: true });
+            document.addEventListener('touchstart', resume, { once: true });
+            document.addEventListener('keydown', resume, { once: true });
+            bgAudio.play().catch(() => {});
+        }
+
+        // Click feedback
+        document.addEventListener('click', (event) => {
+            if (!clickSfx) return;
+            const interactive = event.target.closest('button, .choice-btn');
+            if (!interactive) return;
+            clickSfx.currentTime = 0;
+            clickSfx.play().catch(() => {});
+        });
     </script>
 
 </body>

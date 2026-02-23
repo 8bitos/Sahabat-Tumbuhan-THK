@@ -54,7 +54,7 @@ const introSteps = [
     {
         type: 'info',
         title: 'Tujuan Pembelajaran',
-        text: `1) Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK, siswa mampu mengenali dan menyebutkan dan menunjukkan (mengidentifikasi) bagian-bagian tubuh dari tumbuhan.
+        text: `1) Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK, siswa mampu mengenali, menyebutkan dan menunjukkan (mengidentifikasi) bagian-bagian tubuh dari tumbuhan.
 2) Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK, siswa mampu menjelaskan (menganalisis) fungsi dari masing-masing bagian tubuh tumbuhan.
 3) Dengan mengaplikasikan media game edukasi Jagadipa berbasis THK siswa mampu mengaitkan fungsi bagian tubuh dengan kebutuhan tumbuhan untuk tumbuh dan mempertahankan diri, serta berkembang biak.`
     }

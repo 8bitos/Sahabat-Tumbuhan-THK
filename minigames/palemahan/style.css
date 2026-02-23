@@ -214,6 +214,14 @@ body {
         position: relative;
         top: -18px;
     }
+
+    .tomato-container {
+        padding: 0.75rem 1rem 1rem;
+    }
+
+    .tomato-board {
+        max-width: 640px;
+    }
 }
 
 .tool {
@@ -237,6 +245,286 @@ body {
 .tool img {
     width: 50px;
     height: 50px;
+}
+
+/* --- Tomato Drag & Drop Minigame --- */
+#tomato-game {
+    padding: 1rem;
+}
+
+.tomato-container {
+    width: min(980px, 96vw);
+    background-color: #fff2dd;
+    border: 3px solid #b05a2a;
+    border-radius: 6px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.tomato-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tomato-left,
+.tomato-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Mobile: header above, image middle, words below */
+.tomato-header {
+    order: 1;
+}
+
+.tomato-right {
+    order: 2;
+}
+
+.tomato-left {
+    order: 3;
+}
+
+.tomato-header h2 {
+    margin-bottom: 0.25rem;
+    color: #7b2c16;
+}
+
+.tomato-message {
+    min-height: 1.2rem;
+    font-weight: 600;
+    color: #7b2c16;
+}
+
+.tomato-board {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+#tomato-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    user-select: none;
+    -webkit-user-drag: none;
+    touch-action: none;
+}
+
+.tomato-drop-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.tomato-debug-rect {
+    position: absolute;
+    border: 2px solid #7b2c16;
+    background: rgba(255, 240, 210, 0.35);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.tomato-drop {
+    position: absolute;
+    border: 2px dashed rgba(123, 44, 22, 0.5);
+    border-radius: 6px;
+    background: rgba(255, 244, 230, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #7b2c16;
+    pointer-events: auto;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    max-width: 140px;
+    max-height: 70px;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+}
+
+.tomato-drop.hover {
+    border-color: #b05a2a;
+    transform: scale(1.02);
+}
+
+.tomato-drop.filled {
+    background: rgba(255, 231, 198, 0.9);
+    border-style: solid;
+}
+
+.tomato-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.tomato-word {
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 2px solid rgba(123, 44, 22, 0.4);
+    background-color: #fff7eb;
+    cursor: grab;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.tomato-word.dragging {
+    opacity: 0.5;
+}
+
+.tomato-word.selected {
+    outline: 2px solid #7b2c16;
+}
+
+.tomato-word.used {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tomato-word.shake,
+.tomato-drop.shake {
+    animation: tomato-shake 0.4s ease-in-out;
+}
+
+.tomato-word.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.tomato-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.tomato-debug {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    top: auto;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px dashed #7b2c16;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    color: #3b2314;
+    max-width: 220px;
+    text-align: left;
+}
+
+.tomato-debug.show {
+    display: block;
+}
+
+/* Transition dialog */
+.tomato-transition {
+    max-width: 520px;
+    background-color: #fff2dd;
+    border: 3px solid #b05a2a;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 235, 200, 0.9);
+}
+
+.transition-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.transition-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    background-color: #fff4e6;
+    padding: 6px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.transition-text {
+    text-align: left;
+}
+
+@keyframes tomato-shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+}
+
+@media (min-width: 769px) {
+    .tomato-layout {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        text-align: left;
+        gap: 1rem;
+    }
+
+    .tomato-left {
+        order: 1;
+        flex: 1;
+        min-width: 260px;
+        max-width: 360px;
+        align-items: stretch;
+    }
+
+    .tomato-right {
+        order: 2;
+        flex: 0 0 auto;
+        align-items: flex-end;
+    }
+
+    .tomato-header {
+        order: 0;
+        text-align: left;
+    }
+
+    .tomato-board {
+        max-width: 420px;
+        margin: 0;
+    }
+
+    .tomato-words {
+        justify-content: flex-start;
+    }
+
+    .tomato-actions {
+        justify-content: flex-start;
+    }
+
+    .transition-content {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .transition-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .transition-text {
+        text-align: center;
+    }
 }
 
 /* --- Video Modal --- */
@@ -453,5 +741,14 @@ body {
 
     .tool span {
         font-size: 0.8rem;
+    }
+
+    .tomato-container {
+        padding: 0.75rem;
+    }
+
+    .tomato-word {
+        padding: 0.45rem 0.8rem;
+        font-size: 0.9rem;
     }
 }

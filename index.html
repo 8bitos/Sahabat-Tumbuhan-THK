@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahabat Tumbuhanku: Petualangan Tri Hita Karana</title>
+    <title>JAGADIPA: Petualangan Tri Hita Karana</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="loading-overlay" aria-live="polite" aria-busy="true">
+        <div class="loading-card">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <p class="loading-text">Memuat petualangan...</p>
+        </div>
+    </div>
     <div id="game-container">
         <div id="game-world">
             <!-- The map or minigame will be dynamically rendered here -->
@@ -50,6 +56,7 @@
 
 
     <audio id="background-music" src="assets/audio/bgm.mp3" loop></audio>
+    <audio id="click-sfx" src="assets/audio/click.wav" preload="auto"></audio>
 
     <!-- Intro Overlay Container -->
     <div id="intro-overlay-container"> <!-- Active by default for intro -->

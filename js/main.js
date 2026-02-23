@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const hideLoadingOverlay = () => {
+        if (!loadingOverlay || loadingOverlay.classList.contains('hidden')) return;
+        loadingOverlay.classList.add('hidden');
+        loadingOverlay.setAttribute('aria-busy', 'false');
+    };
+
+    window.addEventListener('load', () => {
+        hideLoadingOverlay();
+    });
+
+    // Fallback: ensure overlay hides even if load event is delayed.
+    setTimeout(() => {
+        hideLoadingOverlay();
+    }, 2500);
+
     // --- INITIALIZE GAME ---
     async function init() { // Make init an async function
         // --- Assign DOM Elements ---
@@ -20,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         quizButton = document.getElementById('quiz-button');
         backgroundMusic = document.getElementById('background-music');
+        const clickSfx = document.getElementById('click-sfx');
 
         updatePlayerNameBadge();
 
@@ -32,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pawonganDone = localStorage.getItem('pawonganCompleted') === 'true' || pawonganCount > 0;
                 const parahyanganDone = localStorage.getItem('parahyanganCompleted') === 'true' || parahyanganCount > 0;
                 const quizScore = localStorage.getItem('quizScore');
+                const minigameRushBestScore = localStorage.getItem('minigameRushBestScore');
+                const minigameRushLastScore = localStorage.getItem('minigameRushLastScore');
 
                 const row = (label, done, count) => `
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px solid rgba(0,0,0,0.08);">
@@ -49,6 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${row('Palemahan', palemahanDone, palemahanCount)}
                         ${row('Pawongan', pawonganDone, pawonganCount)}
                         ${row('Parahyangan', parahyanganDone, parahyanganCount)}
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px solid rgba(0,0,0,0.08);">
+                            <span style="font-weight:700;">Skor Minigame</span>
+                            <span style="font-weight:700;">${minigameRushBestScore ? 'Best ' + minigameRushBestScore : '-'}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px solid rgba(0,0,0,0.08);">
+                            <span>Skor Terakhir Minigame</span>
+                            <span style="font-weight:700;">${minigameRushLastScore || '-'}</span>
+                        </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0;">
                             <span style="font-weight:700;">Skor Quiz</span>
                             <span style="font-weight:700;">${quizScore ? quizScore + ' / 100' : '-'}</span>
@@ -68,6 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             toggleMusicButton.textContent = 'Matikan Musik';
         }
+
+        // Ensure BGM plays on first user interaction in main menu
+        const tryStartBgm = () => {
+            if (!backgroundMusic || backgroundMusic.muted) return;
+            backgroundMusic.play().finally(() => {
+                document.removeEventListener('pointerdown', tryStartBgm);
+                document.removeEventListener('keydown', tryStartBgm);
+            });
+        };
+        document.addEventListener('pointerdown', tryStartBgm, { once: true });
+        document.addEventListener('keydown', tryStartBgm, { once: true });
+
+        // Global click feedback for interactive controls
+        document.addEventListener('click', (event) => {
+            if (!clickSfx) return;
+            const interactive = event.target.closest('button, .map-location, .dialogue-button, .nav-button, .settings-option-button, .close-button, label');
+            if (!interactive) return;
+            if (localStorage.getItem('isMusicMuted') === 'true') return;
+            clickSfx.currentTime = 0;
+            clickSfx.play().catch(() => {});
+        });
 
         // --- Setup Event Listeners for Buttons ---
         settingsButton.addEventListener('click', () => {

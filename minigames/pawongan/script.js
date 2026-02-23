@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mixingBowl = document.getElementById('mixing-bowl');
     const checkButton = document.getElementById('check-button');
     const sariAvatarEl = document.getElementById('sari-avatar');
+    const bgAudio = document.getElementById('bg-audio');
+    const clickSfx = document.getElementById('click-sfx');
     const tutorialModal = document.getElementById('tutorial-modal');
     const tutorialStartButton = document.getElementById('tutorial-start-button');
 
@@ -256,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Video Functions ---
     function showVideoModal(videoSrc, explanationText) {
+        if (bgAudio) bgAudio.pause();
         explanationVideo.src = videoSrc;
         videoExplanationText.textContent = explanationText;
         videoModal.classList.remove('hidden');
@@ -337,6 +340,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Load ---
     renderIngredients();
     loadRecipe(0);
+
+    // --- Click Feedback ---
+    document.addEventListener('click', (event) => {
+        if (!clickSfx) return;
+        const interactive = event.target.closest('button, .ingredient-item-wrapper, #mixing-bowl, .close-button');
+        if (!interactive) return;
+        clickSfx.currentTime = 0;
+        clickSfx.play().catch(() => {});
+    });
+
+    // --- Background Audio ---
+    function tryPlayAudio() {
+        if (!bgAudio) return;
+        bgAudio.volume = 0.6;
+        bgAudio.play().catch(() => {
+            const resume = () => {
+                bgAudio.play().finally(() => {
+                    document.removeEventListener('click', resume);
+                });
+            };
+            document.addEventListener('click', resume);
+        });
+    }
+    tryPlayAudio();
 
     // --- Tutorial Modal ---
     if (tutorialModal && tutorialStartButton) {

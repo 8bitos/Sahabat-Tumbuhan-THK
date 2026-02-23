@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameContainer = document.querySelector('.game-container');
     const tutorialModal = document.getElementById('tutorial-modal');
     const tutorialStartButton = document.getElementById('tutorial-start-button');
+    const bgAudio = document.getElementById('bg-audio');
+    const clickSfx = document.getElementById('click-sfx');
 
     // --- Game Data ---
     const items = [
@@ -171,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             allowOutsideClick: false,
         }).then((result) => {
             if (result.isConfirmed) {
+                if (bgAudio) bgAudio.pause();
                 const currentCount = parseInt(localStorage.getItem('parahyanganCompleteCount') || '0', 10);
                 localStorage.setItem('parahyanganCompleteCount', String(currentCount + 1));
                 localStorage.setItem('parahyanganCompleted', 'true');
@@ -302,4 +305,28 @@ document.addEventListener('DOMContentLoaded', () => {
             tutorialModal.style.display = 'none';
         });
     }
+
+    // --- Background Audio ---
+    function tryPlayAudio() {
+        if (!bgAudio) return;
+        bgAudio.volume = 0.6;
+        bgAudio.play().catch(() => {
+            const resume = () => {
+                bgAudio.play().finally(() => {
+                    document.removeEventListener('click', resume);
+                });
+            };
+            document.addEventListener('click', resume);
+        });
+    }
+    tryPlayAudio();
+
+    // Click feedback
+    document.addEventListener('click', (event) => {
+        if (!clickSfx) return;
+        const interactive = event.target.closest('button, .item, #canang-base, .close-button');
+        if (!interactive) return;
+        clickSfx.currentTime = 0;
+        clickSfx.play().catch(() => {});
+    });
 });
