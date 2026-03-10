@@ -36,6 +36,7 @@ function startIntroOverlaySequence() {
         currentIntroStep = stepIndex;
         introButtons.innerHTML = ''; // Clear existing buttons
         introTextArea.innerHTML = ''; // Clear existing text area content
+        introTextArea.classList.remove('intro-text-splash');
     
         if (currentIntroStep < introSteps.length) {
             const step = introSteps[currentIntroStep];
@@ -70,7 +71,14 @@ function startIntroOverlaySequence() {
                 });
                 introNextBtn.style.display = 'none'; // Hide default next button
             } else {
-                introTextArea.textContent = step.text;
+                if (step.type === 'splash') {
+                    introTextArea.classList.add('intro-text-splash');
+                }
+                if (step.type === 'splash') {
+                    introTextArea.innerHTML = step.text;
+                } else {
+                    introTextArea.textContent = step.text;
+                }
                 introNextBtn.style.display = 'block'; // Show default next button
     
                 if (step.type === 'splash') {

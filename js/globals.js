@@ -31,8 +31,13 @@ let currentIntroStep = 0;
 const introSteps = [
     {
         type: 'splash',
-        title: 'Sahabat Tumbuhanku: Petualangan Tri Hita Karana',
-        text: 'Pengembang: Putu Surya Gutama'
+        title: 'JAGADIPA: Petualangan Tri Hita Karana',
+        text: `<strong>Pengembang:</strong>
+Putu Surya Gutama
+<strong>Pembimbing 1:</strong>
+Dr. Basilius Redan Werang, S.S., S.Sos., JCL.
+<strong>Pembimbing 2:</strong>
+Ketut Herya Darma Utami, S.Pd., M.Pd.`
     },
     {
         type: 'name-input',
